@@ -102,7 +102,7 @@ public partial class CloseUp : CanvasLayer
     {
         if (_puzzle == null || Conversation.Active) return;
         _lastFocus = spot;
-        _puzzle.Use(spot, _using);
+        _puzzle.Press(spot, _using);
     }
 
     /// <summary>Play a Yarn node over the close-up; optionally step back once it ends.</summary>

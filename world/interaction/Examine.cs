@@ -8,9 +8,5 @@ public partial class Examine : Interactable
 {
     [Export] public string YarnNode { get; set; } = "";
 
-    public override void Interact()
-    {
-        base.Interact();
-        Conversation.Start(YarnNode);
-    }
+    protected override void OnInteract() => Conversation.Start(YarnNode);
 }
