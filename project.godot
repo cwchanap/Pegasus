@@ -15,6 +15,7 @@ SceneRouter="*res://core/SceneRouter.cs"
 Toast="*res://ui/Toast.cs"
 Conversation="*res://ui/dialogue/conversation.tscn"
 Menu="*res://ui/menu/menu.tscn"
+CloseUp="*res://puzzles/close_up/close_up.tscn"
 DevDriver="*res://dev/DevDriver.cs"
 
 [display]

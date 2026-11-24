@@ -3,6 +3,7 @@ title: Aoi_Hangout1
 Aoi: You again. Most people only come here at New Year.
 Aoi: I'm writing up the lantern festival for the folklore club. Nobody else signed up, so I am the whole club.
 Aoi: They light the lanterns from the gate inward, one each night of the festival. The order never changes.
+<<flag clue_lantern_order>>
 -> What's so special about the order?
     Aoi: Old Mr. Kuroda says if you light them in the wrong order, winter comes early.
 -> Can I help?

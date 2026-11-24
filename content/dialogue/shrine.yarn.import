@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://cj1omkgwaid8m"
+path="res://.godot/imported/shrine.yarn-6eca37dee999bd5f2e7eeb0263f6480b.tres"
+
+[deps]
+
+source_file="res://content/dialogue/shrine.yarn"
+dest_files=["res://.godot/imported/shrine.yarn-6eca37dee999bd5f2e7eeb0263f6480b.tres"]
+
+[params]
+

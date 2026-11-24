@@ -1,0 +1,73 @@
+title: Shrine_LanternsDay
+---
+Five stone lanterns line the path from the gate to the hall.
+The one by the gate is black with soot. Each one after it is a little cleaner, and the one by the hall is almost white.
+<<flag clue_lantern_soot>>
+===
+title: Lantern_1
+---
+<<if met("flag:lanterns_lit")>>
+The lantern by the gate burns steadily. Snow drips from its cap.
+<<else>>
+The lantern by the gate. Its stone is black with old soot.
+<<flag clue_lantern_soot>>
+<<endif>>
+===
+title: Lantern_2
+---
+<<if met("flag:lanterns_lit")>>
+The second lantern burns steadily.
+<<else>>
+Dark grey with soot. Not quite as black as the one by the gate.
+<<flag clue_lantern_soot>>
+<<endif>>
+===
+title: Lantern_3
+---
+<<if met("flag:lanterns_lit")>>
+The middle lantern burns steadily.
+<<else>>
+The middle lantern. A little soot, about half as much as the first.
+<<flag clue_lantern_soot>>
+<<endif>>
+===
+title: Lantern_4
+---
+<<if met("flag:lanterns_lit")>>
+The fourth lantern burns steadily.
+<<else>>
+Only a faint ring of soot under the cap.
+<<flag clue_lantern_soot>>
+<<endif>>
+===
+title: Lantern_5
+---
+<<if met("flag:lanterns_lit")>>
+The lantern by the hall burns steadily. Its stone looks new in the light.
+<<else>>
+The lantern by the hall. The stone is almost clean, as if it has hardly ever burned.
+<<flag clue_lantern_soot>>
+<<endif>>
+===
+title: Shrine_OfferingBox
+---
+<<if met("item:matchbox")>>
+The offering box. Only snow in it now.
+<<else>>
+The offering box is full of snow. Under it, someone has left a box of matches. Dry, somehow.
+<<give matchbox>>
+<<endif>>
+===
+title: Lanterns_Gutter
+---
+The match flares. The flame curls away from the wick and dies.
+===
+title: Lanterns_Solved
+---
+The last lantern catches. Five flames burn in a row, from the gate to the hall.
+Behind them, the snow slides off the hall doors with a soft hiss.
+===
+title: CloseUp_Nothing
+---
+Nothing happens.
+===

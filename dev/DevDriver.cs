@@ -10,6 +10,8 @@ namespace Pegasus.Dev;
 ///   --hold=action@A-B     hold an input action from frame A to frame B (repeatable)
 ///   --tap=action@A        press an action for one frame at frame A (repeatable)
 ///   --state=file.json     start from this game state (same JSON as the save file)
+///   --open=res://x.tscn   open this puzzle scene in the close-up on frame 5
+///   --click=X,Y@A         left-click at viewport position X,Y on frame A (repeatable)
 /// Frames count while the tree is paused too (fades, the Tab menu), so a shot can catch them.
 /// </summary>
 public partial class DevDriver : Node
@@ -18,6 +20,8 @@ public partial class DevDriver : Node
     private int _shotFrame = 90;
     private int _frame;
     private readonly List<(string Action, int From, int To)> _inputs = new();
+    private readonly List<(Vector2 At, int Frame)> _clicks = new();
+    private string? _puzzle;
 
     public override void _Ready()
     {
@@ -39,6 +43,14 @@ public partial class DevDriver : Node
                     _inputs.Add((action, int.Parse(from), int.Parse(to)));
                     break;
                 }
+                case "--open": _puzzle = value; break;
+                case "--click":
+                {
+                    var (xy, at) = Split(value, '@');
+                    var (x, y) = Split(xy, ',');
+                    _clicks.Add((new Vector2(float.Parse(x), float.Parse(y)), int.Parse(at)));
+                    break;
+                }
                 case "--tap":
                 {
                     var (action, at) = Split(value, '@');
@@ -47,7 +59,7 @@ public partial class DevDriver : Node
                 }
             }
         }
-        SetPhysicsProcess(_shotPath != null || _inputs.Count > 0);
+        SetPhysicsProcess(_shotPath != null || _inputs.Count > 0 || _clicks.Count > 0 || _puzzle != null);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -57,6 +69,13 @@ public partial class DevDriver : Node
         {
             if (_frame == from) Press(action, true);
             if (_frame == to + 1) Press(action, false);
+        }
+        if (_frame == 5 && _puzzle != null) Pegasus.Puzzles.CloseUp.Open(GD.Load<PackedScene>(_puzzle));
+        foreach (var (at, frame) in _clicks)
+        {
+            if (_frame == frame - 1) Input.ParseInputEvent(new InputEventMouseMotion { Position = at, GlobalPosition = at });
+            if (_frame == frame) Click(at, true);
+            if (_frame == frame + 1) Click(at, false);
         }
         if (_shotPath == null || _frame < _shotFrame) return;
         GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(_shotPath));
@@ -69,6 +88,9 @@ public partial class DevDriver : Node
 
     private static void Press(string action, bool pressed) =>
         Input.ParseInputEvent(new InputEventAction { Action = action, Pressed = pressed, Strength = pressed ? 1 : 0 });
+
+    private static void Click(Vector2 at, bool pressed) =>
+        Input.ParseInputEvent(new InputEventMouseButton { Position = at, GlobalPosition = at, ButtonIndex = MouseButton.Left, Pressed = pressed });
 
     private static (string, string) Split(string s, char sep)
     {

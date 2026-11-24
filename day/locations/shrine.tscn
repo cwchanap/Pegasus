@@ -11,6 +11,7 @@
 [ext_resource type="Resource" path="res://content/characters/aoi.tres" id="char_aoi"]
 [ext_resource type="Resource" path="res://content/activities/hangout_aoi.tres" id="act_hangout_aoi"]
 [ext_resource type="Script" path="res://day/ActivitySpot.cs" id="spot_script"]
+[ext_resource type="Script" path="res://world/interaction/Examine.cs" id="examine"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -229,6 +230,20 @@ Activity = ExtResource("act_hangout_aoi")
 PromptHeight = 2.0
 
 [node name="Shape" type="CollisionShape3D" parent="HangOutAoi"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="LookAtLanterns" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -0.4)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("examine")
+YarnNode = "Shrine_LanternsDay"
+Prompt = "Look at the lanterns"
+PromptHeight = 2.0
+
+[node name="Shape" type="CollisionShape3D" parent="LookAtLanterns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
 
