@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
 [ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
+[ext_resource type="Script" path="res://world/bounds/Bounds.cs" id="bounds_script"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -75,6 +76,11 @@ PromptHeight = 2.2
 [node name="Shape" type="CollisionShape3D" parent="HomeDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
+
+[node name="Bounds" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("bounds_script")
+Size = Vector2(30, 30)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2)

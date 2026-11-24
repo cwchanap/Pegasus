@@ -57,6 +57,8 @@ public partial class DevDriver : Node
         if (_shotPath == null || _frame < _shotFrame) return;
         GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(_shotPath));
         GD.Print($"Screenshot saved to {_shotPath}");
+        if (GetTree().GetFirstNodeInGroup("player") is Node3D player)
+            GD.Print($"Player at {player.GlobalPosition:F2}");
         GetTree().Quit();
     }
 
