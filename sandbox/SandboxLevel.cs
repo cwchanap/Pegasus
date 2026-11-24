@@ -89,8 +89,9 @@ public partial class SandboxLevel : Node3D
     {
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.F5 })
         {
-            SaveService.Save(Game.State, SavePath);
-            Say($"Saved to {ProjectSettings.GlobalizePath(SavePath)}");
+            Say(SaveService.Save(Game.State, SavePath)
+                ? $"Saved to {ProjectSettings.GlobalizePath(SavePath)}"
+                : "Save failed (see the log); the old save is kept.");
         }
     }
 }
