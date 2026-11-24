@@ -1,10 +1,12 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://day/apartment/Apartment.cs" id="1_apt"]
 [ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
 [ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
+[ext_resource type="Script" path="res://ui/hud/DayHeader.cs" id="6_header"]
+[ext_resource type="Resource" path="res://content/locations/apartment.tres" id="7_data"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -65,14 +67,20 @@ size = Vector3(1.4, 0.8, 0.7)
 material = SubResource("window_mat")
 size = Vector3(1.6, 1, 0.05)
 
+[sub_resource type="BoxMesh" id="door_mesh"]
+material = SubResource("desk_mat")
+size = Vector3(0.08, 2.2, 1.1)
+
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.8
 
-[node name="Apartment" type="Node3D" node_paths=PackedStringArray("Bed", "Desk", "ClockLabel")]
+[node name="Apartment" type="Node3D" node_paths=PackedStringArray("Header", "Exit", "Bed", "Desk")]
 script = ExtResource("1_apt")
+Location = ExtResource("7_data")
+Header = NodePath("Hud/Header")
+Exit = NodePath("Door")
 Bed = NodePath("Bed")
 Desk = NodePath("Desk")
-ClockLabel = NodePath("Hud/Clock")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("env")
@@ -154,6 +162,23 @@ PromptHeight = 1.4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("spot")
 
+[node name="DoorMesh" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.86, 1.1, 1.2)
+mesh = SubResource("door_mesh")
+
+[node name="Door" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 1.2)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Go out"
+PromptHeight = 2.2
+
+[node name="Shape" type="CollisionShape3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("spot")
+
 [node name="Player" parent="." instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 
@@ -167,11 +192,11 @@ Height = 4.5
 
 [node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
 
-[node name="Clock" type="Label" parent="Hud"]
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 500.0
-offset_bottom = 40.0
-theme_override_colors/font_color = Color(0.15, 0.12, 0.1, 1)
-theme_override_font_sizes/font_size = 20
-text = "Day 1 · Afternoon"
+[node name="Header" type="Control" parent="Hud"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 388.0
+offset_bottom = 108.0
+script = ExtResource("6_header")

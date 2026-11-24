@@ -1,0 +1,15 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://day/city_map/CityMap.cs" id="1_map"]
+[ext_resource type="Resource" path="res://content/locations/apartment.tres" id="2_apt"]
+[ext_resource type="Resource" path="res://content/locations/university.tres" id="3_uni"]
+[ext_resource type="Resource" path="res://content/locations/arcade.tres" id="4_arc"]
+[ext_resource type="Resource" path="res://content/locations/shrine.tres" id="5_shr"]
+
+[node name="CityMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_map")
+Locations = [ExtResource("2_apt"), ExtResource("3_uni"), ExtResource("4_arc"), ExtResource("5_shr")]

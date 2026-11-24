@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/LocationData.cs" id="1_loc"]
+
+[resource]
+script = ExtResource("1_loc")
+Id = "arcade"
+DisplayName = "Shopping arcade"
+Letter = "A"
+MapPosition = Vector2(684, 252)
+ScenePath = "res://day/locations/arcade.tscn"
+Blurb = "A covered street of small shops. Someone is always hiring."

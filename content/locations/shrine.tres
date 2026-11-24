@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/LocationData.cs" id="1_loc"]
+
+[resource]
+script = ExtResource("1_loc")
+Id = "shrine"
+DisplayName = "Shrine"
+Letter = "S"
+MapPosition = Vector2(715, 460)
+ScenePath = "res://day/locations/shrine.tscn"
+Blurb = "A quiet neighbourhood shrine by the river, five stone lanterns along the path."

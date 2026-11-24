@@ -1,0 +1,220 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://day/DayLocation.cs" id="1_loc"]
+[ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
+[ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
+[ext_resource type="Script" path="res://ui/hud/DayHeader.cs" id="6_header"]
+[ext_resource type="Resource" path="res://content/locations/shrine.tres" id="7_data"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.75, 0.86, 0.95, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.94, 0.85, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_0"]
+albedo_color = Color(0.8, 0.78, 0.72, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_1"]
+albedo_color = Color(0.86, 0.84, 0.78, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_2"]
+albedo_color = Color(0.75, 0.25, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_3"]
+albedo_color = Color(0.25, 0.25, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_4"]
+albedo_color = Color(0.55, 0.35, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_5"]
+albedo_color = Color(0.4, 0.6, 0.38, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_6"]
+albedo_color = Color(0.62, 0.62, 0.6, 1)
+
+[sub_resource type="SphereShape3D" id="spot"]
+radius = 0.8
+
+[node name="Shrine" type="Node3D" node_paths=PackedStringArray("Header", "Exit")]
+script = ExtResource("1_loc")
+Location = ExtResource("7_data")
+Spot = ""
+Header = NodePath("Hud/Header")
+Exit = NodePath("Exit")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 8, 0)
+light_color = Color(1, 0.94, 0.84, 1)
+shadow_enabled = true
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="Ground" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -1)
+use_collision = true
+size = Vector3(22, 0.2, 16)
+material = SubResource("mat_0")
+
+[node name="Path" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.2)
+use_collision = true
+size = Vector3(14, 0.04, 1.6)
+material = SubResource("mat_1")
+
+[node name="ToriiL" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 1.7, -0.7)
+use_collision = true
+size = Vector3(0.4, 3.4, 0.4)
+material = SubResource("mat_2")
+
+[node name="ToriiR" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 1.7, 1.1)
+use_collision = true
+size = Vector3(0.4, 3.4, 0.4)
+material = SubResource("mat_2")
+
+[node name="ToriiTop" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 3.5, 0.2)
+use_collision = true
+size = Vector3(0.5, 0.35, 3.2)
+material = SubResource("mat_3")
+
+[node name="ToriiBar" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.9, 0.2)
+use_collision = true
+size = Vector3(0.3, 0.25, 2.4)
+material = SubResource("mat_2")
+
+[node name="Hall" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.3, -6)
+use_collision = true
+size = Vector3(5, 2.6, 4)
+material = SubResource("mat_4")
+
+[node name="HallRoof" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.85, -6)
+use_collision = true
+size = Vector3(6, 0.5, 5)
+material = SubResource("mat_3")
+
+[node name="TreeA" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, -5)
+use_collision = true
+size = Vector3(1.6, 4, 1.6)
+material = SubResource("mat_5")
+
+[node name="TreeB" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2.3, -4)
+use_collision = true
+size = Vector3(1.8, 4.6, 1.8)
+material = SubResource("mat_5")
+
+[node name="Lantern0Base" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.6, -1.2)
+use_collision = true
+size = Vector3(0.5, 1.2, 0.5)
+material = SubResource("mat_6")
+
+[node name="Lantern0Top" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.4, -1.2)
+use_collision = true
+size = Vector3(0.7, 0.4, 0.7)
+material = SubResource("mat_6")
+
+[node name="Lantern1Base" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, -1.2)
+use_collision = true
+size = Vector3(0.5, 1.2, 0.5)
+material = SubResource("mat_6")
+
+[node name="Lantern1Top" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.4, -1.2)
+use_collision = true
+size = Vector3(0.7, 0.4, 0.7)
+material = SubResource("mat_6")
+
+[node name="Lantern2Base" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.6, -1.2)
+use_collision = true
+size = Vector3(0.5, 1.2, 0.5)
+material = SubResource("mat_6")
+
+[node name="Lantern2Top" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.4, -1.2)
+use_collision = true
+size = Vector3(0.7, 0.4, 0.7)
+material = SubResource("mat_6")
+
+[node name="Lantern3Base" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.6, -1.2)
+use_collision = true
+size = Vector3(0.5, 1.2, 0.5)
+material = SubResource("mat_6")
+
+[node name="Lantern3Top" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.4, -1.2)
+use_collision = true
+size = Vector3(0.7, 0.4, 0.7)
+material = SubResource("mat_6")
+
+[node name="Lantern4Base" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.6, -1.2)
+use_collision = true
+size = Vector3(0.5, 1.2, 0.5)
+material = SubResource("mat_6")
+
+[node name="Lantern4Top" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.4, -1.2)
+use_collision = true
+size = Vector3(0.7, 0.4, 0.7)
+material = SubResource("mat_6")
+
+[node name="Sign0" type="Label3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.6, -3.4)
+text = "SHRINE"
+font_size = 72
+modulate = Color(0.11, 0.12, 0.23, 1)
+outline_size = 0
+
+[node name="Exit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 1)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Leave"
+PromptHeight = 2.2
+
+[node name="Shape" type="CollisionShape3D" parent="Exit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 0, 1.8)
+
+[node name="Camera" type="Camera3D" parent="."]
+fov = 50.0
+script = ExtResource("3_camera")
+Distance = 7
+Height = 4.5
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
+
+[node name="Header" type="Control" parent="Hud"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 388.0
+offset_bottom = 108.0
+script = ExtResource("6_header")

@@ -1,0 +1,185 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://day/DayLocation.cs" id="1_loc"]
+[ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
+[ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
+[ext_resource type="Script" path="res://ui/hud/DayHeader.cs" id="6_header"]
+[ext_resource type="Resource" path="res://content/locations/university.tres" id="7_data"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.93, 0.86, 0.74, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.94, 0.85, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_0"]
+albedo_color = Color(0.76, 0.6, 0.42, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_1"]
+albedo_color = Color(0.92, 0.88, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_2"]
+albedo_color = Color(0.4, 0.28, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_3"]
+albedo_color = Color(0.45, 0.3, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_4"]
+albedo_color = Color(0.55, 0.4, 0.27, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_5"]
+albedo_color = Color(0.35, 0.5, 0.75, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_6"]
+albedo_color = Color(0.45, 0.47, 0.52, 1)
+
+[sub_resource type="SphereShape3D" id="spot"]
+radius = 0.8
+
+[node name="University" type="Node3D" node_paths=PackedStringArray("Header", "Exit")]
+script = ExtResource("1_loc")
+Location = ExtResource("7_data")
+Spot = "Library & gym"
+Header = NodePath("Hud/Header")
+Exit = NodePath("Exit")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 8, 0)
+light_color = Color(1, 0.94, 0.84, 1)
+shadow_enabled = true
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -1)
+use_collision = true
+size = Vector3(16, 0.2, 9)
+material = SubResource("mat_0")
+
+[node name="BackWall" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.5)
+use_collision = true
+size = Vector3(16, 4, 0.3)
+material = SubResource("mat_1")
+
+[node name="LeftWall" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, -1)
+use_collision = true
+size = Vector3(0.3, 4, 9)
+material = SubResource("mat_1")
+
+[node name="RightWall" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, -1)
+use_collision = true
+size = Vector3(0.3, 4, 9)
+material = SubResource("mat_1")
+
+[node name="Door" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 1.1, 1.8)
+use_collision = true
+size = Vector3(0.1, 2.2, 1.2)
+material = SubResource("mat_2")
+
+[node name="ShelfA" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.2, -5)
+use_collision = true
+size = Vector3(3, 2.4, 0.6)
+material = SubResource("mat_3")
+
+[node name="ShelfB" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.2, -5)
+use_collision = true
+size = Vector3(3, 2.4, 0.6)
+material = SubResource("mat_3")
+
+[node name="DeskA" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.4, -2.2)
+use_collision = true
+size = Vector3(2.6, 0.8, 1.2)
+material = SubResource("mat_4")
+
+[node name="DeskB" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.4, -2.2)
+use_collision = true
+size = Vector3(2.6, 0.8, 1.2)
+material = SubResource("mat_4")
+
+[node name="Divider" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.6, -3.5)
+use_collision = true
+size = Vector3(0.2, 1.2, 4)
+material = SubResource("mat_1")
+
+[node name="Mat" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.05, -2)
+use_collision = true
+size = Vector3(3, 0.1, 2)
+material = SubResource("mat_5")
+
+[node name="Rack" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.6, -4.8)
+use_collision = true
+size = Vector3(2, 1.2, 0.6)
+material = SubResource("mat_6")
+
+[node name="Treadmill" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 0.3, -4)
+use_collision = true
+size = Vector3(1, 0.6, 2)
+material = SubResource("mat_6")
+
+[node name="Sign0" type="Label3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3.2, -5.3)
+text = "LIBRARY"
+font_size = 96
+modulate = Color(0.11, 0.12, 0.23, 1)
+outline_size = 0
+
+[node name="Sign1" type="Label3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.2, -5.3)
+text = "GYM"
+font_size = 96
+modulate = Color(0.11, 0.12, 0.23, 1)
+outline_size = 0
+
+[node name="Exit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2, 0, 1.8)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Leave"
+PromptHeight = 2.2
+
+[node name="Shape" type="CollisionShape3D" parent="Exit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0, 2.2)
+
+[node name="Camera" type="Camera3D" parent="."]
+fov = 50.0
+script = ExtResource("3_camera")
+Distance = 7
+Height = 4.5
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
+
+[node name="Header" type="Control" parent="Hud"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 388.0
+offset_bottom = 108.0
+script = ExtResource("6_header")

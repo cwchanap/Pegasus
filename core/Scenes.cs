@@ -4,5 +4,6 @@ namespace Pegasus.Core;
 public static class Scenes
 {
     public const string Apartment = "res://day/apartment/apartment.tscn";
+    public const string CityMap = "res://day/city_map/city_map.tscn";
     public const string Night = "res://night/snow_area/snow_area.tscn";
 }
