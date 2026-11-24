@@ -15,6 +15,8 @@ Aoi: The lanterns? They have always lit them from the gate inward, one each nigh
 -> Tell her about the snow. #needs:guts>=1
     Aoi: Snow? In August? You're braver than me for saying it out loud.
     <<bond aoi 1>>
+-> Say you will walk out into it tonight. #needs:guts>=2|item:flashlight
+    Aoi: Then take a light. Promise me.
 The night air is warm. Somewhere, cicadas.
 <<stat guts 1>>
 ===

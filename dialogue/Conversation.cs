@@ -37,10 +37,21 @@ public partial class Conversation : CanvasLayer
     public static void Start(string node)
     {
         if (Active) return;
+        if (!Instance.Runner!.Dialogue.NodeExists(node))
+        {
+            GD.PushError($"Conversation: no Yarn node named '{node}'.");
+            return;
+        }
         Active = true;
         Instance._node = node;
         InputLock.Acquire(nameof(Conversation));
         Instance.Runner!.StartDialogueForget(node);
+    }
+
+    /// <summary>Ends the running conversation early; Finished still fires.</summary>
+    public static void End()
+    {
+        if (Active) Instance.Runner!.StopForget();
     }
 
     public CharacterProfile? FindCharacter(string? displayName) =>
@@ -49,8 +60,12 @@ public partial class Conversation : CanvasLayer
     private void OnComplete()
     {
         Active = false;
-        // Release a frame later so the key that closed the box does not also trigger the world.
-        GetTree().CreateTimer(0.1).Timeout += () => InputLock.Release(nameof(Conversation));
+        // Release a moment later so the key that closed the box does not also trigger the world,
+        // unless a Finished handler has already started the next conversation.
+        GetTree().CreateTimer(0.1).Timeout += () =>
+        {
+            if (!Active) InputLock.Release(nameof(Conversation));
+        };
         Finished?.Invoke(_node);
     }
 }
