@@ -61,28 +61,31 @@ public partial class CityMap : Control
     {
         var list = GetNode<VBoxContainer>("%Activities");
         foreach (var child in list.GetChildren()) child.QueueFree();
-        list.Visible = location.Activities.Count > 0;
+        list.Visible = location.Activities.Count + location.Shops.Count > 0;
         foreach (var activity in location.Activities)
         {
             var person = activity.With;
-            var row = new VBoxContainer();
-            row.AddThemeConstantOverride("separation", 2);
-            var head = new HBoxContainer();
-            head.AddThemeConstantOverride("separation", 10);
-            head.AddChild(new Label
-            {
-                Text = person == null ? "1 SLOT" : "HERE TODAY",
-                ThemeTypeVariation = person == null ? "TagOrange" : "TagPurple",
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-            });
-            head.AddChild(new Label { Text = person?.DisplayName ?? activity.Title, ThemeTypeVariation = "DarkTitle" });
-            row.AddChild(head);
-            var detail = person == null
-                ? activity.Describe(Game.State)
-                : $"Hang out · spends a slot · Bond {Game.State.GetBond(person.Id)} of {GameState.MaxBond}";
-            row.AddChild(new Label { Text = detail, ThemeTypeVariation = "MutedLabel" });
-            list.AddChild(row);
+            list.AddChild(person == null
+                ? Row("1 SLOT", "TagOrange", activity.Title, activity.Describe(Game.State))
+                : Row("HERE TODAY", "TagPurple", person.DisplayName,
+                    $"Hang out · spends a slot · Bond {Game.State.GetBond(person.Id)} of {GameState.MaxBond}"));
         }
+        foreach (var shop in location.Shops)
+            list.AddChild(Row("FREE", "TagTeal", shop.Title,
+                string.Join(" · ", shop.Stock.Select(i => $"{i.DisplayName} {Format.Yen(i.Price)}"))));
+    }
+
+    private static VBoxContainer Row(string tag, string tagStyle, string title, string detail)
+    {
+        var row = new VBoxContainer();
+        row.AddThemeConstantOverride("separation", 2);
+        var head = new HBoxContainer();
+        head.AddThemeConstantOverride("separation", 10);
+        head.AddChild(new Label { Text = tag, ThemeTypeVariation = tagStyle, SizeFlagsVertical = SizeFlags.ShrinkCenter });
+        head.AddChild(new Label { Text = title, ThemeTypeVariation = "DarkTitle" });
+        row.AddChild(head);
+        row.AddChild(new Label { Text = detail, ThemeTypeVariation = "MutedLabel" });
+        return row;
     }
 
     private void AddMarker(LocationData location)

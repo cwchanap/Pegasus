@@ -197,7 +197,7 @@ offset_left = 16.0
 offset_top = 12.0
 offset_right = 400.0
 offset_bottom = 38.0
-text = "Snow Dream · grey-box sandbox (WASD move, E interact, Tab save, Esc quit)"
+text = "Snow Dream · grey-box sandbox (WASD move, E interact, Tab menu, F5 save, Esc quit)"
 
 [node name="Info" type="Label" parent="Hud"]
 offset_left = 16.0

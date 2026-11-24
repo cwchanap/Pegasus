@@ -1,6 +1,7 @@
 using System;
 using Pegasus.Conditions;
 using Pegasus.Core;
+using Pegasus.World;
 using YarnSpinnerGodot;
 
 namespace Pegasus.Dialogue;
@@ -27,7 +28,7 @@ public static class YarnBindings
         runner.AddFunction("met", (Func<string, bool>)(text => Condition.Check(text, Game.State)));
         runner.AddCommandHandler("stat", (Action<string, int>)((stat, amount) => Game.State.AddStat(Enum.Parse<Stat>(stat, ignoreCase: true), amount)));
         runner.AddCommandHandler("money", (Action<int>)(amount => Game.State.AddMoney(amount)));
-        runner.AddCommandHandler("give", (Action<string>)(item => Game.State.GiveItem(item)));
+        runner.AddCommandHandler("give", (Action<string>)(item => { Items.Get(item); /* warns if the id has no item data */ Game.State.GiveItem(item); }));
         runner.AddCommandHandler("take", (Action<string>)(item => Game.State.TakeItem(item)));
         runner.AddCommandHandler("flag", (Action<string>)(flag => Game.State.SetFlag(flag)));
         runner.AddCommandHandler("unflag", (Action<string>)(flag => Game.State.SetFlag(flag, false)));

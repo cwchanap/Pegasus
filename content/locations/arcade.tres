@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="LocationData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="LocationData" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://day/LocationData.cs" id="1_loc"]
+[ext_resource type="Resource" path="res://content/shops/winter_gear.tres" id="s_winter_gear"]
 [ext_resource type="Resource" path="res://content/activities/hangout_kenta.tres" id="a_hangout_kenta"]
 [ext_resource type="Resource" path="res://content/activities/job_kissa.tres" id="a_job_kissa"]
 
@@ -13,3 +14,4 @@ MapPosition = Vector2(684, 252)
 ScenePath = "res://day/locations/arcade.tscn"
 Blurb = "A covered street of small shops. Someone is always hiring."
 Activities = [ExtResource("a_job_kissa"), ExtResource("a_hangout_kenta")]
+Shops = [ExtResource("s_winter_gear")]

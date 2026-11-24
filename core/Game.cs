@@ -15,7 +15,7 @@ public static class Game
 
     static Game() => State.Changed += RaiseChanged;
 
-    public static void NewGame() => Load(new GameState());
+    public static void NewGame() => Load(new GameState { Money = GameState.StartingMoney });
 
     /// <summary>Loads the save slot. False when there is no save.</summary>
     public static bool Continue()
