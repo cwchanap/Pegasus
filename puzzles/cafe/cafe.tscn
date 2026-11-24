@@ -444,6 +444,8 @@ offset_right = 516.0
 offset_bottom = 250.0
 script = ExtResource("2_spot")
 Label = "Dial"
+Requires = "flag:tablet_read"
+LockedYarnNode = "Cafe_DialsBlind"
 
 [node name="Face" type="ColorRect" parent="Stove/Dial1"]
 offset_left = 2.0
@@ -631,6 +633,8 @@ offset_right = 580.0
 offset_bottom = 250.0
 script = ExtResource("2_spot")
 Label = "Dial"
+Requires = "flag:tablet_read"
+LockedYarnNode = "Cafe_DialsBlind"
 
 [node name="Face" type="ColorRect" parent="Stove/Dial2"]
 offset_left = 2.0
@@ -818,6 +822,8 @@ offset_right = 644.0
 offset_bottom = 250.0
 script = ExtResource("2_spot")
 Label = "Dial"
+Requires = "flag:tablet_read"
+LockedYarnNode = "Cafe_DialsBlind"
 
 [node name="Face" type="ColorRect" parent="Stove/Dial3"]
 offset_left = 2.0
