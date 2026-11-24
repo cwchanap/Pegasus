@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/ending/EndCard.cs" id="1_card"]
+
+[node name="EndCard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_card")
+
+[node name="Backdrop" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MenuBackdrop"
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Col" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Caption" type="Label" parent="Center/Col"]
+layout_mode = 2
+theme_type_variation = &"MenuCaption"
+text = "SNOW DREAM"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="Center/Col"]
+layout_mode = 2
+theme_type_variation = &"MenuTitle"
+text = "To be continued"
+horizontal_alignment = 1
+
+[node name="Days" type="Label" parent="Center/Col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"BodyText"
+text = "You found your way out of the cold in 5 days."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Gap" type="Control" parent="Center/Col"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+
+[node name="Leave" type="Button" parent="Center/Col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"PrimaryButton"
+text = "Quit"

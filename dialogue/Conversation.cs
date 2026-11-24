@@ -50,6 +50,20 @@ public partial class Conversation : CanvasLayer
         return true;
     }
 
+    /// <summary>Starts a node and runs <paramref name="then"/> once it ends, or at once if it could not start.</summary>
+    public static bool Start(string node, Action then)
+    {
+        void Done(string _)
+        {
+            Finished -= Done;
+            then();
+        }
+        Finished += Done;
+        if (Start(node)) return true;
+        Done(node);
+        return false;
+    }
+
     /// <summary>Ends the running conversation early; Finished still fires.</summary>
     public static void End()
     {

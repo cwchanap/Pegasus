@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 
@@ -20,6 +21,8 @@ public partial class SceneRouter : CanvasLayer
     private Label _caption = null!;
 
     public bool Busy { get; private set; }
+
+    private readonly List<Action> _whenIdle = new();
 
     public override void _EnterTree()
     {
@@ -56,6 +59,14 @@ public partial class SceneRouter : CanvasLayer
         return Task.CompletedTask;
     });
 
+    /// <summary>Run <paramref name="action"/> once no fade is up: now, or as soon as the current fade-in ends.
+    /// A scene's _Ready runs in the dark, so this is how it says something when the player can see it.</summary>
+    public void WhenIdle(Action action)
+    {
+        if (Busy) _whenIdle.Add(action);
+        else action();
+    }
+
     private async void Run(string? caption, Func<Task> whileDark)
     {
         if (Busy) return;
@@ -88,6 +99,9 @@ public partial class SceneRouter : CanvasLayer
             _fade.MouseFilter = Control.MouseFilterEnum.Ignore;
             InputLock.Release(nameof(SceneRouter));
             Busy = false;
+            var due = _whenIdle.ToArray();
+            _whenIdle.Clear();
+            foreach (var action in due) action();
         }
     }
 

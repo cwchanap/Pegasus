@@ -1,0 +1,36 @@
+title: Home_Intro
+---
+Osaka, July. Even the cicadas sound tired of the heat.
+For a week now, you've woken at exactly three in the morning.
+And every time, there's snow outside the window. Deep, silent snow, in the middle of summer.
+The glass is cold enough to sting. Your breath fogs in your own room.
+By morning it's gone. The street is hot and loud again, and nobody else saw a thing.
+Tonight, when it comes back, you're going out there.
+===
+title: Night_First
+---
+Three in the morning. This time, you open the door.
+The cold goes straight through your pyjamas.
+The street is buried. Not a sound, not even wind.
+Past the snow, the road runs on further than you can see.
+===
+title: Home_GearHint
+---
+You wake with your fingers still aching from the cold.
+Pyjamas won't get you far out there. Somewhere in this city, someone must still sell a winter coat in July.
+===
+title: Ending
+---
+You sink into the armchair. The heat soaks into your hands, your face, your bones.
+Through the melting frost, the street is still white.
+Someone is standing out there in the snow, under the dead streetlight, facing the window.
+They lift a hand, slowly, as if they've been waiting for you.
+<<if met("flag:aoi_knows")>>
+Aoi's grandmother said the ones who see the snow always come back. Mostly.
+<<endif>>
+<<if met("flag:kenta_confided")>>
+You'll tell Kenta everything, like you promised. Maybe then he'll call his brother.
+<<endif>>
+Your eyes close before you can wave back.
+<<end_game "You wake to cicadas. It's summer again.">>
+===
