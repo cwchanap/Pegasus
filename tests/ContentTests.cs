@@ -88,6 +88,19 @@ public class ContentTests
     }
 
     [Fact]
+    public void Every_requirement_has_a_locked_line()
+    {
+        // Without one, a locked spot does nothing but log an error.
+        var bad = Files(".tscn", ".tres")
+            .SelectMany(f => Regex.Split(f.Text, @"^(?=\[node )", RegexOptions.Multiline).Select(node => (f.File, Node: node)))
+            .Where(n => Regex.IsMatch(n.Node, @"^Requires = ""[^""]+""", RegexOptions.Multiline)
+                        && !Regex.IsMatch(n.Node, @"^LockedYarnNode = ""[^""]+""", RegexOptions.Multiline))
+            .Select(n => $"{n.File}: {n.Node.Split('\n')[0]} has Requires but no LockedYarnNode")
+            .ToList();
+        Assert.Empty(bad);
+    }
+
+    [Fact]
     public void Speakers_are_known_characters()
     {
         // Yarn reads any "Text:" at the start of a line as a speaker, so a stray colon in
