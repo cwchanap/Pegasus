@@ -8,5 +8,5 @@ Id = "down_coat"
 DisplayName = "Down coat"
 Description = "Bought at the arcade. Far too hot to wear by day. At night it keeps the cold off."
 Price = 9800
-Warmth = 40
+Warmth = 300
 IconColor = Color(0.76, 0.22, 0.17, 1)

@@ -13,10 +13,14 @@ namespace Pegasus.Core;
 public static class Warmth
 {
     public const int Base = 100;
-    public const int PerFitness = 10;
+    public const int PerFitness = 50;
 
-    /// <summary>How many seconds of walking Base lasts. The one number to tune night length.</summary>
-    public const int BaseSeconds = 90;
+    /// <summary>
+    /// How many seconds of walking Base lasts: the one number to tune night length. Base is
+    /// a short tease (main street, the university gate, lights in the distance); the coat
+    /// (+300) is what reaches the shrine, and full gear with Fitness 3 reaches everything.
+    /// </summary>
+    public const int BaseSeconds = 15;
 
     public const float DrainPerSecond = (float)Base / BaseSeconds;
 
@@ -37,7 +41,7 @@ public static class Warmth
     public static int Max(GameState s, Func<string, (string Name, int Warmth)> item) =>
         Base + Bonuses(s, item).Sum(b => b.Amount);
 
-    /// <summary>"Down coat +40 · Fitness +20", or "" with nothing extra.</summary>
+    /// <summary>"Down coat +300 · Fitness +100", or "" with nothing extra.</summary>
     public static string Describe(GameState s, Func<string, (string Name, int Warmth)> item) =>
         string.Join(" · ", Bonuses(s, item).Select(b => $"{b.Source} +{b.Amount}"));
 }

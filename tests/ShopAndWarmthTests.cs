@@ -7,8 +7,8 @@ public class ShopAndWarmthTests
 {
     private static (string, int) Lookup(string id) => id switch
     {
-        "down_coat" => ("Down coat", 40),
-        "boots" => ("Boots", 20),
+        "down_coat" => ("Down coat", 300),
+        "boots" => ("Boots", 150),
         _ => (id, 0),
     };
 
@@ -33,19 +33,19 @@ public class ShopAndWarmthTests
         s.GiveItem("down_coat");
         s.GiveItem("flashlight");
         s.AddStat(Stat.Fitness, 2);
-        Assert.Equal(Warmth.Base + 40 + 20, Warmth.Max(s, Lookup));
-        Assert.Equal("Down coat +40 · Fitness +20", Warmth.Describe(s, Lookup));
+        Assert.Equal(Warmth.Base + 300 + 100, Warmth.Max(s, Lookup));
+        Assert.Equal("Down coat +300 · Fitness +100", Warmth.Describe(s, Lookup));
     }
 
     [Fact]
     public void NightLengthGrowsWithGearAndFitness()
     {
-        Assert.Equal(90f, Warmth.Seconds(Warmth.Base), 3);
         var s = new GameState();
+        Assert.Equal(15f, Warmth.Seconds(Warmth.Max(s, Lookup)), 3); // a tease: short of the shrine (about 24 s away)
         s.GiveItem("down_coat");
+        Assert.Equal(60f, Warmth.Seconds(Warmth.Max(s, Lookup)), 3); // the shrine and some wandering
         s.GiveItem("boots");
         s.AddStat(Stat.Fitness, GameState.MaxStat);
-        // Coat 40, boots 20, Fitness 30: about three minutes of walking.
-        Assert.InRange(Warmth.Seconds(Warmth.Max(s, Lookup)), 165f, 180f);
+        Assert.Equal(105f, Warmth.Seconds(Warmth.Max(s, Lookup)), 3); // shrine, underpass and arcade in one night
     }
 }
