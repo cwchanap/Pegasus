@@ -16,17 +16,15 @@ public partial class Toast : CanvasLayer
         _instance = this;
         Layer = 50;
         ProcessMode = ProcessModeEnum.Always;
-        _label = new Label
+        var row = new CenterContainer
         {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Modulate = Colors.Transparent,
+            MouseFilter = Control.MouseFilterEnum.Ignore,
             AnchorLeft = 0, AnchorRight = 1, AnchorTop = 1, AnchorBottom = 1,
-            OffsetTop = -120, OffsetBottom = -80,
+            OffsetTop = -130, OffsetBottom = -86,
         };
-        _label.AddThemeFontSizeOverride("font_size", 22);
-        _label.AddThemeConstantOverride("outline_size", 6);
-        _label.AddThemeColorOverride("font_outline_color", new Color(0, 0, 0, 0.6f));
-        AddChild(_label);
+        _label = new Label { ThemeTypeVariation = "ToastLabel", Modulate = Colors.Transparent };
+        row.AddChild(_label);
+        AddChild(row);
     }
 
     private void Display(string text)

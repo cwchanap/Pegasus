@@ -8,5 +8,4 @@ Id = "job_kissa"
 Title = "Part-time job at Kissa Mori"
 Verb = "Work"
 Outcome = "Coffee, dishes, and a regular who never smiles."
-Money = 3000
-Guts = 1
+Money = 5000

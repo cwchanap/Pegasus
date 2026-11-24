@@ -46,7 +46,7 @@ public partial class ActivityPanel : Control
 
     private void Confirm()
     {
-        var activity = _activity!;
+        if (_activity is not { } activity) return;
         Close();
         SceneRouter.Instance.Interlude(activity.Outcome, () =>
         {

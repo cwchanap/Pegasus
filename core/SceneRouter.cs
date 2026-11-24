@@ -63,23 +63,32 @@ public partial class SceneRouter : CanvasLayer
         InputLock.Acquire(nameof(SceneRouter));
         _fade.MouseFilter = Control.MouseFilterEnum.Stop;
         GetTree().Paused = true;
-
-        await Tween(_fade, 1f, FadeSeconds);
-        if (!string.IsNullOrEmpty(caption))
+        try
         {
-            _caption.Text = caption;
-            await Tween(_caption, 1f, FadeSeconds);
-            await ToSignal(GetTree().CreateTimer(CaptionSeconds, processAlways: true), SceneTreeTimer.SignalName.Timeout);
+            await Tween(_fade, 1f, FadeSeconds);
+            if (!string.IsNullOrEmpty(caption))
+            {
+                _caption.Text = caption;
+                await Tween(_caption, 1f, FadeSeconds);
+                await ToSignal(GetTree().CreateTimer(CaptionSeconds, processAlways: true), SceneTreeTimer.SignalName.Timeout);
+            }
+            await whileDark();
+            if (!string.IsNullOrEmpty(caption)) await Tween(_caption, 0f, FadeSeconds);
         }
-
-        await whileDark();
-
-        if (!string.IsNullOrEmpty(caption)) await Tween(_caption, 0f, FadeSeconds);
-        GetTree().Paused = false;
-        await Tween(_fade, 0f, FadeSeconds);
-        _fade.MouseFilter = Control.MouseFilterEnum.Ignore;
-        InputLock.Release(nameof(SceneRouter));
-        Busy = false;
+        catch (Exception e)
+        {
+            GD.PushError($"SceneRouter: {e}");
+        }
+        finally
+        {
+            // Always come back from black, even if the work in the dark failed.
+            _caption.Modulate = Colors.Transparent;
+            GetTree().Paused = false;
+            await Tween(_fade, 0f, FadeSeconds);
+            _fade.MouseFilter = Control.MouseFilterEnum.Ignore;
+            InputLock.Release(nameof(SceneRouter));
+            Busy = false;
+        }
     }
 
     private async Task Tween(CanvasItem item, float alpha, float seconds)
