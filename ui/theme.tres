@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=61 format=3]
+[gd_resource type="Theme" load_steps=68 format=3]
 
 [sub_resource type="StyleBoxEmpty" id="empty"]
 
@@ -884,6 +884,100 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 12
 
+[sub_resource type="StyleBoxFlat" id="sb_60"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1.000, 0.650, 0.200, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_61"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1.000, 1.000, 1.000, 0.22)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_62"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1.000, 0.650, 0.200, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_63"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1.000, 1.000, 1.000, 0.22)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.550, 0.750, 1.000, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_65"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.160, 0.190, 0.270, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1.000, 1.000, 1.000, 0.2)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_66"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.220, 0.230, 0.220, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.000, 0.824, 0.302, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 12
+
 [resource]
 default_font_size = 16
 NavyPanel/base_type = &"PanelContainer"
@@ -1109,3 +1203,18 @@ KeyCapOutline/base_type = &"Label"
 KeyCapOutline/colors/font_color = Color(1.000, 1.000, 1.000, 1)
 KeyCapOutline/font_sizes/font_size = 16
 KeyCapOutline/styles/normal = SubResource("sb_59")
+NightCaption/base_type = &"Label"
+NightCaption/colors/font_color = Color(1.000, 1.000, 1.000, 0.85)
+NightCaption/font_sizes/font_size = 13
+WarmthIcon/base_type = &"Panel"
+WarmthIcon/styles/panel = SubResource("sb_60")
+WarmthBar/base_type = &"ProgressBar"
+WarmthBar/styles/background = SubResource("sb_61")
+WarmthBar/styles/fill = SubResource("sb_62")
+WarmthBarLow/base_type = &"ProgressBar"
+WarmthBarLow/styles/background = SubResource("sb_63")
+WarmthBarLow/styles/fill = SubResource("sb_64")
+HeldSlot/base_type = &"PanelContainer"
+HeldSlot/styles/panel = SubResource("sb_65")
+HeldSlotOn/base_type = &"PanelContainer"
+HeldSlotOn/styles/panel = SubResource("sb_66")

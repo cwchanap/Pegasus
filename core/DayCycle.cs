@@ -20,12 +20,14 @@ public static class DayCycle
         SceneRouter.Instance.GoTo(Scenes.Night, Caption(Game.State));
     }
 
-    public static void WakeUp()
+    /// <summary>End the night: walking home, or Warmth running out (<paramref name="why"/> is shown first).</summary>
+    public static void WakeUp(string? why = null)
     {
         if (SceneRouter.Instance.Busy) return;
         Clock.Wake(Game.State);
         Game.Save();
-        SceneRouter.Instance.GoTo(Scenes.Apartment, Caption(Game.State));
+        var caption = Caption(Game.State);
+        SceneRouter.Instance.GoTo(Scenes.Apartment, why == null ? caption : $"{why}\n\n{caption}");
     }
 
     private static string Caption(GameState s) =>
