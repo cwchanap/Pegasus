@@ -22,5 +22,5 @@ Conventions: snake_case folders and scene files, PascalCase C# files, namespace 
 - Build: `dotnet build`
 - Tests: `dotnet test`
 - Run headless: `godot --headless --quit-after 120 [res://scene.tscn]`
-- Screenshot: `scripts/shot.sh out.png [res://scene.tscn] [frames]`
+- Screenshot: `scripts/shot.sh out.png [res://scene.tscn] [frames] [extra dev args, e.g. --hold=move_right@1-40 --tap=interact@60]` (see `dev/DevDriver.cs`)
 - After adding new assets, import once: `godot --headless --import`
