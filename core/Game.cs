@@ -26,7 +26,8 @@ public static class Game
         return true;
     }
 
-    public static void Save() => SaveService.Save(State);
+    /// <summary>False if the write failed (logged); the old save stays.</summary>
+    public static bool Save() => SaveService.Save(State);
 
     /// <summary>Replace the live state (new game, save slot, or a dev fixture).</summary>
     public static void Load(GameState state)

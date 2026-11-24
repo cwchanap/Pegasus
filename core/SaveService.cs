@@ -9,17 +9,17 @@ public static class SaveService
 
     public static bool Exists => FileAccess.FileExists(Path);
 
-    /// <summary>Writes a temp file and renames it over the slot, so a failed write keeps the old save.</summary>
-    public static void Save(GameState state, string path = Path)
+    /// <summary>Writes a temp file and renames it over the slot, so a failed write keeps the old save. False if it failed (logged).</summary>
+    public static bool Save(GameState state, string path = Path)
     {
         var temp = path + ".tmp";
         using (var file = FileAccess.Open(temp, FileAccess.ModeFlags.Write))
         {
-            if (file == null) { GD.PushError($"Could not write {temp}: {FileAccess.GetOpenError()}"); return; }
-            file.StoreString(SaveData.ToJson(state));
+            if (file == null) return Fail($"Could not open {temp}: {FileAccess.GetOpenError()}");
+            if (!file.StoreString(SaveData.ToJson(state))) return Fail($"Could not write {temp}: {file.GetError()}");
         }
         var error = DirAccess.RenameAbsolute(ProjectSettings.GlobalizePath(temp), ProjectSettings.GlobalizePath(path));
-        if (error != Error.Ok) GD.PushError($"Could not replace {path}: {error}");
+        return error == Error.Ok || Fail($"Could not replace {path}: {error}");
     }
 
     /// <summary>The saved state, or null when there is none or it can't be read (then the title offers only New game).</summary>
@@ -27,10 +27,11 @@ public static class SaveService
     {
         if (!FileAccess.FileExists(path)) return null;
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        if (file == null) { Fail($"Could not open {path}: {FileAccess.GetOpenError()}"); return null; }
         try { return SaveData.FromJson(file.GetAsText()); }
         catch (System.Text.Json.JsonException e)
         {
-            GD.PushError($"Could not read {path}: {e.Message}");
+            Fail($"Could not read {path}: {e.Message}");
             return null;
         }
     }
@@ -38,5 +39,11 @@ public static class SaveService
     public static void Delete()
     {
         if (Exists) DirAccess.RemoveAbsolute(ProjectSettings.GlobalizePath(Path));
+    }
+
+    private static bool Fail(string message)
+    {
+        GD.PushError(message);
+        return false;
     }
 }
