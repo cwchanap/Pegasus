@@ -15,6 +15,7 @@ namespace Pegasus.Dialogue;
 ///   &lt;&lt;stat guts 1&gt;&gt;  &lt;&lt;money 500&gt;&gt;  &lt;&lt;money -300&gt;&gt;
 ///   &lt;&lt;give coat&gt;&gt;  &lt;&lt;take coat&gt;&gt;  &lt;&lt;flag name&gt;&gt; (clue_* writes the notebook)  &lt;&lt;unflag name&gt;&gt;  &lt;&lt;bond aoi 1&gt;&gt;
 ///   &lt;&lt;wake_up "You fell asleep in the cold."&gt;&gt;   end the night (last line of a node)
+///   &lt;&lt;end_game "You wake to cicadas."&gt;&gt;         end the slice and go to the end card (last line)
 ///
 /// A choice that needs something is tagged, not wrapped in &lt;&lt;if&gt;&gt;, so it stays visible
 /// but locked with its requirement: <c>-&gt; Tell her about the snow #needs:guts&gt;=3</c>.
@@ -44,6 +45,7 @@ public static class YarnBindings
         runner.AddCommandHandler("unflag", (Action<string>)(flag => Game.State.SetFlag(flag, false)));
         runner.AddCommandHandler("bond", (Action<string, int>)((who, amount) => Game.State.AddBond(who, amount)));
         runner.AddCommandHandler("wake_up", (Action<string>)(why => DayCycle.WakeUp(why)));
+        runner.AddCommandHandler("end_game", (Action<string>)(caption => DayCycle.Finish(caption)));
     }
 
     /// <summary>The condition text of a "#needs:..." tag on a choice, or null.</summary>

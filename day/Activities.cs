@@ -10,11 +10,8 @@ public static class Activities
     public static void Do(ActivityData activity)
     {
         var node = activity.SceneFor(Game.State);
-        if (node == "") { PassTime(activity); return; }
-
-        void Done(string _) { Conversation.Finished -= Done; PassTime(activity); }
-        Conversation.Finished += Done;
-        if (!Conversation.Start(node)) Done(node);
+        if (node == "") PassTime(activity);
+        else Conversation.Start(node, () => PassTime(activity));
     }
 
     /// <summary>Fade out with the outcome line, spend the slot and apply the gains, then toast them.</summary>

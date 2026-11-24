@@ -145,7 +145,8 @@ public partial class CloseUp : CanvasLayer
         SetRoomInput(true);
         if (_closeAfter)
         {
-            Close();
+            // A line that ended the night or the game is fading the scene out; the scene change closes it.
+            if (!SceneRouter.Instance.Busy) Close();
             return;
         }
         BuildSlots(); // what he saw may have given him something

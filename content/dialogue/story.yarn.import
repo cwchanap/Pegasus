@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://cujiif2qyfevg"
+path="res://.godot/imported/story.yarn-735747f6040a9be6ad13349115c7a016.tres"
+
+[deps]
+
+source_file="res://content/dialogue/story.yarn"
+dest_files=["res://.godot/imported/story.yarn-735747f6040a9be6ad13349115c7a016.tres"]
+
+[params]
+
