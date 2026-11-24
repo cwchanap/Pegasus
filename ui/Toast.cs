@@ -26,8 +26,9 @@ public partial class Toast : CanvasLayer
         var row = new CenterContainer
         {
             MouseFilter = Control.MouseFilterEnum.Ignore,
-            AnchorLeft = 0, AnchorRight = 1, AnchorTop = 1, AnchorBottom = 1,
-            OffsetTop = -130, OffsetBottom = -86,
+            // Top centre, under the HUD header: at the bottom it covered panel buttons and the dialogue box.
+            AnchorLeft = 0, AnchorRight = 1, AnchorTop = 0, AnchorBottom = 0,
+            OffsetTop = 120, OffsetBottom = 164,
         };
         _label = new Label { ThemeTypeVariation = "ToastLabel", Modulate = Colors.Transparent };
         row.AddChild(_label);

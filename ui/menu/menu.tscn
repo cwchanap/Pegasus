@@ -228,6 +228,7 @@ theme_type_variation = &"MenuAction"
 text = "Quit to title"
 
 [node name="QuitNote" type="Label" parent="Margin/Col/System/Panel/Col"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MenuWarning"
 text = "Progress since you last slept is lost."

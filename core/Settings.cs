@@ -5,7 +5,8 @@ namespace Pegasus.Core;
 /// <summary>
 /// Player settings: volumes and fullscreen. Kept in user://settings.cfg, apart from the save,
 /// so they survive a new game. Loaded and applied at boot (by <see cref="AudioService"/>);
-/// every change applies at once and is written straight away.
+/// every change applies at once; <see cref="Save"/> writes them (the settings panel calls it
+/// when a drag ends or the panel closes, not on every slider tick).
 /// </summary>
 public static class Settings
 {
@@ -29,15 +30,18 @@ public static class Settings
     {
         File.SetValue("display", "fullscreen", on);
         Apply();
+        Save();
     }
+
+    public static void Save() => File.Save(Path);
 
     public static void Load()
     {
         if (FileAccess.FileExists(Path)) File.Load(Path); // no file yet: the defaults
-        Apply(save: false);
+        Apply();
     }
 
-    private static void Apply(bool save = true)
+    private static void Apply()
     {
         foreach (var bus in Buses)
         {
@@ -50,6 +54,5 @@ public static class Settings
         var isFullscreen = mode is DisplayServer.WindowMode.Fullscreen or DisplayServer.WindowMode.ExclusiveFullscreen;
         if (Fullscreen != isFullscreen && DisplayServer.GetName() != "headless")
             DisplayServer.WindowSetMode(Fullscreen ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
-        if (save) File.Save(Path);
     }
 }

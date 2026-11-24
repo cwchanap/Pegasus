@@ -34,11 +34,6 @@ public partial class ShopPanel : Control
             GetViewport().SetInputAsHandled();
             Close();
         }
-        else if (e.IsActionPressed("interact") && GetViewport().GuiGetFocusOwner() is Button { Disabled: false } row)
-        {
-            GetViewport().SetInputAsHandled();
-            row.EmitSignal(BaseButton.SignalName.Pressed);
-        }
     }
 
     private void Buy(ItemData item)

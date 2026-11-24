@@ -4,7 +4,8 @@ using Pegasus.Core;
 namespace Pegasus.UI;
 
 /// <summary>Volumes and fullscreen, shared by the title screen and the menu's System page.
-/// Each row is named for its audio bus. Changes apply and save at once (core/Settings).</summary>
+/// Each row is named for its audio bus. Changes apply at once (core/Settings) and are written
+/// when a drag ends or the panel is hidden or freed.</summary>
 public partial class SettingsPanel : VBoxContainer
 {
     public Control First => GetNode<Control>($"{Settings.Buses[0]}/Slider");
@@ -16,6 +17,7 @@ public partial class SettingsPanel : VBoxContainer
             var slider = GetNode<HSlider>($"{bus}/Slider");
             var label = GetNode<Label>($"{bus}/Label");
             slider.ValueChanged += value => Settings.SetVolume(bus, (float)value);
+            slider.DragEnded += _ => Settings.Save();
             // A slider's own focus mark is faint; light up its row's name instead.
             slider.FocusEntered += () => label.ThemeTypeVariation = "BodyTextOn";
             slider.FocusExited += () => label.ThemeTypeVariation = "BodyText";
@@ -43,6 +45,11 @@ public partial class SettingsPanel : VBoxContainer
         var fullscreen = GetNode<Button>("%Fullscreen");
         fullscreen.SetPressedNoSignal(Settings.Fullscreen);
         ShowFullscreen(fullscreen);
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationVisibilityChanged && !IsVisibleInTree() || what == NotificationExitTree) Settings.Save();
     }
 
     private static void ShowFullscreen(Button button) => button.Text = $"Fullscreen: {(button.ButtonPressed ? "On" : "Off")}";

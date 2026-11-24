@@ -106,17 +106,6 @@ public partial class CloseUp : CanvasLayer
             GetViewport().SetInputAsHandled();
             _puzzle.StepBack();
         }
-        // E presses the focused button too; Space and Enter already do (ui_accept).
-        else if (e.IsActionPressed("interact") && !e.IsActionPressed("ui_accept") && GetViewport().GuiGetFocusOwner() is BaseButton button)
-        {
-            GetViewport().SetInputAsHandled();
-            if (button.ToggleMode)
-            {
-                button.ButtonPressed = !button.ButtonPressed;
-                AudioService.PlaySfx(Sfx.UiClick); // setting ButtonPressed doesn't emit Pressed, so no click by itself
-            }
-            else button.EmitSignal(BaseButton.SignalName.Pressed);
-        }
     }
 
     private void OnHotspot(Hotspot spot)
