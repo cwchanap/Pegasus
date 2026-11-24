@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://world/ShowIf.cs" id="7_showif"]
 [ext_resource type="Script" path="res://puzzles/PuzzleSpot.cs" id="8_puzzle_spot"]
 [ext_resource type="PackedScene" path="res://puzzles/lanterns/lanterns.tscn" id="9_lanterns"]
+[ext_resource type="Script" path="res://world/Gate.cs" id="10_gate"]
+[ext_resource type="Script" path="res://world/interaction/Examine.cs" id="11_examine"]
+[ext_resource type="PackedScene" path="res://puzzles/tablet/tablet.tscn" id="12_tablet"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -66,6 +69,21 @@ radius = 0.8
 
 [sub_resource type="BoxShape3D" id="lantern_row"]
 size = Vector3(9.5, 2, 1.8)
+
+[sub_resource type="BoxShape3D" id="tunnel_shape"]
+size = Vector3(4, 3, 6)
+
+[sub_resource type="StandardMaterial3D" id="dark_mat"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="tunnel_dark"]
+material = SubResource("dark_mat")
+size = Vector3(2.9, 2.2, 5.9)
+
+[sub_resource type="BoxMesh" id="tunnel_spill"]
+material = SubResource("dark_mat")
+size = Vector3(1.4, 0.02, 6)
 
 [sub_resource type="StandardMaterial3D" id="flake_mat"]
 transparency = 1
@@ -460,35 +478,35 @@ material = SubResource("mat_2")
 [node name="Railway" type="Node3D" parent="."]
 
 [node name="EmbankmentN" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.5, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.1, -19)
 use_collision = true
-size = Vector3(3, 3, 20)
+size = Vector3(3, 2.2, 20)
 material = SubResource("mat_5")
 
 [node name="EmbankmentNCap" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3.25, -19)
-size = Vector3(3.6, 0.5, 20.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.3, -19)
+size = Vector3(3.4, 0.2, 20.4)
 material = SubResource("mat_2")
 
 [node name="EmbankmentS" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.5, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.1, 10)
 use_collision = true
-size = Vector3(3, 3, 26)
+size = Vector3(3, 2.2, 26)
 material = SubResource("mat_5")
 
 [node name="EmbankmentSCap" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3.25, 10)
-size = Vector3(3.6, 0.5, 26.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.3, 10)
+size = Vector3(3.4, 0.2, 26.4)
 material = SubResource("mat_2")
 
 [node name="Bridge" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3.4, -6)
-size = Vector3(3.2, 0.8, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.45, -6)
+size = Vector3(3.2, 0.5, 6)
 material = SubResource("mat_5")
 
 [node name="BridgeCap" type="CSGBox3D" parent="Railway"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3.95, -6)
-size = Vector3(3.6, 0.3, 6.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.8, -6)
+size = Vector3(3.6, 0.2, 6.4)
 material = SubResource("mat_2")
 
 [node name="Arcade" type="Node3D" parent="."]
@@ -641,6 +659,67 @@ PromptHeight = 2.4
 [node name="Shape" type="CollisionShape3D" parent="LanternSpot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("lantern_row")
+
+[node name="HallSpot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 8.2)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("8_puzzle_spot")
+Puzzle = ExtResource("12_tablet")
+Prompt = "Enter the hall"
+PromptHeight = 2.6
+Requires = "flag:lanterns_lit"
+LockedYarnNode = "Hall_Sealed"
+
+[node name="Shape" type="CollisionShape3D" parent="HallSpot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="UnderpassGate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -6)
+script = ExtResource("10_gate")
+OpenWhen = "guts >= 2 | item:flashlight"
+
+[node name="Dark" type="MeshInstance3D" parent="UnderpassGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("tunnel_dark")
+
+[node name="Spill" type="MeshInstance3D" parent="UnderpassGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0.07, 0)
+mesh = SubResource("tunnel_spill")
+
+[node name="Shape" type="CollisionShape3D" parent="UnderpassGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 0)
+shape = SubResource("tunnel_shape")
+
+[node name="LookIn" type="Area3D" parent="UnderpassGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1, 0, 0)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("11_examine")
+YarnNode = "Underpass_TooDark"
+Prompt = "Look into the underpass"
+PromptHeight = 2.4
+
+[node name="Shape" type="CollisionShape3D" parent="UnderpassGate/LookIn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="UnderpassBells" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.4, 0, -6.6)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("11_examine")
+YarnNode = "Underpass_Bells"
+Prompt = "Listen"
+PromptHeight = 2.2
+
+[node name="Shape" type="CollisionShape3D" parent="UnderpassBells"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
 
 [node name="Bounds" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)

@@ -13,6 +13,7 @@ namespace Pegasus.Dev;
 ///   --open=res://x.tscn   open this puzzle scene in the close-up on frame 5 (pass a gameplay
 ///                         scene too: the title's fade holds the input lock then); exits 1 if it can't
 ///   --click=X,Y@A         left-click at viewport position X,Y on frame A (repeatable)
+///   --at=X,Z              put the player at X,Z on frame 2 (skip the walk to a spot)
 /// Frames count while the tree is paused too (fades, the Tab menu), so a shot can catch them.
 /// </summary>
 public partial class DevDriver : Node
@@ -23,6 +24,7 @@ public partial class DevDriver : Node
     private readonly List<(string Action, int From, int To)> _inputs = new();
     private readonly List<(Vector2 At, int Frame)> _clicks = new();
     private string? _puzzle;
+    private Vector3? _at;
 
     public override void _Ready()
     {
@@ -45,6 +47,12 @@ public partial class DevDriver : Node
                     break;
                 }
                 case "--open": _puzzle = value; break;
+                case "--at":
+                {
+                    var (x, z) = Split(value, ',');
+                    _at = new Vector3(float.Parse(x), 0, float.Parse(z));
+                    break;
+                }
                 case "--click":
                 {
                     var (xy, at) = Split(value, '@');
@@ -60,7 +68,7 @@ public partial class DevDriver : Node
                 }
             }
         }
-        SetPhysicsProcess(_shotPath != null || _inputs.Count > 0 || _clicks.Count > 0 || _puzzle != null);
+        SetPhysicsProcess(_shotPath != null || _inputs.Count > 0 || _clicks.Count > 0 || _puzzle != null || _at != null);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -71,6 +79,7 @@ public partial class DevDriver : Node
             if (_frame == from) Press(action, true);
             if (_frame == to + 1) Press(action, false);
         }
+        if (_frame == 2 && _at is { } at0 && GetTree().GetFirstNodeInGroup("player") is Node3D p) p.GlobalPosition = at0;
         if (_frame == 5 && _puzzle != null)
         {
             Pegasus.Puzzles.CloseUp.Open(GD.Load<PackedScene>(_puzzle));

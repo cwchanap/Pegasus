@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://dnw1m5a1pqt0j"
+path="res://.godot/imported/underpass.yarn-979961ce027c9a82596d6bd933c5b9eb.tres"
+
+[deps]
+
+source_file="res://content/dialogue/underpass.yarn"
+dest_files=["res://.godot/imported/underpass.yarn-979961ce027c9a82596d6bd933c5b9eb.tres"]
+
+[params]
+

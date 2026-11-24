@@ -8,9 +8,8 @@ public partial class PuzzleSpot : Interactable
 {
     [Export] public PackedScene? Puzzle { get; set; }
 
-    public override void Interact()
+    protected override void OnInteract()
     {
-        base.Interact();
         if (Puzzle != null) CloseUp.Open(Puzzle);
     }
 }
