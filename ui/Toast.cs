@@ -21,6 +21,7 @@ public partial class Toast : CanvasLayer
     public override void _EnterTree()
     {
         _instance = this;
+        Game.SaveFailed += WarnSaveFailed;
         Layer = 50;
         ProcessMode = ProcessModeEnum.Always;
         var row = new CenterContainer
@@ -34,6 +35,10 @@ public partial class Toast : CanvasLayer
         row.AddChild(_label);
         AddChild(row);
     }
+
+    public override void _ExitTree() => Game.SaveFailed -= WarnSaveFailed;
+
+    private static void WarnSaveFailed() => Show("Couldn't save. Progress since the last save isn't kept.");
 
     private void Enqueue(string text)
     {
