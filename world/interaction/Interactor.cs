@@ -38,8 +38,11 @@ public partial class Interactor : Area3D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (Focused == null || !e.IsActionPressed("interact") || !InputLock.IsFree) return;
+        if (!e.IsActionPressed("interact") || !InputLock.IsFree) return;
+        // Focus is picked per physics frame, so check it again: an interaction may have
+        // turned its target off or freed it before the next frame.
+        if (Focused is not { } target || !IsInstanceValid(target) || !target.Enabled || !_inRange.Contains(target)) return;
         GetViewport().SetInputAsHandled();
-        Focused.Interact();
+        target.Interact();
     }
 }
