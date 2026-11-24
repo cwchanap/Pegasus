@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Kissa Mori · Stove lock"
+Text = "Three dials of the old signs above the firebox. A brass plate under them says \"SPEAK THE OLD RULE, AND I WILL BURN.\""
+Order = 30
+ByDay = false

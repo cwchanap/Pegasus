@@ -9,13 +9,27 @@ namespace Pegasus.UI;
 
 /// <summary>
 /// Autoload (ui/menu/menu.tscn). Tab opens one screen with three columns, per the menu
-/// mockup: status, items and notebook. It opens only where the player is and only while
+/// mockup: status, items and the notebook (ui/notebook). It opens only where the player is and only while
 /// the input lock is free, so never over a conversation, a panel or a scene fade. While
 /// open it holds the lock and pauses the tree, so nothing timed (night Warmth) runs.
 /// </summary>
 public partial class Menu : CanvasLayer
 {
     private const int SlotsPerRow = 4;
+
+    private bool _noted;
+
+    public override void _Ready()
+    {
+        // A new clue says so once its conversation ends, so the toast doesn't cover the box.
+        YarnBindings.ClueNoted += _ => _noted = true;
+        Conversation.Finished += _ =>
+        {
+            if (!_noted) return;
+            _noted = false;
+            Toast.Show("Notebook updated");
+        };
+    }
 
     public override void _UnhandledInput(InputEvent e)
     {
@@ -59,6 +73,7 @@ public partial class Menu : CanvasLayer
         GetNode<Label>("%WarmthWhy").Text = why == "" ? "No winter gear yet" : why;
         BuildBonds(s);
         BuildItems(s);
+        GetNode<Notebook>("%Notes").Rebuild();
     }
 
     private void BuildBonds(GameState s)
