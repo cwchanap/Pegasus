@@ -1,15 +1,21 @@
+using System.Collections.Generic;
 using Godot;
+using Pegasus.Core;
 
 namespace Pegasus.UI;
 
-/// <summary>Autoload. One short line of feedback near the bottom of the screen.</summary>
+/// <summary>
+/// Autoload. One short line of feedback near the bottom of the screen. Lines wait their turn,
+/// and none starts while a fade is up, so a toast shown just before a fade is still seen after it.
+/// </summary>
 public partial class Toast : CanvasLayer
 {
     private static Toast? _instance;
+    private readonly Queue<string> _waiting = new();
     private Label _label = null!;
     private Tween? _tween;
 
-    public static void Show(string text) => _instance?.Display(text);
+    public static void Show(string text) => _instance?.Enqueue(text);
 
     public override void _EnterTree()
     {
@@ -27,11 +33,16 @@ public partial class Toast : CanvasLayer
         AddChild(row);
     }
 
-    private void Display(string text)
+    private void Enqueue(string text)
     {
         GD.Print($"[toast] {text}");
+        _waiting.Enqueue(text);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_tween?.IsRunning() == true || SceneRouter.Instance.Busy || !_waiting.TryDequeue(out var text)) return;
         _label.Text = text;
-        _tween?.Kill();
         _tween = CreateTween();
         _tween.TweenProperty(_label, "modulate:a", 1f, 0.15f);
         _tween.TweenInterval(2.5f);
