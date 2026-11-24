@@ -14,6 +14,8 @@ public partial class DevScreenshot : Node
 
     public override void _Ready()
     {
+        SetProcess(false);
+        if (!OS.IsDebugBuild()) return;
         foreach (var arg in OS.GetCmdlineUserArgs())
         {
             if (arg.StartsWith("--shot=")) _path = arg["--shot=".Length..];
