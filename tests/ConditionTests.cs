@@ -45,10 +45,18 @@ public class ConditionTests
     [InlineData("item:coat |")]
     [InlineData("(item:coat")]
     [InlineData("item:coat item:hat")]
+    [InlineData("item")]
+    [InlineData("flag:")]
+    [InlineData("bond: >= 1")]
+    [InlineData("money:foo >= 3")]
+    [InlineData("guts:x >= 1")]
     public void RejectsBadSyntax(string text) =>
         Assert.Throws<ConditionSyntaxException>(() => Condition.Parse(text));
 
-    [Fact]
-    public void DescribesForLockedChoices() =>
-        Assert.Equal("Guts 2 or flashlight", Condition.Parse("guts >= 2 | item:flashlight").Describe());
+    [Theory]
+    [InlineData("guts >= 2 | item:flashlight", "Guts 2")]
+    [InlineData("knowledge >= 1 & money >= 300", "Knowledge 1 and ¥300")]
+    [InlineData("flag:secret & bond:aoi >= 2", "")]
+    public void DescribesOnlyStatsAndMoney(string text, string expected) =>
+        Assert.Equal(expected, Condition.Parse(text).Describe());
 }

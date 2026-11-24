@@ -64,7 +64,7 @@ public partial class SandboxLevel : Node3D
         var condition = Condition.Parse(GateCondition);
         if (!condition.IsMet(Game.State))
         {
-            Say($"Locked. Needs {condition.Describe()}.");
+            Say("It won't budge. Maybe with some light, and some nerve.");
             return;
         }
         Game.State.SetFlag("gate_open");
