@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ActivityData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://day/ActivityData.cs" id="1_act"]
+[ext_resource type="Resource" path="res://content/characters/kenta.tres" id="2_char"]
+
+[resource]
+script = ExtResource("1_act")
+Id = "hangout_kenta"
+Title = "Hang out with Kenta"
+Verb = "Hang out"
+Outcome = "Neon, noise, and a pocket full of tokens."
+With = ExtResource("2_char")
+Bond = 1
+YarnScene = "Kenta_Hangout"

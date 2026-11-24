@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ActivityData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://day/ActivityData.cs" id="1_act"]
+[ext_resource type="Resource" path="res://content/characters/aoi.tres" id="2_char"]
+
+[resource]
+script = ExtResource("1_act")
+Id = "hangout_aoi"
+Title = "Hang out with Aoi"
+Verb = "Hang out"
+Outcome = "The afternoon slips away under the shrine trees."
+With = ExtResource("2_char")
+Bond = 1
+YarnScene = "Aoi_Hangout"

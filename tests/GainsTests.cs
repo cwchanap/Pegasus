@@ -35,4 +35,18 @@ public class GainsTests
         Assert.Equal("Knowledge (max)", new Gains(Knowledge: 1).Describe(s));
         Assert.Equal("Nothing", new Gains().Describe(s));
     }
+
+    [Fact]
+    public void BondGainsGoToTheNamedCharacter()
+    {
+        var s = new GameState();
+        var hangout = new Gains(BondWith: "kenta", Bond: 1);
+        Assert.Equal("Bond +1", hangout.Describe(s));
+        Assert.Equal("Bond with Kenta +1", hangout.Describe(s, "Kenta"));
+        hangout.Apply(s);
+        Assert.Equal(1, s.GetBond("kenta"));
+        Assert.Equal(0, s.GetBond("aoi"));
+        s.AddBond("kenta", 5);
+        Assert.Equal("Bond (max)", hangout.Describe(s));
+    }
 }

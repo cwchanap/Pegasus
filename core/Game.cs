@@ -15,20 +15,21 @@ public static class Game
 
     static Game() => State.Changed += RaiseChanged;
 
-    public static void NewGame() => Use(new GameState());
+    public static void NewGame() => Load(new GameState());
 
     /// <summary>Loads the save slot. False when there is no save.</summary>
     public static bool Continue()
     {
         var saved = SaveService.Load();
         if (saved == null) return false;
-        Use(saved);
+        Load(saved);
         return true;
     }
 
     public static void Save() => SaveService.Save(State);
 
-    private static void Use(GameState state)
+    /// <summary>Replace the live state (new game, save slot, or a dev fixture).</summary>
+    public static void Load(GameState state)
     {
         State.Changed -= RaiseChanged;
         State = state;

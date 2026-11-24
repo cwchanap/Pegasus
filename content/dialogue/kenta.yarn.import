@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://bf2y8bet8g5ce"
+path="res://.godot/imported/kenta.yarn-8b8d95216cdbeafd6d516434cb5272b2.tres"
+
+[deps]
+
+source_file="res://content/dialogue/kenta.yarn"
+dest_files=["res://.godot/imported/kenta.yarn-8b8d95216cdbeafd6d516434cb5272b2.tres"]
+
+[params]
+
