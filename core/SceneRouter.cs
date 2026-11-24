@@ -44,6 +44,7 @@ public partial class SceneRouter : CanvasLayer
     {
         if (Busy) return;
         Busy = true;
+        InputLock.Acquire(nameof(SceneRouter));
         _fade.MouseFilter = Control.MouseFilterEnum.Stop;
         GetTree().Paused = true;
 
@@ -63,6 +64,7 @@ public partial class SceneRouter : CanvasLayer
         GetTree().Paused = false;
         await Tween(_fade, 0f, FadeSeconds);
         _fade.MouseFilter = Control.MouseFilterEnum.Ignore;
+        InputLock.Release(nameof(SceneRouter));
         Busy = false;
     }
 

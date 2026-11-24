@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://dialogue/Conversation.cs" id="1_conv"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_runner"]
+[ext_resource type="Resource" path="res://content/dialogue/dialogue.yarnproject" id="3_project"]
+[ext_resource type="Script" path="res://ui/dialogue/DialogueBox.cs" id="4_box"]
+[ext_resource type="Resource" path="res://content/characters/aoi.tres" id="5_aoi"]
+
+[node name="Conversation" type="CanvasLayer" node_paths=PackedStringArray("Runner")]
+layer = 20
+script = ExtResource("1_conv")
+Runner = NodePath("Runner")
+Characters = [ExtResource("5_aoi")]
+
+[node name="Runner" type="Node" parent="." node_paths=PackedStringArray("dialoguePresenters")]
+script = ExtResource("2_runner")
+yarnProject = ExtResource("3_project")
+dialoguePresenters = [NodePath("../DialogueBox")]
+
+[node name="DialogueBox" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("4_box")

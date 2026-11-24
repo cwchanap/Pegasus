@@ -16,19 +16,16 @@ public partial class Interactor : Area3D
     public Interactable? Focused { get; private set; }
 
     private readonly List<Interactable> _inRange = new();
-    private Player? _player;
 
     public override void _Ready()
     {
-        _player = GetParent() as Player;
         AreaEntered += area => { if (area is Interactable i) _inRange.Add(i); };
         AreaExited += area => { if (area is Interactable i) _inRange.Remove(i); };
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        var canAct = _player?.Controllable ?? true;
-        var nearest = canAct
+        var nearest = InputLock.IsFree
             ? _inRange
                 .Where(i => IsInstanceValid(i) && i.Enabled)
                 .OrderBy(i => i.GlobalPosition.DistanceSquaredTo(GlobalPosition))
@@ -41,7 +38,7 @@ public partial class Interactor : Area3D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (Focused == null || !e.IsActionPressed("interact") || SceneRouter.Instance?.Busy == true) return;
+        if (Focused == null || !e.IsActionPressed("interact") || !InputLock.IsFree) return;
         GetViewport().SetInputAsHandled();
         Focused.Interact();
     }

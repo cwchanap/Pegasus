@@ -1,0 +1,20 @@
+title: SandboxTalk
+---
+<<if met("flag:talked_aoi")>>
+    Aoi: Back again? The lanterns are still on my mind.
+<<else>>
+    Aoi: Oh, you're up. Couldn't sleep either?
+    <<flag talked_aoi>>
+<<endif>>
+Aoi: The lanterns? They have always lit them from the gate inward, one each night of the festival. Why do you ask?
+-> Just curious.
+    Aoi: Curious is good. Most people never look up.
+-> Isn't that the old solstice order? #needs:knowledge>=1
+    Aoi: You noticed? Three lit, two dark. Always the same three.
+    <<flag lantern_hint>>
+-> Tell her about the snow. #needs:guts>=1
+    Aoi: Snow? In August? You're braver than me for saying it out loud.
+    <<bond aoi 1>>
+The night air is warm. Somewhere, cicadas.
+<<stat guts 1>>
+===
