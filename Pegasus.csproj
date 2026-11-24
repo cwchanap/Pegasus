@@ -6,6 +6,8 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>Pegasus</RootNamespace>
   </PropertyGroup>
+  <!-- Yarn Spinner for Godot (vendored addon, MIT): pulls YarnSpinner + compiler from NuGet. -->
+  <Import Project="addons/YarnSpinner-Godot/YarnSpinner-Godot.props" />
   <ItemGroup>
     <!-- Unit tests live in their own project. -->
     <Compile Remove="tests/**" />

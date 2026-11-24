@@ -1,0 +1,292 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Godot;
+using Pegasus.Conditions;
+using Pegasus.Core;
+using Pegasus.Dialogue;
+using YarnSpinnerGodot;
+
+namespace Pegasus.UI;
+
+/// <summary>
+/// Yarn dialogue presenter laid out like the dialogue mockup: portrait on the left,
+/// name plate with bond pips, text box along the bottom, numbered choices top right.
+/// Locked choices (#needs:...) stay visible with their requirement.
+/// </summary>
+public partial class DialogueBox : Control, DialoguePresenterBase
+{
+    private static readonly Color Navy = new("1c1f3b");
+    private static readonly Color Cream = new("fbf1e3");
+    private static readonly Color TagYellow = new("ffd24d");
+    private const float CharsPerSecond = 60f;
+    private const int MaxBond = 3;
+
+    public List<IActionMarkupHandler> ActionMarkupHandlers { get; } = new();
+
+    private TextureRect _portrait = null!;
+    private PanelContainer _plate = null!;
+    private Label _name = null!, _subtitle = null!, _text = null!, _hint = null!;
+    private VBoxContainer _options = null!;
+    private Tween? _reveal;
+    private TaskCompletionSource? _advance;
+    private TaskCompletionSource<DialogueOption?>? _choice;
+    private readonly List<(Button Button, DialogueOption Option)> _buttons = new();
+
+    public override void _Ready()
+    {
+        SetAnchorsPreset(LayoutPreset.FullRect);
+        MouseFilter = MouseFilterEnum.Ignore;
+        Visible = false;
+        Build();
+    }
+
+    // ---- DialoguePresenterBase ----
+
+    public YarnTask OnDialogueStartedAsync()
+    {
+        _text.Text = "";
+        Visible = true;
+        return YarnTask.CompletedTask;
+    }
+
+    public YarnTask OnDialogueCompleteAsync()
+    {
+        Visible = false;
+        return YarnTask.CompletedTask;
+    }
+
+    public async YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
+    {
+        ShowSpeaker(Conversation.Instance.FindCharacter(line.CharacterName), line.CharacterName);
+        _text.Text = line.TextWithoutCharacterName.Text;
+        _hint.Text = "Next";
+        _text.VisibleRatio = 0;
+        _reveal?.Kill();
+        _reveal = CreateTween();
+        _reveal.TweenProperty(_text, "visible_ratio", 1f, Math.Max(0.05f, _text.Text.Length / CharsPerSecond));
+
+        _advance = new TaskCompletionSource();
+        await using (token.NextLineToken.Register(() => _advance.TrySetResult()))
+            await _advance.Task;
+        _advance = null;
+        _reveal?.Kill();
+        _text.VisibleRatio = 1;
+    }
+
+    public async YarnTask<DialogueOption?> RunOptionsAsync(DialogueOption[] options, CancellationToken cancellationToken)
+    {
+        _hint.Text = "Choose";
+        _choice = new TaskCompletionSource<DialogueOption?>();
+        var number = 1;
+        foreach (var option in options.Where(o => o.IsAvailable))
+            _buttons.Add((AddOption(number++, option), option));
+        _buttons.FirstOrDefault(b => !b.Button.Disabled).Button?.GrabFocus();
+
+        DialogueOption? chosen;
+        await using (cancellationToken.Register(() => _choice.TrySetResult(null)))
+            chosen = await _choice.Task;
+        _choice = null;
+        foreach (var (button, _) in _buttons) button.QueueFree();
+        _buttons.Clear();
+        return chosen;
+    }
+
+    // ---- Input ----
+
+    public override void _UnhandledInput(InputEvent e)
+    {
+        if (!Visible) return;
+        if (_choice != null)
+        {
+            if (e.IsActionPressed("interact") && GetViewport().GuiGetFocusOwner() is Button { Disabled: false } focused)
+            {
+                Accept();
+                focused.EmitSignal(BaseButton.SignalName.Pressed);
+            }
+            else if (e is InputEventKey { Pressed: true, Echo: false } key && key.Keycode is >= Key.Key1 and <= Key.Key9)
+            {
+                var index = (int)(key.Keycode - Key.Key1);
+                if (index < _buttons.Count && !_buttons[index].Button.Disabled)
+                {
+                    Accept();
+                    _buttons[index].Button.EmitSignal(BaseButton.SignalName.Pressed);
+                }
+            }
+            return;
+        }
+        var advancePressed = e.IsActionPressed("interact") || e.IsActionPressed("ui_accept")
+            || e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left };
+        if (!advancePressed || _advance == null) return;
+        Accept();
+        if (_reveal != null && _reveal.IsRunning())
+        {
+            _reveal.Kill();
+            _text.VisibleRatio = 1;
+        }
+        else _advance.TrySetResult();
+    }
+
+    private void Accept() => GetViewport().SetInputAsHandled();
+
+    // ---- Layout ----
+
+    private void ShowSpeaker(CharacterProfile? profile, string? name)
+    {
+        _portrait.Texture = profile?.Portrait;
+        _portrait.Visible = profile?.Portrait != null;
+        _plate.Visible = name != null;
+        _name.Text = profile?.DisplayName ?? name ?? "";
+        var details = new List<string>();
+        if (!string.IsNullOrEmpty(profile?.Subtitle)) details.Add(profile.Subtitle);
+        if (profile is { HasBond: true })
+        {
+            var bond = Math.Clamp(Game.State.GetBond(profile.Id), 0, MaxBond);
+            details.Add("Bond " + new string('◆', bond) + new string('◇', MaxBond - bond));
+        }
+        _subtitle.Text = string.Join(" · ", details);
+        _plate.AddThemeStyleboxOverride("panel", Box(profile?.Color ?? Navy, 8, padH: 16, padV: 4));
+        // Text starts right of the portrait when there is one.
+        _text.OffsetLeft = _portrait.Visible ? 340 : 40;
+        _plate.OffsetLeft = _portrait.Visible ? 300 : 24;
+    }
+
+    private Button AddOption(int number, DialogueOption option)
+    {
+        var needs = YarnBindings.Needs(option.Line.Metadata);
+        var condition = needs == null ? null : Condition.Parse(needs);
+        var locked = condition != null && !condition.IsMet(Game.State);
+
+        var button = new Button
+        {
+            CustomMinimumSize = new Vector2(0, 50),
+            Disabled = locked,
+            FocusMode = locked ? FocusModeEnum.None : FocusModeEnum.All,
+            MouseFilter = MouseFilterEnum.Stop,
+        };
+        button.AddThemeStyleboxOverride("normal", Box(Navy, 10));
+        button.AddThemeStyleboxOverride("hover", Box(Navy.Lightened(0.12f), 10));
+        button.AddThemeStyleboxOverride("pressed", Box(Colors.White, 10, border: new Color("ff5a3c")));
+        button.AddThemeStyleboxOverride("focus", Box(Colors.White, 10, border: new Color("ff5a3c")));
+        button.AddThemeStyleboxOverride("disabled", Box(new Color(0.24f, 0.25f, 0.33f, 0.85f), 10));
+
+        var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
+        row.AddThemeConstantOverride("separation", 12);
+        row.SetAnchorsPreset(LayoutPreset.FullRect);
+        row.OffsetLeft = 14; row.OffsetRight = -16;
+        button.AddChild(row);
+
+        var badge = Tag(number.ToString(), new Color(1, 1, 1, 0.12f), Colors.White);
+        row.AddChild(badge);
+        var tagText = condition?.Describe() ?? "";
+        if (tagText != "")
+            row.AddChild(Tag(tagText.ToUpperInvariant(), locked ? new Color(1, 1, 1, 0.12f) : TagYellow, locked ? new Color(1, 1, 1, 0.7f) : Navy));
+        var text = new Label
+        {
+            Text = option.Line.TextWithoutCharacterName.Text,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            VerticalAlignment = VerticalAlignment.Center,
+            MouseFilter = MouseFilterEnum.Ignore,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
+        };
+        text.AddThemeFontSizeOverride("font_size", 20);
+        text.AddThemeColorOverride("font_color", locked ? new Color(1, 1, 1, 0.45f) : Colors.White);
+        row.AddChild(text);
+        if (locked && condition is StatAtLeast stat)
+        {
+            var progress = new Label { Text = $"{stat.Stat} {Game.State.GetStat(stat.Stat)} of {stat.Level}", VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore };
+            progress.AddThemeFontSizeOverride("font_size", 14);
+            progress.AddThemeColorOverride("font_color", new Color(1, 1, 1, 0.5f));
+            row.AddChild(progress);
+        }
+
+        // Dark text on the white focused style.
+        button.FocusEntered += () => { text.AddThemeColorOverride("font_color", Navy); badge.AddThemeStyleboxOverride("panel", Box(new Color("ff5a3c"), 6, padH: 8)); };
+        button.FocusExited += () => { text.AddThemeColorOverride("font_color", Colors.White); badge.AddThemeStyleboxOverride("panel", Box(new Color(1, 1, 1, 0.12f), 6, padH: 8)); };
+        button.MouseEntered += () => { if (!locked) button.GrabFocus(); };
+        button.Pressed += () => _choice?.TrySetResult(option);
+        _options.AddChild(button);
+        return button;
+    }
+
+    private void Build()
+    {
+        _options = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore, Alignment = BoxContainer.AlignmentMode.End };
+        _options.AddThemeConstantOverride("separation", 10);
+        _options.AnchorLeft = 0.45f; _options.AnchorRight = 1; _options.AnchorTop = 0; _options.AnchorBottom = 1;
+        _options.OffsetLeft = 20; _options.OffsetRight = -48; _options.OffsetTop = 40; _options.OffsetBottom = -240;
+        AddChild(_options);
+
+        var box = new Panel { MouseFilter = MouseFilterEnum.Ignore };
+        box.AddThemeStyleboxOverride("panel", Box(Cream, 14, border: Navy, borderWidth: 3));
+        box.AnchorLeft = 0; box.AnchorRight = 1; box.AnchorTop = 1; box.AnchorBottom = 1;
+        box.OffsetLeft = 60; box.OffsetRight = -60; box.OffsetTop = -205; box.OffsetBottom = -36;
+        AddChild(box);
+
+        _text = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = MouseFilterEnum.Ignore };
+        _text.AddThemeFontSizeOverride("font_size", 23);
+        _text.AddThemeColorOverride("font_color", Navy);
+        _text.AnchorRight = 1; _text.AnchorBottom = 1;
+        _text.OffsetLeft = 340; _text.OffsetTop = 44; _text.OffsetRight = -40; _text.OffsetBottom = -40;
+        box.AddChild(_text);
+
+        var hintRow = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
+        hintRow.AddThemeConstantOverride("separation", 8);
+        hintRow.AnchorLeft = 1; hintRow.AnchorRight = 1; hintRow.AnchorTop = 1; hintRow.AnchorBottom = 1;
+        hintRow.OffsetLeft = -140; hintRow.OffsetRight = -22; hintRow.OffsetTop = -44; hintRow.OffsetBottom = -14;
+        hintRow.Alignment = BoxContainer.AlignmentMode.End;
+        hintRow.AddChild(Tag("E", new Color("4a4d63"), Colors.White));
+        _hint = new Label { Text = "Next", VerticalAlignment = VerticalAlignment.Center };
+        _hint.AddThemeFontSizeOverride("font_size", 16);
+        _hint.AddThemeColorOverride("font_color", new Color("4a4d63"));
+        hintRow.AddChild(_hint);
+        box.AddChild(hintRow);
+
+        _plate = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore };
+        _plate.AnchorTop = 1; _plate.AnchorBottom = 1;
+        _plate.OffsetLeft = 300; _plate.OffsetTop = -232; _plate.OffsetBottom = -190;
+        var plateRow = new HBoxContainer();
+        plateRow.AddThemeConstantOverride("separation", 12);
+        _name = new Label { VerticalAlignment = VerticalAlignment.Center };
+        _name.AddThemeFontSizeOverride("font_size", 24);
+        _subtitle = new Label { VerticalAlignment = VerticalAlignment.Center };
+        _subtitle.AddThemeFontSizeOverride("font_size", 15);
+        plateRow.AddChild(_name);
+        plateRow.AddChild(_subtitle);
+        _plate.AddChild(plateRow);
+        AddChild(_plate);
+
+        _portrait = new TextureRect
+        {
+            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
+            MouseFilter = MouseFilterEnum.Ignore,
+        };
+        _portrait.AnchorTop = 1; _portrait.AnchorBottom = 1;
+        _portrait.OffsetLeft = 80; _portrait.OffsetRight = 330; _portrait.OffsetTop = -560; _portrait.OffsetBottom = 0;
+        AddChild(_portrait);
+    }
+
+    private static PanelContainer Tag(string text, Color bg, Color fg)
+    {
+        var panel = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        panel.AddThemeStyleboxOverride("panel", Box(bg, 6, padH: 8));
+        var label = new Label { Text = text };
+        label.AddThemeFontSizeOverride("font_size", 15);
+        label.AddThemeColorOverride("font_color", fg);
+        panel.AddChild(label);
+        return panel;
+    }
+
+    private static StyleBoxFlat Box(Color bg, int radius, Color? border = null, int borderWidth = 3, int padH = 0, int padV = 2)
+    {
+        var box = new StyleBoxFlat { BgColor = bg };
+        box.SetCornerRadiusAll(radius);
+        if (border is { } b) { box.BorderColor = b; box.SetBorderWidthAll(borderWidth); }
+        box.ContentMarginLeft = box.ContentMarginRight = padH;
+        box.ContentMarginTop = box.ContentMarginBottom = padV;
+        return box;
+    }
+}

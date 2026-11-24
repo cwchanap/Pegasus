@@ -13,6 +13,7 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 SceneRouter="*res://core/SceneRouter.cs"
 Toast="*res://ui/Toast.cs"
+Conversation="*res://ui/dialogue/conversation.tscn"
 DevDriver="*res://dev/DevDriver.cs"
 
 [display]
@@ -25,6 +26,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="Pegasus"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/YarnSpinner-Godot/plugin.cfg")
 
 [input]
 

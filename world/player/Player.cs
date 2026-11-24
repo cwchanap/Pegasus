@@ -1,4 +1,5 @@
 using Godot;
+using Pegasus.Core;
 
 namespace Pegasus.World;
 
@@ -14,9 +15,6 @@ public partial class Player : CharacterBody3D
     [Export] public float Acceleration { get; set; } = 30f;
     [Export] public Sprite3D? Sprite { get; set; }
 
-    /// <summary>False while a dialogue, menu or puzzle owns the input.</summary>
-    public bool Controllable { get; set; } = true;
-
     private readonly float _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
     public override void _EnterTree() => AddToGroup(Group);
@@ -24,7 +22,7 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         var dt = (float)delta;
-        var input = Controllable
+        var input = InputLock.IsFree
             ? Input.GetVector("move_left", "move_right", "move_forward", "move_back")
             : Vector2.Zero;
 

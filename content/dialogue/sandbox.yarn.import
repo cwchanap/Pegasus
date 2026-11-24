@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://yt5p0d7kxs7u"
+path="res://.godot/imported/sandbox.yarn-097ca73339dc2287aaef94e647e13ba9.tres"
+
+[deps]
+
+source_file="res://content/dialogue/sandbox.yarn"
+dest_files=["res://.godot/imported/sandbox.yarn-097ca73339dc2287aaef94e647e13ba9.tres"]
+
+[params]
+
