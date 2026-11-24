@@ -2,7 +2,8 @@ namespace Pegasus.Core;
 
 /// <summary>
 /// The day/night loop: go to bed, wake at 3 AM in the snow world, return to bed,
-/// wake next morning. Saves at bedtime and on waking.
+/// wake next morning. Saves at bedtime and on waking. Both saves happen at the start
+/// of a night or a day, so the state never needs to record a current location.
 /// </summary>
 public static class DayCycle
 {

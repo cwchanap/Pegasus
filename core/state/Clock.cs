@@ -5,12 +5,11 @@ namespace Pegasus.Core;
 /// <summary>
 /// The slot clock. Each day has two slots (afternoon, evening); every activity spends
 /// one. Bed is open once it is evening. Sleeping starts the night; waking starts the
-/// next day's afternoon.
+/// next day's afternoon. There is no deadline: the slice ends when the coffee shop
+/// is escaped, and the calendar keeps counting until then.
 /// </summary>
 public static class Clock
 {
-    public const int LastDay = 5;
-
     public static bool CanSpendSlot(GameState s) => s.Slot is TimeSlot.Afternoon or TimeSlot.Evening;
 
     public static bool CanSleep(GameState s) => s.Slot is TimeSlot.Evening or TimeSlot.Late;
@@ -32,9 +31,6 @@ public static class Clock
         if (s.Slot != TimeSlot.Night) throw new InvalidOperationException($"Not night ({s.Slot})");
         s.Mutate(() => { s.Day++; s.Slot = TimeSlot.Afternoon; });
     }
-
-    /// <summary>True once the last night is over.</summary>
-    public static bool IsSliceOver(GameState s) => s.Day > LastDay;
 
     public static string Describe(GameState s) => s.Slot switch
     {
