@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Underpass · Bells"
+Text = "Out of the underpass, the street went quiet. Then bells from somewhere ahead, small ones, the kind that hang on a shop door."
+Order = 21
+ByDay = false

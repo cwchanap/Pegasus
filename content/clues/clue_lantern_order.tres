@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Aoi · The festival"
+Text = "\"They light the lanterns from the gate inward, one each night of the festival. The order never changes.\""
+Order = 11
+ByDay = true

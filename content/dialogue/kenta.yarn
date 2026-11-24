@@ -5,6 +5,7 @@ Kenta: I'm collecting Osaka urban legends. Want to hear about the underpass by t
 -> Sure.
     Kenta: People say if you walk through it at night, you hear bells. In summer. From the far side.
     Kenta: Nobody has walked all the way through. Too dark, they say.
+    <<flag clue_kenta_bells>>
 -> I don't believe in that stuff.
     Kenta: That's what everyone says before the bells.
 Kenta: Come on, the claw machine owes me a rematch.

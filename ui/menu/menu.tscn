@@ -1,5 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
+[ext_resource type="PackedScene" path="res://ui/notebook/notebook.tscn" id="notebook"]
 [ext_resource type="Script" path="res://ui/menu/Menu.cs" id="1_menu"]
 [ext_resource type="PackedScene" path="res://ui/hud/stats_panel.tscn" id="2_stats"]
 
@@ -174,20 +175,9 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 theme_type_variation = &"MenuPanel"
 
-[node name="Col" type="VBoxContainer" parent="Margin/Col/Columns/Notebook"]
+[node name="Notes" parent="Margin/Col/Columns/Notebook" instance=ExtResource("notebook")]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Caption" type="Label" parent="Margin/Col/Columns/Notebook/Col"]
-layout_mode = 2
-theme_type_variation = &"MenuCaption"
-text = "NOTEBOOK"
-
-[node name="Empty" type="Label" parent="Margin/Col/Columns/Notebook/Col"]
-layout_mode = 2
-theme_type_variation = &"MenuMuted"
-text = "Clues you find at night are written here."
-autowrap_mode = 3
 
 [node name="Footer" type="HBoxContainer" parent="Margin/Col"]
 layout_mode = 2

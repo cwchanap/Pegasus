@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Shrine · Stone tablet"
+Text = "Five signs carved down a slab in the hall, top to bottom.\nGATE, two posts and a beam.\nCOLD, three strokes, each shorter than the last.\nSLEEP, a closed eye.\nFIRE, three flames, the middle one tallest.\nWAKE, an open eye in a frame.\nRead together, \"Through the gate, into the cold, one sleeps. Only a fire wakes the sleeper.\""
+Order = 12
+ByDay = false

@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[node name="ClueEntry" type="PanelContainer"]
+theme_type_variation = &"ClueCard"
+
+[node name="Col" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="When" type="Label" parent="Col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ClueWhen"
+text = "SHRINE · LANTERNS"
+
+[node name="Text" type="Label" parent="Col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_type_variation = &"ClueText"
+text = "Five stone lanterns from the gate to the hall."
+autowrap_mode = 3

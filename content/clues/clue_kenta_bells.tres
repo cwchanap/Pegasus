@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Kenta · The underpass"
+Text = "\"People say if you walk through it at night, you hear bells. In summer. From the far side.\""
+Order = 20
+ByDay = true

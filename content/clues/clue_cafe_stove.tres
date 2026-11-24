@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/notebook/ClueData.cs" id="1_clue"]
+
+[resource]
+script = ExtResource("1_clue")
+Title = "Kissa Mori · Photo"
+Text = "A photo of an old man by the stove, laughing, a match in his hand. Written under it, \"Mori's stove only listens to the old rule.\""
+Order = 31
+ByDay = false

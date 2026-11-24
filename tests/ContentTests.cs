@@ -154,6 +154,17 @@ public class ContentTests
     }
 
     [Fact]
+    public void Every_clue_has_a_notebook_entry_and_every_entry_a_clue()
+    {
+        var set = Find(@"<<flag\s+(clue_\w+)\s*>>", ".yarn").Concat(Find(@"SetFlag\(""(clue_\w+)""", ".cs"))
+            .Select(m => m.Value).ToHashSet();
+        var entries = Ids("content/clues");
+        Assert.NotEmpty(set);
+        Assert.Empty(set.Except(entries).Select(f => $"no content/clues/{f}.tres"));
+        Assert.Empty(entries.Except(set).Select(f => $"content/clues/{f}.tres: nothing sets {f}"));
+    }
+
+    [Fact]
     public void Speakers_are_known_characters()
     {
         // Yarn reads any "Text:" at the start of a line as a speaker, so a stray colon in
