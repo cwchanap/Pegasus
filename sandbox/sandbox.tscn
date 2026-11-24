@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
 [ext_resource type="PackedScene" path="res://world/npc/npc.tscn" id="6_npc"]
 [ext_resource type="Resource" path="res://content/characters/aoi.tres" id="7_aoi"]
+[ext_resource type="Script" path="res://world/bounds/Bounds.cs" id="bounds_script"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.32, 0.5, 0.78, 1)
@@ -174,6 +175,11 @@ shape = SubResource("spot")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1.5)
 Profile = ExtResource("7_aoi")
 YarnNode = "SandboxTalk"
+
+[node name="Bounds" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("bounds_script")
+Size = Vector2(20, 20)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
