@@ -1,0 +1,1575 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://puzzles/cafe/CafePuzzle.cs" id="1_puzzle"]
+[ext_resource type="Script" path="res://puzzles/Hotspot.cs" id="2_spot"]
+
+[node name="Cafe" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_puzzle")
+Title = "Kissa Mori"
+SolvedFlag = "cafe_fire_lit"
+
+[node name="Counter" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Wall" type="ColorRect" parent="Counter"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.22, 0.15, 0.12, 1)
+
+[node name="Wainscot" type="ColorRect" parent="Counter"]
+offset_left = 0.0
+offset_top = 330.0
+offset_right = 1086.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.17, 0.11, 0.09, 1)
+
+[node name="Floor" type="ColorRect" parent="Counter"]
+offset_left = 0.0
+offset_top = 440.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.14, 0.1, 0.08, 1)
+
+[node name="ShelfA" type="ColorRect" parent="Counter"]
+offset_left = 120.0
+offset_top = 120.0
+offset_right = 960.0
+offset_bottom = 128.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="ShelfB" type="ColorRect" parent="Counter"]
+offset_left = 120.0
+offset_top = 200.0
+offset_right = 960.0
+offset_bottom = 208.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="Jar0" type="ColorRect" parent="Counter"]
+offset_left = 150.0
+offset_top = 88.0
+offset_right = 184.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.4, 0.45, 0.42, 1)
+
+[node name="Cup0" type="ColorRect" parent="Counter"]
+offset_left = 156.0
+offset_top = 176.0
+offset_right = 180.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar1" type="ColorRect" parent="Counter"]
+offset_left = 220.0
+offset_top = 88.0
+offset_right = 254.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.55, 0.42, 0.3, 1)
+
+[node name="Cup1" type="ColorRect" parent="Counter"]
+offset_left = 226.0
+offset_top = 176.0
+offset_right = 250.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar2" type="ColorRect" parent="Counter"]
+offset_left = 290.0
+offset_top = 88.0
+offset_right = 324.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.4, 0.45, 0.42, 1)
+
+[node name="Cup2" type="ColorRect" parent="Counter"]
+offset_left = 296.0
+offset_top = 176.0
+offset_right = 320.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar3" type="ColorRect" parent="Counter"]
+offset_left = 360.0
+offset_top = 88.0
+offset_right = 394.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.55, 0.42, 0.3, 1)
+
+[node name="Cup3" type="ColorRect" parent="Counter"]
+offset_left = 366.0
+offset_top = 176.0
+offset_right = 390.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar8" type="ColorRect" parent="Counter"]
+offset_left = 710.0
+offset_top = 88.0
+offset_right = 744.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.4, 0.45, 0.42, 1)
+
+[node name="Cup8" type="ColorRect" parent="Counter"]
+offset_left = 716.0
+offset_top = 176.0
+offset_right = 740.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar9" type="ColorRect" parent="Counter"]
+offset_left = 780.0
+offset_top = 88.0
+offset_right = 814.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.55, 0.42, 0.3, 1)
+
+[node name="Cup9" type="ColorRect" parent="Counter"]
+offset_left = 786.0
+offset_top = 176.0
+offset_right = 810.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar10" type="ColorRect" parent="Counter"]
+offset_left = 850.0
+offset_top = 88.0
+offset_right = 884.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.4, 0.45, 0.42, 1)
+
+[node name="Cup10" type="ColorRect" parent="Counter"]
+offset_left = 856.0
+offset_top = 176.0
+offset_right = 880.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Jar11" type="ColorRect" parent="Counter"]
+offset_left = 920.0
+offset_top = 88.0
+offset_right = 954.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.55, 0.42, 0.3, 1)
+
+[node name="Cup11" type="ColorRect" parent="Counter"]
+offset_left = 926.0
+offset_top = 176.0
+offset_right = 950.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="MenuBoard" type="Button" parent="Counter"]
+offset_left = 440.0
+offset_top = 28.0
+offset_right = 646.0
+offset_bottom = 112.0
+script = ExtResource("2_spot")
+Label = "Menu board"
+YarnNode = "Cafe_MenuBoard"
+
+[node name="Slate" type="ColorRect" parent="Counter/MenuBoard"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 202.0
+offset_bottom = 80.0
+mouse_filter = 2
+color = Color(0.12, 0.14, 0.13, 1)
+
+[node name="Chalk0" type="ColorRect" parent="Counter/MenuBoard"]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 150.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.85, 0.87, 0.85, 1)
+
+[node name="Chalk1" type="ColorRect" parent="Counter/MenuBoard"]
+offset_left = 20.0
+offset_top = 38.0
+offset_right = 110.0
+offset_bottom = 44.0
+mouse_filter = 2
+color = Color(0.85, 0.87, 0.85, 1)
+
+[node name="Chalk2" type="ColorRect" parent="Counter/MenuBoard"]
+offset_left = 20.0
+offset_top = 58.0
+offset_right = 170.0
+offset_bottom = 64.0
+mouse_filter = 2
+color = Color(0.85, 0.87, 0.85, 1)
+
+[node name="CounterFront" type="ColorRect" parent="Counter"]
+offset_left = 60.0
+offset_top = 300.0
+offset_right = 900.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="CounterTop" type="ColorRect" parent="Counter"]
+offset_left = 50.0
+offset_top = 290.0
+offset_right = 910.0
+offset_bottom = 306.0
+mouse_filter = 2
+color = Color(0.46, 0.3, 0.2, 1)
+
+[node name="Siphon" type="Button" parent="Counter"]
+offset_left = 200.0
+offset_top = 180.0
+offset_right = 290.0
+offset_bottom = 290.0
+script = ExtResource("2_spot")
+Label = "Coffee siphon"
+YarnNode = "Cafe_Siphon"
+
+[node name="Upper" type="ColorRect" parent="Counter/Siphon"]
+offset_left = 28.0
+offset_top = 6.0
+offset_right = 62.0
+offset_bottom = 50.0
+mouse_filter = 2
+color = Color(0.7, 0.78, 0.88, 0.7)
+
+[node name="Neck" type="ColorRect" parent="Counter/Siphon"]
+offset_left = 40.0
+offset_top = 50.0
+offset_right = 50.0
+offset_bottom = 60.0
+mouse_filter = 2
+color = Color(0.7, 0.78, 0.88, 0.7)
+
+[node name="Lower" type="ColorRect" parent="Counter/Siphon"]
+offset_left = 22.0
+offset_top = 60.0
+offset_right = 68.0
+offset_bottom = 100.0
+mouse_filter = 2
+color = Color(0.42, 0.27, 0.18, 1)
+
+[node name="Stand" type="ColorRect" parent="Counter/Siphon"]
+offset_left = 14.0
+offset_top = 100.0
+offset_right = 76.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="Till" type="Button" parent="Counter"]
+offset_left = 620.0
+offset_top = 214.0
+offset_right = 760.0
+offset_bottom = 290.0
+script = ExtResource("2_spot")
+Label = "Till"
+YarnNode = "Cafe_Register"
+
+[node name="Body" type="ColorRect" parent="Counter/Till"]
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 132.0
+offset_bottom = 72.0
+mouse_filter = 2
+color = Color(0.3, 0.3, 0.32, 1)
+
+[node name="Keys" type="ColorRect" parent="Counter/Till"]
+offset_left = 20.0
+offset_top = 26.0
+offset_right = 90.0
+offset_bottom = 50.0
+mouse_filter = 2
+color = Color(0.55, 0.55, 0.58, 1)
+
+[node name="Drawer" type="ColorRect" parent="Counter/Till"]
+offset_left = 0.0
+offset_top = 64.0
+offset_right = 140.0
+offset_bottom = 76.0
+mouse_filter = 2
+color = Color(0.22, 0.22, 0.24, 1)
+
+[node name="CharcoalSack" type="Button" parent="Counter"]
+offset_left = 930.0
+offset_top = 330.0
+offset_right = 1056.0
+offset_bottom = 462.0
+script = ExtResource("2_spot")
+Label = "Charcoal sack"
+YarnNode = "Cafe_Charcoal"
+
+[node name="Sack" type="ColorRect" parent="Counter/CharcoalSack"]
+offset_left = 10.0
+offset_top = 24.0
+offset_right = 116.0
+offset_bottom = 128.0
+mouse_filter = 2
+color = Color(0.4, 0.33, 0.24, 1)
+
+[node name="Top" type="ColorRect" parent="Counter/CharcoalSack"]
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 108.0
+offset_bottom = 30.0
+mouse_filter = 2
+color = Color(0.08, 0.08, 0.09, 1)
+
+[node name="Stove" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Wall" type="ColorRect" parent="Stove"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.22, 0.15, 0.12, 1)
+
+[node name="Wainscot" type="ColorRect" parent="Stove"]
+offset_left = 0.0
+offset_top = 330.0
+offset_right = 1086.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.17, 0.11, 0.09, 1)
+
+[node name="Floor" type="ColorRect" parent="Stove"]
+offset_left = 0.0
+offset_top = 440.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.14, 0.1, 0.08, 1)
+
+[node name="Hearth" type="ColorRect" parent="Stove"]
+offset_left = 380.0
+offset_top = 60.0
+offset_right = 720.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.35, 0.18, 0.14, 1)
+
+[node name="Pipe" type="ColorRect" parent="Stove"]
+offset_left = 530.0
+offset_top = 0.0
+offset_right = 570.0
+offset_bottom = 170.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="Body" type="ColorRect" parent="Stove"]
+offset_left = 420.0
+offset_top = 170.0
+offset_right = 680.0
+offset_bottom = 430.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="TopPlate" type="ColorRect" parent="Stove"]
+offset_left = 405.0
+offset_top = 160.0
+offset_right = 695.0
+offset_bottom = 178.0
+mouse_filter = 2
+color = Color(0.18, 0.18, 0.2, 1)
+
+[node name="LegL" type="ColorRect" parent="Stove"]
+offset_left = 430.0
+offset_top = 430.0
+offset_right = 452.0
+offset_bottom = 452.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="LegR" type="ColorRect" parent="Stove"]
+offset_left = 648.0
+offset_top = 430.0
+offset_right = 670.0
+offset_bottom = 452.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="LockPlate" type="ColorRect" parent="Stove"]
+offset_left = 452.0
+offset_top = 186.0
+offset_right = 652.0
+offset_bottom = 262.0
+mouse_filter = 2
+color = Color(0.7, 0.55, 0.25, 1)
+
+[node name="Dial1" type="Button" parent="Stove"]
+offset_left = 460.0
+offset_top = 194.0
+offset_right = 516.0
+offset_bottom = 250.0
+script = ExtResource("2_spot")
+Label = "Dial"
+
+[node name="Face" type="ColorRect" parent="Stove/Dial1"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 54.0
+offset_bottom = 54.0
+mouse_filter = 2
+color = Color(0.82, 0.68, 0.36, 1)
+
+[node name="Gate" type="Control" parent="Stove/Dial1"]
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial1/Gate"]
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 52.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial1/Gate"]
+offset_left = 9.0
+offset_top = 19.0
+offset_right = 46.0
+offset_bottom = 23.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial1/Gate"]
+offset_left = 11.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial1/Gate"]
+offset_left = 39.0
+offset_top = 16.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Cold" type="Control" parent="Stove/Dial1"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial1/Cold"]
+offset_left = 6.0
+offset_top = 13.0
+offset_right = 49.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial1/Cold"]
+offset_left = 11.0
+offset_top = 24.0
+offset_right = 44.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial1/Cold"]
+offset_left = 16.0
+offset_top = 35.0
+offset_right = 40.0
+offset_bottom = 39.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Sleep" type="Control" parent="Stove/Dial1"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial1/Sleep"]
+offset_left = 4.0
+offset_top = 21.0
+offset_right = 51.0
+offset_bottom = 26.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial1/Sleep"]
+offset_left = 11.0
+offset_top = 26.0
+offset_right = 14.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial1/Sleep"]
+offset_left = 26.0
+offset_top = 26.0
+offset_right = 29.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial1/Sleep"]
+offset_left = 41.0
+offset_top = 26.0
+offset_right = 44.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Fire" type="Control" parent="Stove/Dial1"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial1/Fire"]
+offset_left = 11.0
+offset_top = 30.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial1/Fire"]
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 31.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial1/Fire"]
+offset_left = 39.0
+offset_top = 22.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Wake" type="Control" parent="Stove/Dial1"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial1/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial1/Wake"]
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial1/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial1/Wake"]
+offset_left = 43.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S4" type="ColorRect" parent="Stove/Dial1/Wake"]
+offset_left = 24.0
+offset_top = 23.0
+offset_right = 32.0
+offset_bottom = 31.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Dial2" type="Button" parent="Stove"]
+offset_left = 524.0
+offset_top = 194.0
+offset_right = 580.0
+offset_bottom = 250.0
+script = ExtResource("2_spot")
+Label = "Dial"
+
+[node name="Face" type="ColorRect" parent="Stove/Dial2"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 54.0
+offset_bottom = 54.0
+mouse_filter = 2
+color = Color(0.82, 0.68, 0.36, 1)
+
+[node name="Gate" type="Control" parent="Stove/Dial2"]
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial2/Gate"]
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 52.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial2/Gate"]
+offset_left = 9.0
+offset_top = 19.0
+offset_right = 46.0
+offset_bottom = 23.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial2/Gate"]
+offset_left = 11.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial2/Gate"]
+offset_left = 39.0
+offset_top = 16.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Cold" type="Control" parent="Stove/Dial2"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial2/Cold"]
+offset_left = 6.0
+offset_top = 13.0
+offset_right = 49.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial2/Cold"]
+offset_left = 11.0
+offset_top = 24.0
+offset_right = 44.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial2/Cold"]
+offset_left = 16.0
+offset_top = 35.0
+offset_right = 40.0
+offset_bottom = 39.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Sleep" type="Control" parent="Stove/Dial2"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial2/Sleep"]
+offset_left = 4.0
+offset_top = 21.0
+offset_right = 51.0
+offset_bottom = 26.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial2/Sleep"]
+offset_left = 11.0
+offset_top = 26.0
+offset_right = 14.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial2/Sleep"]
+offset_left = 26.0
+offset_top = 26.0
+offset_right = 29.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial2/Sleep"]
+offset_left = 41.0
+offset_top = 26.0
+offset_right = 44.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Fire" type="Control" parent="Stove/Dial2"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial2/Fire"]
+offset_left = 11.0
+offset_top = 30.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial2/Fire"]
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 31.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial2/Fire"]
+offset_left = 39.0
+offset_top = 22.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Wake" type="Control" parent="Stove/Dial2"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial2/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial2/Wake"]
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial2/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial2/Wake"]
+offset_left = 43.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S4" type="ColorRect" parent="Stove/Dial2/Wake"]
+offset_left = 24.0
+offset_top = 23.0
+offset_right = 32.0
+offset_bottom = 31.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Dial3" type="Button" parent="Stove"]
+offset_left = 588.0
+offset_top = 194.0
+offset_right = 644.0
+offset_bottom = 250.0
+script = ExtResource("2_spot")
+Label = "Dial"
+
+[node name="Face" type="ColorRect" parent="Stove/Dial3"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 54.0
+offset_bottom = 54.0
+mouse_filter = 2
+color = Color(0.82, 0.68, 0.36, 1)
+
+[node name="Gate" type="Control" parent="Stove/Dial3"]
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial3/Gate"]
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 52.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial3/Gate"]
+offset_left = 9.0
+offset_top = 19.0
+offset_right = 46.0
+offset_bottom = 23.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial3/Gate"]
+offset_left = 11.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial3/Gate"]
+offset_left = 39.0
+offset_top = 16.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Cold" type="Control" parent="Stove/Dial3"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial3/Cold"]
+offset_left = 6.0
+offset_top = 13.0
+offset_right = 49.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial3/Cold"]
+offset_left = 11.0
+offset_top = 24.0
+offset_right = 44.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial3/Cold"]
+offset_left = 16.0
+offset_top = 35.0
+offset_right = 40.0
+offset_bottom = 39.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Sleep" type="Control" parent="Stove/Dial3"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial3/Sleep"]
+offset_left = 4.0
+offset_top = 21.0
+offset_right = 51.0
+offset_bottom = 26.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial3/Sleep"]
+offset_left = 11.0
+offset_top = 26.0
+offset_right = 14.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial3/Sleep"]
+offset_left = 26.0
+offset_top = 26.0
+offset_right = 29.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial3/Sleep"]
+offset_left = 41.0
+offset_top = 26.0
+offset_right = 44.0
+offset_bottom = 35.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Fire" type="Control" parent="Stove/Dial3"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial3/Fire"]
+offset_left = 11.0
+offset_top = 30.0
+offset_right = 16.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial3/Fire"]
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 31.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial3/Fire"]
+offset_left = 39.0
+offset_top = 22.0
+offset_right = 44.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Wake" type="Control" parent="Stove/Dial3"]
+visible = false
+mouse_filter = 2
+
+[node name="S0" type="ColorRect" parent="Stove/Dial3/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S1" type="ColorRect" parent="Stove/Dial3/Wake"]
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S2" type="ColorRect" parent="Stove/Dial3/Wake"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S3" type="ColorRect" parent="Stove/Dial3/Wake"]
+offset_left = 43.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="S4" type="ColorRect" parent="Stove/Dial3/Wake"]
+offset_left = 24.0
+offset_top = 23.0
+offset_right = 32.0
+offset_bottom = 31.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Plate" type="Button" parent="Stove"]
+offset_left = 452.0
+offset_top = 266.0
+offset_right = 652.0
+offset_bottom = 290.0
+script = ExtResource("2_spot")
+Label = "Brass plate"
+YarnNode = "Cafe_Plate"
+
+[node name="Strip" type="ColorRect" parent="Stove/Plate"]
+offset_left = 0.0
+offset_top = 4.0
+offset_right = 200.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.7, 0.55, 0.25, 1)
+
+[node name="Line0" type="ColorRect" parent="Stove/Plate"]
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Line1" type="ColorRect" parent="Stove/Plate"]
+offset_left = 50.0
+offset_top = 10.0
+offset_right = 76.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Line2" type="ColorRect" parent="Stove/Plate"]
+offset_left = 86.0
+offset_top = 10.0
+offset_right = 112.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Line3" type="ColorRect" parent="Stove/Plate"]
+offset_left = 122.0
+offset_top = 10.0
+offset_right = 148.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Line4" type="ColorRect" parent="Stove/Plate"]
+offset_left = 158.0
+offset_top = 10.0
+offset_right = 184.0
+offset_bottom = 14.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="Firebox" type="Button" parent="Stove"]
+offset_left = 470.0
+offset_top = 298.0
+offset_right = 630.0
+offset_bottom = 412.0
+script = ExtResource("2_spot")
+Label = "Firebox"
+
+[node name="Shut" type="Control" parent="Stove/Firebox"]
+mouse_filter = 2
+
+[node name="Door" type="ColorRect" parent="Stove/Firebox/Shut"]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 154.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(0.2, 0.2, 0.22, 1)
+
+[node name="Handle" type="ColorRect" parent="Stove/Firebox/Shut"]
+offset_left = 120.0
+offset_top = 48.0
+offset_right = 140.0
+offset_bottom = 60.0
+mouse_filter = 2
+color = Color(0.7, 0.55, 0.25, 1)
+
+[node name="Open" type="Control" parent="Stove/Firebox"]
+visible = false
+mouse_filter = 2
+
+[node name="Inside" type="ColorRect" parent="Stove/Firebox/Open"]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 154.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(0.04, 0.03, 0.03, 1)
+
+[node name="Ash" type="ColorRect" parent="Stove/Firebox/Open"]
+offset_left = 14.0
+offset_top = 88.0
+offset_right = 146.0
+offset_bottom = 104.0
+mouse_filter = 2
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Kindling" type="Control" parent="Stove/Firebox"]
+visible = false
+mouse_filter = 2
+
+[node name="Paper" type="ColorRect" parent="Stove/Firebox/Kindling"]
+offset_left = 30.0
+offset_top = 62.0
+offset_right = 130.0
+offset_bottom = 92.0
+mouse_filter = 2
+color = Color(0.86, 0.84, 0.76, 1)
+
+[node name="Coal" type="ColorRect" parent="Stove/Firebox/Kindling"]
+offset_left = 44.0
+offset_top = 52.0
+offset_right = 116.0
+offset_bottom = 70.0
+mouse_filter = 2
+color = Color(0.1, 0.1, 0.11, 1)
+
+[node name="Flames" type="Control" parent="Stove/Firebox"]
+visible = false
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="Stove/Firebox/Flames"]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 154.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(1, 0.55, 0.2, 0.85)
+
+[node name="Core" type="ColorRect" parent="Stove/Firebox/Flames"]
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 120.0
+offset_bottom = 104.0
+mouse_filter = 2
+color = Color(1, 0.85, 0.45, 1)
+
+[node name="Armchair" type="Button" parent="Stove"]
+offset_left = 780.0
+offset_top = 250.0
+offset_right = 960.0
+offset_bottom = 452.0
+script = ExtResource("2_spot")
+Label = "Armchair"
+YarnNode = "Cafe_Armchair"
+
+[node name="Back" type="ColorRect" parent="Stove/Armchair"]
+offset_left = 20.0
+offset_top = 0.0
+offset_right = 160.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.45, 0.14, 0.14, 1)
+
+[node name="Seat" type="ColorRect" parent="Stove/Armchair"]
+offset_left = 10.0
+offset_top = 110.0
+offset_right = 170.0
+offset_bottom = 160.0
+mouse_filter = 2
+color = Color(0.5, 0.18, 0.16, 1)
+
+[node name="ArmL" type="ColorRect" parent="Stove/Armchair"]
+offset_left = 0.0
+offset_top = 80.0
+offset_right = 26.0
+offset_bottom = 170.0
+mouse_filter = 2
+color = Color(0.38, 0.12, 0.12, 1)
+
+[node name="ArmR" type="ColorRect" parent="Stove/Armchair"]
+offset_left = 154.0
+offset_top = 80.0
+offset_right = 180.0
+offset_bottom = 170.0
+mouse_filter = 2
+color = Color(0.38, 0.12, 0.12, 1)
+
+[node name="Legs" type="ColorRect" parent="Stove/Armchair"]
+offset_left = 14.0
+offset_top = 170.0
+offset_right = 166.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="Door" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Wall" type="ColorRect" parent="Door"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.22, 0.15, 0.12, 1)
+
+[node name="Wainscot" type="ColorRect" parent="Door"]
+offset_left = 0.0
+offset_top = 330.0
+offset_right = 1086.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.17, 0.11, 0.09, 1)
+
+[node name="Floor" type="ColorRect" parent="Door"]
+offset_left = 0.0
+offset_top = 440.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.14, 0.1, 0.08, 1)
+
+[node name="Window" type="Button" parent="Door"]
+offset_left = 110.0
+offset_top = 110.0
+offset_right = 350.0
+offset_bottom = 300.0
+script = ExtResource("2_spot")
+Label = "Window"
+YarnNode = "Cafe_Window"
+
+[node name="Pane" type="ColorRect" parent="Door/Window"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 240.0
+offset_bottom = 190.0
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.18, 1)
+
+[node name="Sill" type="ColorRect" parent="Door/Window"]
+offset_left = 0.0
+offset_top = 150.0
+offset_right = 240.0
+offset_bottom = 190.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 0.9)
+
+[node name="Flake0" type="ColorRect" parent="Door/Window"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 36.0
+offset_bottom = 36.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Flake1" type="ColorRect" parent="Door/Window"]
+offset_left = 90.0
+offset_top = 70.0
+offset_right = 96.0
+offset_bottom = 76.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Flake2" type="ColorRect" parent="Door/Window"]
+offset_left = 160.0
+offset_top = 40.0
+offset_right = 166.0
+offset_bottom = 46.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Flake3" type="ColorRect" parent="Door/Window"]
+offset_left = 200.0
+offset_top = 100.0
+offset_right = 206.0
+offset_bottom = 106.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Flake4" type="ColorRect" parent="Door/Window"]
+offset_left = 60.0
+offset_top = 110.0
+offset_right = 66.0
+offset_bottom = 116.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Flake5" type="ColorRect" parent="Door/Window"]
+offset_left = 130.0
+offset_top = 120.0
+offset_right = 136.0
+offset_bottom = 126.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="WindowR" type="ColorRect" parent="Door"]
+offset_left = 736.0
+offset_top = 110.0
+offset_right = 976.0
+offset_bottom = 300.0
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.18, 1)
+
+[node name="SillR" type="ColorRect" parent="Door"]
+offset_left = 736.0
+offset_top = 260.0
+offset_right = 976.0
+offset_bottom = 300.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 0.9)
+
+[node name="Bell" type="Button" parent="Door"]
+offset_left = 512.0
+offset_top = 24.0
+offset_right = 568.0
+offset_bottom = 72.0
+script = ExtResource("2_spot")
+Label = "Bell"
+YarnNode = "Cafe_Bell"
+
+[node name="Bell" type="ColorRect" parent="Door/Bell"]
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 42.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.7, 0.55, 0.25, 1)
+
+[node name="Clapper" type="ColorRect" parent="Door/Bell"]
+offset_left = 24.0
+offset_top = 40.0
+offset_right = 32.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0.2, 0.15, 0.08, 1)
+
+[node name="FrontDoor" type="Button" parent="Door"]
+offset_left = 430.0
+offset_top = 76.0
+offset_right = 650.0
+offset_bottom = 450.0
+script = ExtResource("2_spot")
+Label = "Front door"
+YarnNode = "Cafe_Door"
+
+[node name="Frame" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 220.0
+offset_bottom = 374.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="Glass" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 30.0
+offset_top = 24.0
+offset_right = 190.0
+offset_bottom = 184.0
+mouse_filter = 2
+color = Color(0.7, 0.78, 0.88, 1)
+
+[node name="Panel" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 30.0
+offset_top = 206.0
+offset_right = 190.0
+offset_bottom = 350.0
+mouse_filter = 2
+color = Color(0.3, 0.18, 0.12, 1)
+
+[node name="Handle" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 168.0
+offset_top = 214.0
+offset_right = 180.0
+offset_bottom = 254.0
+mouse_filter = 2
+color = Color(0.7, 0.55, 0.25, 1)
+
+[node name="IceL" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 10.0
+offset_bottom = 374.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 0.85)
+
+[node name="IceR" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 210.0
+offset_top = 0.0
+offset_right = 220.0
+offset_bottom = 374.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 0.85)
+
+[node name="IceT" type="ColorRect" parent="Door/FrontDoor"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 220.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 0.85)
+
+[node name="Drift" type="ColorRect" parent="Door"]
+offset_left = 380.0
+offset_top = 436.0
+offset_right = 700.0
+offset_bottom = 470.0
+mouse_filter = 2
+color = Color(0.85, 0.9, 0.98, 1)
+
+[node name="Booth" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Wall" type="ColorRect" parent="Booth"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.22, 0.15, 0.12, 1)
+
+[node name="Wainscot" type="ColorRect" parent="Booth"]
+offset_left = 0.0
+offset_top = 330.0
+offset_right = 1086.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.17, 0.11, 0.09, 1)
+
+[node name="Floor" type="ColorRect" parent="Booth"]
+offset_left = 0.0
+offset_top = 440.0
+offset_right = 1086.0
+offset_bottom = 522.0
+mouse_filter = 2
+color = Color(0.14, 0.1, 0.08, 1)
+
+[node name="Window" type="ColorRect" parent="Booth"]
+offset_left = 360.0
+offset_top = 60.0
+offset_right = 720.0
+offset_bottom = 230.0
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.18, 1)
+
+[node name="Sill" type="ColorRect" parent="Booth"]
+offset_left = 350.0
+offset_top = 226.0
+offset_right = 730.0
+offset_bottom = 238.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="SeatL" type="ColorRect" parent="Booth"]
+offset_left = 150.0
+offset_top = 220.0
+offset_right = 330.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.45, 0.14, 0.14, 1)
+
+[node name="SeatR" type="ColorRect" parent="Booth"]
+offset_left = 750.0
+offset_top = 220.0
+offset_right = 930.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.45, 0.14, 0.14, 1)
+
+[node name="TableTop" type="ColorRect" parent="Booth"]
+offset_left = 360.0
+offset_top = 300.0
+offset_right = 720.0
+offset_bottom = 318.0
+mouse_filter = 2
+color = Color(0.46, 0.3, 0.2, 1)
+
+[node name="TableLeg" type="ColorRect" parent="Booth"]
+offset_left = 530.0
+offset_top = 318.0
+offset_right = 550.0
+offset_bottom = 440.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="Newspaper" type="Button" parent="Booth"]
+offset_left = 440.0
+offset_top = 262.0
+offset_right = 600.0
+offset_bottom = 302.0
+script = ExtResource("2_spot")
+Label = "Newspaper"
+YarnNode = "Cafe_Newspaper"
+
+[node name="Paper" type="ColorRect" parent="Booth/Newspaper"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 152.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.86, 0.84, 0.76, 1)
+
+[node name="Line0" type="ColorRect" parent="Booth/Newspaper"]
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 100.0
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0.4, 0.4, 0.42, 1)
+
+[node name="Line1" type="ColorRect" parent="Booth/Newspaper"]
+offset_left = 20.0
+offset_top = 23.0
+offset_right = 112.0
+offset_bottom = 26.0
+mouse_filter = 2
+color = Color(0.4, 0.4, 0.42, 1)
+
+[node name="Line2" type="ColorRect" parent="Booth/Newspaper"]
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 124.0
+offset_bottom = 33.0
+mouse_filter = 2
+color = Color(0.4, 0.4, 0.42, 1)
+
+[node name="Photo" type="Button" parent="Booth"]
+offset_left = 780.0
+offset_top = 64.0
+offset_right = 900.0
+offset_bottom = 170.0
+script = ExtResource("2_spot")
+Label = "Photo"
+YarnNode = "Cafe_Photo"
+
+[node name="Frame" type="ColorRect" parent="Booth/Photo"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 106.0
+mouse_filter = 2
+color = Color(0.36, 0.22, 0.14, 1)
+
+[node name="Print" type="ColorRect" parent="Booth/Photo"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 96.0
+mouse_filter = 2
+color = Color(0.62, 0.58, 0.5, 1)
+
+[node name="Stove" type="ColorRect" parent="Booth/Photo"]
+offset_left = 56.0
+offset_top = 46.0
+offset_right = 86.0
+offset_bottom = 90.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.14, 1)
+
+[node name="Man" type="ColorRect" parent="Booth/Photo"]
+offset_left = 28.0
+offset_top = 36.0
+offset_right = 50.0
+offset_bottom = 90.0
+mouse_filter = 2
+color = Color(0.3, 0.25, 0.22, 1)

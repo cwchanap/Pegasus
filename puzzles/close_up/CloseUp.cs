@@ -11,8 +11,9 @@ namespace Pegasus.Puzzles;
 /// Autoload (puzzles/close_up/close_up.tscn): the one close-up layout from the mockup that
 /// every puzzle opens in. Title and view dots on top, the puzzle's current view in the
 /// middle with arrows to turn, his items along the bottom (pick one, then a hotspot to use
-/// it there) and Warmth, paused, at night. It holds the input lock while open, so night
-/// Warmth stops; Esc steps back and drops any partial progress. Mouse and keyboard both
+/// it there, or another item to combine) and Warmth, paused, at night. It holds the input
+/// lock while open, so night Warmth stops; Esc asks the puzzle to step back, which by
+/// default drops any partial progress. Mouse and keyboard both
 /// work: arrows move focus, E, Space or Enter press, Esc leaves.
 /// </summary>
 public partial class CloseUp : CanvasLayer
@@ -27,7 +28,8 @@ public partial class CloseUp : CanvasLayer
     private string? _using;
     private bool _closeAfter;
     private Control? _lastFocus;
-    private readonly ButtonGroup _slotGroup = new() { AllowUnpress = true };
+    private readonly Dictionary<Button, string> _slots = new();
+    private Node? _scene;
 
     public static bool IsOpen => _instance?._puzzle != null;
 
@@ -67,11 +69,17 @@ public partial class CloseUp : CanvasLayer
         ShowWarmth();
         Visible = true;
         FocusFirst();
+        // A scene change (he wakes up) ends the close-up too.
+        _scene = GetTree().CurrentScene;
+        _scene.TreeExiting += Close;
+        _puzzle.Opened();
     }
 
-    private void Close()
+    internal void Close()
     {
         if (_puzzle == null) return;
+        if (_scene != null && IsInstanceValid(_scene)) _scene.TreeExiting -= Close;
+        _scene = null;
         Visible = false;
         _puzzle.QueueFree();
         _puzzle = null;
@@ -87,7 +95,7 @@ public partial class CloseUp : CanvasLayer
         if (e.IsActionPressed("pause") || e.IsActionPressed("ui_cancel"))
         {
             GetViewport().SetInputAsHandled();
-            Close();
+            _puzzle.StepBack();
         }
         // E presses the focused button too; Space and Enter already do (ui_accept).
         else if (e.IsActionPressed("interact") && !e.IsActionPressed("ui_accept") && GetViewport().GuiGetFocusOwner() is BaseButton button)
@@ -194,24 +202,37 @@ public partial class CloseUp : CanvasLayer
             row.RemoveChild(child);
             child.QueueFree();
         }
+        _slots.Clear();
         if (_using != null && !Game.State.HasItem(_using)) _using = null;
         foreach (var id in Game.State.Items)
         {
             var slot = ItemSlots.Create(ItemSlots.Data(id), SlotSize);
             slot.ToggleMode = true;
-            slot.ButtonGroup = _slotGroup;
             slot.ButtonPressed = id == _using;
-            slot.Toggled += on =>
-            {
-                if (on) _using = id;
-                else if (_using == id) _using = null;
-                ShowUsing();
-            };
+            slot.Toggled += on => OnSlot(id, on);
+            _slots[slot] = id;
             row.AddChild(slot);
         }
         for (var i = Game.State.Items.Count; i < MinSlots; i++) row.AddChild(ItemSlots.Empty(SlotSize));
         ShowUsing();
         LinkFocus();
+    }
+
+    /// <summary>
+    /// One item at a time. Picking a second while holding one first offers the pair to the
+    /// puzzle to combine; if they don't go together he just switches.
+    /// </summary>
+    private void OnSlot(string id, bool on)
+    {
+        if (on && _using != null && _using != id && !Conversation.Active && _puzzle!.Combine(_using, id))
+        {
+            _using = null; // the slots rebuild once the line ends
+            return;
+        }
+        if (on) _using = id;
+        else if (_using == id) _using = null;
+        foreach (var (slot, slotId) in _slots) slot.SetPressedNoSignal(slotId == _using);
+        ShowUsing();
     }
 
     /// <summary>Down from any hotspot reaches the items, up from the items returns to the view.</summary>
@@ -233,7 +254,7 @@ public partial class CloseUp : CanvasLayer
     private void ShowUsing()
     {
         GetNode<Label>("%UsingName").Text = _using == null ? "Nothing" : ItemSlots.Data(_using).DisplayName;
-        GetNode<Label>("%UsingHint").Text = _using == null ? "Pick an item, then a hotspot." : "Click a hotspot to use it there.";
+        GetNode<Label>("%UsingHint").Text = _using == null ? "Pick an item, then a hotspot." : "Use it on a hotspot or an item.";
     }
 
     private void ShowWarmth()

@@ -115,6 +115,18 @@ public class ContentTests
     }
 
     [Fact]
+    public void Recipes_use_real_items_and_have_a_line()
+    {
+        var items = Ids("content/items");
+        var nodes = YarnNodes();
+        var bad = Pegasus.Puzzles.Recipes.All
+            .SelectMany(r => new[] { r.A, r.B, r.Result }.Where(id => !items.Contains(id)).Select(id => $"no item '{id}'")
+                .Concat(nodes.Contains($"Made_{r.Result}") ? Array.Empty<string>() : new[] { $"no Yarn node 'Made_{r.Result}'" }))
+            .ToList();
+        Assert.Empty(bad);
+    }
+
+    [Fact]
     public void Yarn_nodes_that_are_played_exist()
     {
         var nodes = YarnNodes();

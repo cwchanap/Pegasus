@@ -123,12 +123,14 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"DetailTitle"
 text = "Nothing"
+text_overrun_behavior = 3
 
 [node name="UsingHint" type="Label" parent="Bottom/Using"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MenuMuted"
 text = "Pick an item, then a hotspot."
+autowrap_mode = 3
 
 [node name="Slots" type="HBoxContainer" parent="Bottom"]
 unique_name_in_owner = true

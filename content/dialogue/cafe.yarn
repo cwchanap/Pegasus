@@ -1,0 +1,135 @@
+title: Cafe_Enter
+---
+<<if met("flag:cafe_entered")>>
+The bell rings. The door swings shut behind you again, and the frost seals it.
+<<else>>
+The bell over the door rings as you step inside.
+<<if met("flag:clue_underpass_bells")>>
+The same bells you heard from the underpass.
+<<endif>>
+The lamps are lit, but the room is as cold as the street. Cups sit frozen to their saucers.
+Behind you, the door swings shut. Frost runs across the glass and seals it.
+<<flag cafe_entered>>
+<<endif>>
+===
+title: Cafe_GiveIn
+---
+The door won't open. The cold is in your fingers now.
+You could sit down for a moment. Just close your eyes.
+-> Stay awake.
+    You shake your head. Not yet.
+-> Sit down and close your eyes.
+    You sink into the armchair by the cold stove. Snow keeps falling past the window.
+    <<wake_up "You fell asleep in the cold.">>
+===
+title: Cafe_MenuBoard
+---
+Chalk on the board. SUMIYAKI COFFEE, roasted over charcoal, here, every morning. 350 yen.
+===
+title: Cafe_Siphon
+---
+A coffee siphon, half full. The coffee has frozen into brown glass. Someone was in the middle of making it.
+===
+title: Cafe_Register
+---
+The till drawer hangs open, empty. A sticker on the side says KISSA MORI, SINCE 1971.
+===
+title: Cafe_Charcoal
+---
+<<if met("item:charcoal | item:kindling | flag:cafe_stove_loaded")>>
+The sack of roasting charcoal. You already have what you need from it.
+<<else>>
+A sack of charcoal for the roaster. You take a handful.
+<<give charcoal>>
+<<endif>>
+===
+title: Cafe_Plate
+---
+A brass plate under the three dials, engraved in plain letters.
+SPEAK THE OLD RULE, AND I WILL BURN.
+<<if met("flag:tablet_read")>>
+The old rule. The tablet in the shrine hall had one.
+<<endif>>
+<<flag clue_cafe_lock>>
+===
+title: Cafe_StoveLocked
+---
+The firebox door won't budge. The three dials above it hold it shut.
+===
+title: Cafe_LockOpens
+---
+The last dial clicks into place. Inside the stove, a bolt slides back, and the firebox door swings open.
+===
+title: Cafe_DialsSet
+---
+The dials won't turn any more. The lock is open.
+===
+title: Cafe_StoveEmpty
+---
+The firebox is open. Cold ash, and nothing to burn.
+===
+title: Cafe_CharcoalAlone
+---
+Charcoal won't catch from a match on its own. It needs something that burns fast first.
+===
+title: Cafe_PaperAlone
+---
+Paper on its own would flare up and die. It needs something to keep it going.
+===
+title: Cafe_NothingToBurn
+---
+There's nothing in the firebox to light.
+===
+title: Cafe_Loaded
+---
+You pack the kindling into the firebox.
+===
+title: Cafe_StoveReady
+---
+Kindling waits in the firebox. It only needs a flame.
+===
+title: Cafe_Fire
+---
+The match catches the paper, and the paper catches the charcoal.
+The stove ticks, then roars. For the first time, warmth spills into the room.
+The frost on the windows starts to run.
+Only a fire wakes the sleeper.
+===
+title: Cafe_Armchair
+---
+A worn armchair, turned toward the stove. Sitting down would be very easy.
+===
+title: Cafe_Door
+---
+The door has frozen shut behind you. Ice fills the frame. You won't get out this way.
+===
+title: Cafe_Bell
+---
+A brass bell over the door.
+<<if met("flag:clue_underpass_bells")>>
+The bells you heard from the underpass. Small ones, the kind that hang on a shop door.
+<<endif>>
+===
+title: Cafe_Window
+---
+Snow falls past the glass. The street outside is already gone under it.
+===
+title: Cafe_Newspaper
+---
+<<if met("item:newspaper | item:kindling | flag:cafe_stove_loaded")>>
+Only the ads are left on the table.
+<<else>>
+A newspaper on the table, dry and folded. The date has been torn off. You take it.
+<<give newspaper>>
+<<endif>>
+===
+title: Cafe_Photo
+---
+A photo of an old man by this stove, laughing, a match in his hand.
+Under it, in pen, someone has written "Mori's stove only listens to the old rule."
+<<flag clue_cafe_stove>>
+===
+title: Made_kindling
+---
+You twist the newspaper around a handful of charcoal. Kindling.
+===
