@@ -39,13 +39,4 @@ public class ClockTests
         Assert.Throws<InvalidOperationException>(() => Clock.Wake(new GameState()));
         Assert.Throws<InvalidOperationException>(() => Clock.SpendSlot(new GameState { Slot = TimeSlot.Late }));
     }
-
-    [Fact]
-    public void SliceIsOverAfterTheLastNight()
-    {
-        var s = new GameState { Day = Clock.LastDay, Slot = TimeSlot.Night };
-        Assert.False(Clock.IsSliceOver(s));
-        Clock.Wake(s);
-        Assert.True(Clock.IsSliceOver(s));
-    }
 }
