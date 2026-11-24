@@ -7,10 +7,12 @@ namespace Pegasus.Sandbox;
 
 /// <summary>
 /// Grey-box test scene for the shared kit: walk, interact, conditions and save.
-/// Starts from the save slot if there is one. F5 saves, Esc quits.
+/// Starts from its own save slot (sandbox_save.json) if there is one. F5 saves, Esc quits.
 /// </summary>
 public partial class SandboxLevel : Node3D
 {
+    /// <summary>Its own slot, so sandbox runs never touch the game's save.</summary>
+    private const string SavePath = "user://sandbox_save.json";
     private const string GateCondition = "flag:lantern_lit & guts >= 1";
 
     [Export] public Label? InfoLabel { get; set; }
@@ -24,7 +26,11 @@ public partial class SandboxLevel : Node3D
 
     public override void _Ready()
     {
-        if (Game.Continue()) Say("Loaded the save slot.");
+        if (SaveService.Load(SavePath) is { } saved)
+        {
+            Game.Load(saved);
+            Say("Loaded the sandbox save.");
+        }
         Game.Changed += Rebuild;
         Rebuild();
 
@@ -83,8 +89,8 @@ public partial class SandboxLevel : Node3D
     {
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.F5 })
         {
-            Game.Save();
-            Say($"Saved to {ProjectSettings.GlobalizePath(SaveService.Path)}");
+            SaveService.Save(Game.State, SavePath);
+            Say($"Saved to {ProjectSettings.GlobalizePath(SavePath)}");
         }
     }
 }
