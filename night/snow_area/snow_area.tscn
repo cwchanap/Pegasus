@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
 [ext_resource type="PackedScene" path="res://ui/hud/night_hud.tscn" id="5_hud"]
 [ext_resource type="Script" path="res://world/bounds/Bounds.cs" id="6_bounds"]
+[ext_resource type="Script" path="res://world/ShowIf.cs" id="7_showif"]
+[ext_resource type="Script" path="res://puzzles/PuzzleSpot.cs" id="8_puzzle_spot"]
+[ext_resource type="PackedScene" path="res://puzzles/lanterns/lanterns.tscn" id="9_lanterns"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -43,16 +46,16 @@ albedo_color = Color(0.34, 0.37, 0.45, 1)
 albedo_color = Color(0.38, 0.14, 0.14, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_7"]
-albedo_color = Color(0.14, 0.22, 0.22, 1)
+albedo_color = Color(0.84, 0.88, 0.95, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_8"]
-albedo_color = Color(0.84, 0.88, 0.95, 1)
+albedo_color = Color(0.14, 0.22, 0.22, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_9"]
 albedo_color = Color(0.55, 0.68, 0.84, 1)
 
 [sub_resource type="BoxMesh" id="ground_mesh"]
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 size = Vector3(140, 0.2, 90)
 
 [sub_resource type="BoxShape3D" id="ground_shape"]
@@ -60,6 +63,9 @@ size = Vector3(140, 0.2, 90)
 
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.8
+
+[sub_resource type="BoxShape3D" id="lantern_row"]
+size = Vector3(9.5, 2, 1.8)
 
 [sub_resource type="StandardMaterial3D" id="flake_mat"]
 transparency = 1
@@ -271,6 +277,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.68, 10.6)
 size = Vector3(0.8, 0.15, 0.8)
 material = SubResource("mat_2")
 
+[node name="Lit0" type="Node3D" parent="Shrine"]
+
+[node name="Flame" type="CSGBox3D" parent="Shrine/Lit0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.4, 10.6)
+size = Vector3(0.74, 0.26, 0.74)
+material = SubResource("mat_4")
+
+[node name="Light" type="OmniLight3D" parent="Shrine/Lit0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.6, 10.0)
+light_color = Color(1, 0.78, 0.45, 1)
+light_energy = 1.0
+omni_range = 3.5
+
 [node name="Lantern1" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.6, 10.6)
 use_collision = true
@@ -286,6 +305,21 @@ material = SubResource("mat_5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.68, 10.6)
 size = Vector3(0.8, 0.15, 0.8)
 material = SubResource("mat_2")
+
+[node name="Lit1" type="Node3D" parent="Shrine"]
+script = ExtResource("7_showif")
+Condition = "flag:lanterns_lit"
+
+[node name="Flame" type="CSGBox3D" parent="Shrine/Lit1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.4, 10.6)
+size = Vector3(0.74, 0.26, 0.74)
+material = SubResource("mat_4")
+
+[node name="Light" type="OmniLight3D" parent="Shrine/Lit1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.6, 10.0)
+light_color = Color(1, 0.78, 0.45, 1)
+light_energy = 1.0
+omni_range = 3.5
 
 [node name="Lantern2" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.6, 10.6)
@@ -303,6 +337,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.68, 10.6)
 size = Vector3(0.8, 0.15, 0.8)
 material = SubResource("mat_2")
 
+[node name="Lit2" type="Node3D" parent="Shrine"]
+
+[node name="Flame" type="CSGBox3D" parent="Shrine/Lit2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.4, 10.6)
+size = Vector3(0.74, 0.26, 0.74)
+material = SubResource("mat_4")
+
+[node name="Light" type="OmniLight3D" parent="Shrine/Lit2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.6, 10.0)
+light_color = Color(1, 0.78, 0.45, 1)
+light_energy = 1.0
+omni_range = 3.5
+
 [node name="Lantern3" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0.6, 10.6)
 use_collision = true
@@ -318,6 +365,19 @@ material = SubResource("mat_5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.68, 10.6)
 size = Vector3(0.8, 0.15, 0.8)
 material = SubResource("mat_2")
+
+[node name="Lit3" type="Node3D" parent="Shrine"]
+
+[node name="Flame" type="CSGBox3D" parent="Shrine/Lit3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.4, 10.6)
+size = Vector3(0.74, 0.26, 0.74)
+material = SubResource("mat_4")
+
+[node name="Light" type="OmniLight3D" parent="Shrine/Lit3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.6, 10.0)
+light_color = Color(1, 0.78, 0.45, 1)
+light_energy = 1.0
+omni_range = 3.5
 
 [node name="Lantern4" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.6, 10.6)
@@ -335,6 +395,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.68, 10.6)
 size = Vector3(0.8, 0.15, 0.8)
 material = SubResource("mat_2")
 
+[node name="Lit4" type="Node3D" parent="Shrine"]
+script = ExtResource("7_showif")
+Condition = "flag:lanterns_lit"
+
+[node name="Flame" type="CSGBox3D" parent="Shrine/Lit4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.4, 10.6)
+size = Vector3(0.74, 0.26, 0.74)
+material = SubResource("mat_4")
+
+[node name="Light" type="OmniLight3D" parent="Shrine/Lit4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.6, 10.0)
+light_color = Color(1, 0.78, 0.45, 1)
+light_energy = 1.0
+omni_range = 3.5
+
 [node name="ShrineHall" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1.3, 5)
 use_collision = true
@@ -346,11 +421,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2.85, 5)
 size = Vector3(5.6, 0.5, 4.6)
 material = SubResource("mat_2")
 
+[node name="HallDoor" type="CSGBox3D" parent="Shrine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1, 7.05)
+size = Vector3(1.6, 2, 0.1)
+material = SubResource("mat_3")
+
+[node name="HallSnow" type="Node3D" parent="Shrine"]
+script = ExtResource("7_showif")
+Condition = "!flag:lanterns_lit"
+
+[node name="Drift" type="CSGBox3D" parent="Shrine/HallSnow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1.15, 7.35)
+size = Vector3(2.8, 2.3, 0.6)
+material = SubResource("mat_7")
+
 [node name="TreeA" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 5)
 use_collision = true
 size = Vector3(1.8, 5, 1.8)
-material = SubResource("mat_7")
+material = SubResource("mat_8")
 
 [node name="TreeACap" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5.25, 5)
@@ -361,7 +450,7 @@ material = SubResource("mat_2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 2.75, 7)
 use_collision = true
 size = Vector3(2, 5.5, 2)
-material = SubResource("mat_7")
+material = SubResource("mat_8")
 
 [node name="TreeBCap" type="CSGBox3D" parent="Shrine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 5.75, 7)
@@ -456,70 +545,70 @@ transform = Transform3D(3, 0, 0, 0, 1.2, 0, 0, 0, 2, -27, 0, -9)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift1" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(4, 0, 0, 0, 1.3, 0, 0, 0, 2.5, -12, 0, -1.5)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift2" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 2, 2, 0, -1.8)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift3" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(3, 0, 0, 0, 1.5, 0, 0, 0, 4, -24, 0, 14)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift4" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(6, 0, 0, 0, 1.4, 0, 0, 0, 3, 5, 0, 18)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift5" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(4, 0, 0, 0, 1.6, 0, 0, 0, 3, -44, 0, -4)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift6" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(2.5, 0, 0, 0, 1, 0, 0, 0, 1.5, -12, 0, -10)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift7" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(3, 0, 0, 0, 1.2, 0, 0, 0, 2, 16, 0, -10)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift8" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(3, 0, 0, 0, 1.4, 0, 0, 0, 3, 7, 0, -22)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="Drift9" type="CSGSphere3D" parent="Drifts"]
 transform = Transform3D(4, 0, 0, 0, 2, 0, 0, 0, 4, -46, 0, 15)
 use_collision = true
 radial_segments = 16
 rings = 8
-material = SubResource("mat_8")
+material = SubResource("mat_7")
 
 [node name="River" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 27.5)
@@ -538,6 +627,20 @@ PromptHeight = 2.4
 [node name="Shape" type="CollisionShape3D" parent="HomeDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
+
+[node name="LanternSpot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 11.8)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("8_puzzle_spot")
+Puzzle = ExtResource("9_lanterns")
+Prompt = "Look at the lanterns"
+PromptHeight = 2.4
+
+[node name="Shape" type="CollisionShape3D" parent="LanternSpot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("lantern_row")
 
 [node name="Bounds" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)

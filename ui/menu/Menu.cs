@@ -83,37 +83,21 @@ public partial class Menu : CanvasLayer
         }
     }
 
+    private static readonly Vector2 SlotSize = new(90, 92);
+
     private void BuildItems(GameState s)
     {
         var grid = Clear(GetNode<GridContainer>("%Slots"));
-        var owned = s.Items.Select(id => Items.Get(id) ?? new ItemData { Id = id, DisplayName = id }).ToList();
-        foreach (var item in owned) grid.AddChild(Slot(item));
+        var owned = s.Items.Select(ItemSlots.Data).ToList();
+        foreach (var item in owned)
+        {
+            var slot = ItemSlots.Create(item, SlotSize);
+            slot.FocusEntered += () => ShowDetail(item);
+            grid.AddChild(slot);
+        }
         var slots = System.Math.Max(SlotsPerRow * 2, (owned.Count + SlotsPerRow - 1) / SlotsPerRow * SlotsPerRow);
-        for (var i = owned.Count; i < slots; i++)
-            grid.AddChild(new Panel { ThemeTypeVariation = "ItemSlotEmpty", CustomMinimumSize = SlotSize });
+        for (var i = owned.Count; i < slots; i++) grid.AddChild(ItemSlots.Empty(SlotSize));
         ShowDetail(owned.FirstOrDefault());
-    }
-
-    private static readonly Vector2 SlotSize = new(90, 92);
-
-    private Button Slot(ItemData item)
-    {
-        var slot = new Button { ThemeTypeVariation = "ItemSlot", CustomMinimumSize = SlotSize };
-        var col = new VBoxContainer { Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = Control.MouseFilterEnum.Ignore };
-        col.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-        col.AddThemeConstantOverride("separation", 8);
-        Control icon = item.Icon != null
-            ? new TextureRect { Texture = item.Icon, ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered }
-            : new ColorRect { Color = item.IconColor };
-        icon.CustomMinimumSize = new Vector2(44, 44);
-        icon.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-        icon.MouseFilter = Control.MouseFilterEnum.Ignore;
-        col.AddChild(icon);
-        col.AddChild(new Label { Text = item.DisplayName, HorizontalAlignment = HorizontalAlignment.Center, ThemeTypeVariation = "MenuMuted", MouseFilter = Control.MouseFilterEnum.Ignore });
-        slot.AddChild(col);
-        slot.FocusEntered += () => ShowDetail(item);
-        slot.MouseEntered += slot.GrabFocus;
-        return slot;
     }
 
     private void ShowDetail(ItemData? item)

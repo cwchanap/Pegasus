@@ -9,6 +9,7 @@
     <!-- Pure logic only: these folders must not use Godot types. -->
     <Compile Include="../core/state/**/*.cs" LinkBase="Linked/core" />
     <Compile Include="../conditions/**/*.cs" LinkBase="Linked/conditions" />
+    <Compile Include="../puzzles/rules/**/*.cs" LinkBase="Linked/puzzles" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
