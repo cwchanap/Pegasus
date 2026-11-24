@@ -26,8 +26,16 @@ public static class Game
         return true;
     }
 
-    /// <summary>False if the write failed (logged); the old save stays.</summary>
-    public static bool Save() => SaveService.Save(State);
+    /// <summary>A save failed (the old save stays). The toast tells the player.</summary>
+    public static event Action? SaveFailed;
+
+    /// <summary>False if the write failed (logged, and <see cref="SaveFailed"/> raised); the old save stays.</summary>
+    public static bool Save()
+    {
+        if (SaveService.Save(State)) return true;
+        SaveFailed?.Invoke();
+        return false;
+    }
 
     /// <summary>Replace the live state (new game, save slot, or a dev fixture).</summary>
     public static void Load(GameState state)
