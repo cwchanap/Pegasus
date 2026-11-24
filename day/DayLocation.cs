@@ -30,21 +30,27 @@ public partial class DayLocation : Node3D
         {
             Hud.Header.Place = Location?.DisplayName ?? "";
             Hud.Header.Spot = Spot;
-            var spots = FindChildren("*", "Area3D", owned: false).OfType<ActivitySpot>().ToList();
+            var areas = FindChildren("*", "Area3D", owned: false);
+            var spots = areas.OfType<ActivitySpot>().ToList();
+            var shops = areas.OfType<ShopSpot>().ToList();
             foreach (var spot in spots)
                 spot.Interacted += () => { if (spot.Activity != null) Hud.Offer(spot.Activity); };
-            WarnIfMapDisagrees(spots);
+            foreach (var spot in shops)
+                spot.Interacted += () => { if (spot.Shop != null) Hud.OpenShop(spot.Shop); };
+            WarnIfMapDisagrees(
+                spots.Select(s => s.Activity?.Id).Concat(shops.Select(s => s.Shop?.Id)),
+                (Location?.Activities.Select(a => a.Id) ?? []).Concat(Location?.Shops.Select(s => s.Id) ?? []));
         }
         if (Exit != null) Exit.Interacted += OpenMap;
     }
 
-    /// <summary>The map lists LocationData.Activities; the scene offers its spots. Flag drift early.</summary>
-    private void WarnIfMapDisagrees(List<ActivitySpot> spots)
+    /// <summary>The map lists the place's activities and shops; the scene offers its spots. Flag drift early.</summary>
+    private void WarnIfMapDisagrees(IEnumerable<string?> inScene, IEnumerable<string> onMap)
     {
-        var inScene = spots.Select(s => s.Activity?.Id).OfType<string>().ToHashSet();
-        var onMap = (Location?.Activities ?? new()).Select(a => a.Id).ToHashSet();
-        if (!inScene.SetEquals(onMap))
-            GD.PushWarning($"{Name}: map lists [{string.Join(", ", onMap)}] but the scene offers [{string.Join(", ", inScene)}].");
+        var scene = inScene.OfType<string>().ToHashSet();
+        var map = onMap.ToHashSet();
+        if (!scene.SetEquals(map))
+            GD.PushWarning($"{Name}: map lists [{string.Join(", ", map)}] but the scene offers [{string.Join(", ", scene)}].");
     }
 
     public static void OpenMap() => SceneRouter.Instance.GoTo(Scenes.CityMap);

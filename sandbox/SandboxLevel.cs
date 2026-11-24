@@ -7,7 +7,7 @@ namespace Pegasus.Sandbox;
 
 /// <summary>
 /// Grey-box test scene for the shared kit: walk, interact, conditions and save.
-/// Starts from the save slot if there is one. Tab saves, Esc quits.
+/// Starts from the save slot if there is one. F5 saves, Esc quits.
 /// </summary>
 public partial class SandboxLevel : Node3D
 {
@@ -79,7 +79,7 @@ public partial class SandboxLevel : Node3D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e.IsActionPressed("menu"))
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.F5 })
         {
             Game.Save();
             Say($"Saved to {ProjectSettings.GlobalizePath(SaveService.Path)}");

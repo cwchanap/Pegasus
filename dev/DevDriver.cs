@@ -10,6 +10,7 @@ namespace Pegasus.Dev;
 ///   --hold=action@A-B     hold an input action from frame A to frame B (repeatable)
 ///   --tap=action@A        press an action for one frame at frame A (repeatable)
 ///   --state=file.json     start from this game state (same JSON as the save file)
+/// Frames count while the tree is paused too (fades, the Tab menu), so a shot can catch them.
 /// </summary>
 public partial class DevDriver : Node
 {
@@ -21,6 +22,7 @@ public partial class DevDriver : Node
     public override void _Ready()
     {
         SetPhysicsProcess(false);
+        ProcessMode = ProcessModeEnum.Always;
         if (!OS.IsDebugBuild()) return;
         foreach (var arg in OS.GetCmdlineUserArgs())
         {

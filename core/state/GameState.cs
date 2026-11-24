@@ -19,6 +19,8 @@ public class GameState
     /// <summary>Stats and bonds both run 0 to 3 in the slice.</summary>
     public const int MaxStat = 3;
     public const int MaxBond = 3;
+    /// <summary>Money in hand on a new game.</summary>
+    public const int StartingMoney = 3000;
 
     public int Day { get; set; } = 1;
     public TimeSlot Slot { get; set; } = TimeSlot.Afternoon;
@@ -40,6 +42,14 @@ public class GameState
     public void AddBond(string character, int amount) => Mutate(() => Bonds[character] = Math.Clamp(GetBond(character) + amount, 0, MaxBond));
     public void AddMoney(int amount) => Mutate(() => Money += amount);
     public void GiveItem(string item) => Mutate(() => Items.Add(item));
+
+    /// <summary>Pays for an item he doesn't have yet. False if owned or too expensive.</summary>
+    public bool TryBuy(string item, int price)
+    {
+        if (HasItem(item) || Money < price) return false;
+        Mutate(() => { Money -= price; Items.Add(item); });
+        return true;
+    }
     public void TakeItem(string item) => Mutate(() => Items.Remove(item));
     public void SetFlag(string flag, bool on = true) => Mutate(() => { if (on) Flags.Add(flag); else Flags.Remove(flag); });
 

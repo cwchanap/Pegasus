@@ -17,4 +17,6 @@ public partial class LocationData : Resource
     [Export(PropertyHint.MultilineText)] public string Blurb { get; set; } = "";
     /// <summary>What can be done here, listed on the map. Keep in step with the ActivitySpots in the scene.</summary>
     [Export] public Array<ActivityData> Activities { get; set; } = new();
+    /// <summary>Shops here, listed on the map. Keep in step with the ShopSpots in the scene.</summary>
+    [Export] public Array<ShopData> Shops { get; set; } = new();
 }

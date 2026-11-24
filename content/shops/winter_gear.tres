@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://day/ShopData.cs" id="1_shop"]
+[ext_resource type="Resource" path="res://content/items/down_coat.tres" id="2_coat"]
+[ext_resource type="Resource" path="res://content/items/boots.tres" id="3_boots"]
+
+[resource]
+script = ExtResource("1_shop")
+Id = "winter_gear"
+Title = "Winter gear shop"
+Stock = [ExtResource("2_coat"), ExtResource("3_boots")]

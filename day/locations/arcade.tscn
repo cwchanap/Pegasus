@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" path="res://world/npc/npc.tscn" id="npc"]
 [ext_resource type="Resource" path="res://content/characters/kenta.tres" id="char_kenta"]
 [ext_resource type="Resource" path="res://content/activities/hangout_kenta.tres" id="act_hangout_kenta"]
+[ext_resource type="Script" path="res://day/ShopSpot.cs" id="shop_script"]
+[ext_resource type="Resource" path="res://content/shops/winter_gear.tres" id="shop_winter_gear"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -211,6 +213,19 @@ PromptHeight = 2.0
 
 [node name="Shape" type="CollisionShape3D" parent="HangOutKenta"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="GearShop" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1.3)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("shop_script")
+Shop = ExtResource("shop_winter_gear")
+PromptHeight = 1.6
+
+[node name="Shape" type="CollisionShape3D" parent="GearShop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("spot")
 
 [node name="Hud" parent="." instance=ExtResource("hud")]

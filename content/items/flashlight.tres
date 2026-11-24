@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://world/items/ItemData.cs" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+Id = "flashlight"
+DisplayName = "Bike light"
+Description = "Kenta's old bike light. Brighter than it looks."
+Price = 0
+Warmth = 0
+IconColor = Color(0.82, 0.9, 1.0, 1)

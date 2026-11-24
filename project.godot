@@ -14,6 +14,7 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 SceneRouter="*res://core/SceneRouter.cs"
 Toast="*res://ui/Toast.cs"
 Conversation="*res://ui/dialogue/conversation.tscn"
+Menu="*res://ui/menu/menu.tscn"
 DevDriver="*res://dev/DevDriver.cs"
 
 [display]

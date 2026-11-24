@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://world/items/ItemData.cs" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+Id = "down_coat"
+DisplayName = "Down coat"
+Description = "Bought at the arcade. Far too hot to wear by day. At night it keeps the cold off."
+Price = 9800
+Warmth = 40
+IconColor = Color(0.76, 0.22, 0.17, 1)
