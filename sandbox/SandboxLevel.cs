@@ -20,6 +20,7 @@ public partial class SandboxLevel : Node3D
     [Export] public Interactable? Sign { get; set; }
     [Export] public Interactable? GateButton { get; set; }
     [Export] public Node3D? Gate { get; set; }
+    [Export] public CollisionShape3D? GateShape { get; set; }
 
     public override void _Ready()
     {
@@ -41,6 +42,7 @@ public partial class SandboxLevel : Node3D
         var s = Game.State;
         if (LanternLight != null) LanternLight.Visible = s.HasFlag("lantern_lit");
         if (Gate != null) Gate.Visible = !s.HasFlag("gate_open");
+        GateShape?.SetDeferred(CollisionShape3D.PropertyName.Disabled, s.HasFlag("gate_open"));
         if (GateButton != null) GateButton.Enabled = !s.HasFlag("gate_open");
         if (StateLabel != null)
             StateLabel.Text = $"Guts {s.GetStat(Stat.Guts)} · flags [{string.Join(", ", s.Flags)}]";

@@ -64,7 +64,7 @@ size = Vector3(3, 2.4, 0.3)
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.6
 
-[node name="Sandbox" type="Node3D" node_paths=PackedStringArray("InfoLabel", "StateLabel", "Lantern", "LanternLight", "Sign", "GateButton", "Gate")]
+[node name="Sandbox" type="Node3D" node_paths=PackedStringArray("InfoLabel", "StateLabel", "Lantern", "LanternLight", "Sign", "GateButton", "Gate", "GateShape")]
 script = ExtResource("1_level")
 InfoLabel = NodePath("Hud/Info")
 Lantern = NodePath("Lantern")
@@ -73,6 +73,7 @@ Sign = NodePath("Sign")
 StateLabel = NodePath("Hud/State")
 GateButton = NodePath("GateButton")
 Gate = NodePath("Gate")
+GateShape = NodePath("Gate/Shape")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("env")
