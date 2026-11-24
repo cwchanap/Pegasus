@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Pegasus.Core;
@@ -29,10 +30,21 @@ public partial class DayLocation : Node3D
         {
             Hud.Header.Place = Location?.DisplayName ?? "";
             Hud.Header.Spot = Spot;
-            foreach (var spot in FindChildren("*", "Area3D", owned: false).OfType<ActivitySpot>())
+            var spots = FindChildren("*", "Area3D", owned: false).OfType<ActivitySpot>().ToList();
+            foreach (var spot in spots)
                 spot.Interacted += () => { if (spot.Activity != null) Hud.Offer(spot.Activity); };
+            WarnIfMapDisagrees(spots);
         }
         if (Exit != null) Exit.Interacted += OpenMap;
+    }
+
+    /// <summary>The map lists LocationData.Activities; the scene offers its spots. Flag drift early.</summary>
+    private void WarnIfMapDisagrees(List<ActivitySpot> spots)
+    {
+        var inScene = spots.Select(s => s.Activity?.Id).OfType<string>().ToHashSet();
+        var onMap = (Location?.Activities ?? new()).Select(a => a.Id).ToHashSet();
+        if (!inScene.SetEquals(onMap))
+            GD.PushWarning($"{Name}: map lists [{string.Join(", ", onMap)}] but the scene offers [{string.Join(", ", inScene)}].");
     }
 
     public static void OpenMap() => SceneRouter.Instance.GoTo(Scenes.CityMap);
