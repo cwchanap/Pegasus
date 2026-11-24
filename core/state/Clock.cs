@@ -32,6 +32,9 @@ public static class Clock
         s.Mutate(() => { s.Day++; s.Slot = TimeSlot.Afternoon; });
     }
 
+    /// <summary>Day 1 is Monday 13 July; the slice is a summer week.</summary>
+    public static DateTime Date(int day) => new DateTime(2026, 7, 13).AddDays(day - 1);
+
     public static string Describe(GameState s) => s.Slot switch
     {
         TimeSlot.Night => $"Night {s.Day}",

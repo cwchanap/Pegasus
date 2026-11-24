@@ -39,4 +39,11 @@ public class ClockTests
         Assert.Throws<InvalidOperationException>(() => Clock.Wake(new GameState()));
         Assert.Throws<InvalidOperationException>(() => Clock.SpendSlot(new GameState { Slot = TimeSlot.Late }));
     }
+
+    [Fact]
+    public void DayTwoIsTuesdayFourteenthOfJuly()
+    {
+        var date = Clock.Date(2);
+        Assert.Equal((7, 14, DayOfWeek.Tuesday), (date.Month, date.Day, date.DayOfWeek));
+    }
 }

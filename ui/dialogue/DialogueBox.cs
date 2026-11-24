@@ -18,9 +18,9 @@ namespace Pegasus.UI;
 /// </summary>
 public partial class DialogueBox : Control, DialoguePresenterBase
 {
-    private static readonly Color Navy = new("1c1f3b");
-    private static readonly Color Cream = new("fbf1e3");
-    private static readonly Color TagYellow = new("ffd24d");
+    private static readonly Color Navy = Ui.Navy;
+    private static readonly Color Cream = Ui.Cream;
+    private static readonly Color TagYellow = Ui.Yellow;
     private const float CharsPerSecond = 60f;
     private const int MaxBond = 3;
 
@@ -167,7 +167,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
             details.Add("Bond " + new string('◆', bond) + new string('◇', MaxBond - bond));
         }
         _subtitle.Text = string.Join(" · ", details);
-        _plate.AddThemeStyleboxOverride("panel", Box(profile?.Color ?? Navy, 8, padH: 16, padV: 4));
+        _plate.AddThemeStyleboxOverride("panel", Ui.Box(profile?.Color ?? Navy, 8, padH: 16, padV: 4));
         // Text starts right of the portrait when there is one.
         _text.OffsetLeft = _portrait.Visible ? 340 : 40;
         _plate.OffsetLeft = _portrait.Visible ? 300 : 24;
@@ -186,11 +186,11 @@ public partial class DialogueBox : Control, DialoguePresenterBase
             FocusMode = locked ? FocusModeEnum.None : FocusModeEnum.All,
             MouseFilter = MouseFilterEnum.Stop,
         };
-        button.AddThemeStyleboxOverride("normal", Box(Navy, 10));
-        button.AddThemeStyleboxOverride("hover", Box(Navy.Lightened(0.12f), 10));
-        button.AddThemeStyleboxOverride("pressed", Box(Colors.White, 10, border: new Color("ff5a3c")));
-        button.AddThemeStyleboxOverride("focus", Box(Colors.White, 10, border: new Color("ff5a3c")));
-        button.AddThemeStyleboxOverride("disabled", Box(new Color(0.24f, 0.25f, 0.33f, 0.85f), 10));
+        button.AddThemeStyleboxOverride("normal", Ui.Box(Navy, 10));
+        button.AddThemeStyleboxOverride("hover", Ui.Box(Navy.Lightened(0.12f), 10));
+        button.AddThemeStyleboxOverride("pressed", Ui.Box(Colors.White, 10, border: new Color("ff5a3c")));
+        button.AddThemeStyleboxOverride("focus", Ui.Box(Colors.White, 10, border: new Color("ff5a3c")));
+        button.AddThemeStyleboxOverride("disabled", Ui.Box(new Color(0.24f, 0.25f, 0.33f, 0.85f), 10));
 
         var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
         row.AddThemeConstantOverride("separation", 12);
@@ -198,11 +198,11 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         row.OffsetLeft = 14; row.OffsetRight = -16;
         button.AddChild(row);
 
-        var badge = Tag(number.ToString(), new Color(1, 1, 1, 0.12f), Colors.White);
+        var badge = Ui.Tag(number.ToString(), new Color(1, 1, 1, 0.12f), Colors.White, 15);
         row.AddChild(badge);
         var tagText = condition?.Describe() ?? "";
         if (tagText != "")
-            row.AddChild(Tag(tagText.ToUpperInvariant(), locked ? new Color(1, 1, 1, 0.12f) : TagYellow, locked ? new Color(1, 1, 1, 0.7f) : Navy));
+            row.AddChild(Ui.Tag(tagText.ToUpperInvariant(), locked ? new Color(1, 1, 1, 0.12f) : TagYellow, locked ? new Color(1, 1, 1, 0.7f) : Navy, 15));
         var text = new Label
         {
             Text = option.Line.TextWithoutCharacterName.Text,
@@ -223,8 +223,8 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         }
 
         // Dark text on the white focused style.
-        button.FocusEntered += () => { text.AddThemeColorOverride("font_color", Navy); badge.AddThemeStyleboxOverride("panel", Box(new Color("ff5a3c"), 6, padH: 8)); };
-        button.FocusExited += () => { text.AddThemeColorOverride("font_color", Colors.White); badge.AddThemeStyleboxOverride("panel", Box(new Color(1, 1, 1, 0.12f), 6, padH: 8)); };
+        button.FocusEntered += () => { text.AddThemeColorOverride("font_color", Navy); badge.AddThemeStyleboxOverride("panel", Ui.Box(new Color("ff5a3c"), 6, padH: 8)); };
+        button.FocusExited += () => { text.AddThemeColorOverride("font_color", Colors.White); badge.AddThemeStyleboxOverride("panel", Ui.Box(new Color(1, 1, 1, 0.12f), 6, padH: 8)); };
         button.MouseEntered += () => { if (!locked) button.GrabFocus(); };
         button.Pressed += () => _choice?.TrySetResult(option);
         _options.AddChild(button);
@@ -240,7 +240,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         AddChild(_options);
 
         var box = new Panel { MouseFilter = MouseFilterEnum.Ignore };
-        box.AddThemeStyleboxOverride("panel", Box(Cream, 14, border: Navy, borderWidth: 3));
+        box.AddThemeStyleboxOverride("panel", Ui.Box(Cream, 14, border: Navy, borderWidth: 3));
         box.AnchorLeft = 0; box.AnchorRight = 1; box.AnchorTop = 1; box.AnchorBottom = 1;
         box.OffsetLeft = 60; box.OffsetRight = -60; box.OffsetTop = -205; box.OffsetBottom = -36;
         AddChild(box);
@@ -257,7 +257,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         hintRow.AnchorLeft = 1; hintRow.AnchorRight = 1; hintRow.AnchorTop = 1; hintRow.AnchorBottom = 1;
         hintRow.OffsetLeft = -140; hintRow.OffsetRight = -22; hintRow.OffsetTop = -44; hintRow.OffsetBottom = -14;
         hintRow.Alignment = BoxContainer.AlignmentMode.End;
-        hintRow.AddChild(Tag("E", new Color("4a4d63"), Colors.White));
+        hintRow.AddChild(Ui.Tag("E", new Color("4a4d63"), Colors.White, 15));
         _hint = new Label { Text = "Next", VerticalAlignment = VerticalAlignment.Center };
         _hint.AddThemeFontSizeOverride("font_size", 16);
         _hint.AddThemeColorOverride("font_color", new Color("4a4d63"));
@@ -287,26 +287,5 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         _portrait.AnchorTop = 1; _portrait.AnchorBottom = 1;
         _portrait.OffsetLeft = 80; _portrait.OffsetRight = 330; _portrait.OffsetTop = -560; _portrait.OffsetBottom = 0;
         AddChild(_portrait);
-    }
-
-    private static PanelContainer Tag(string text, Color bg, Color fg)
-    {
-        var panel = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, SizeFlagsVertical = SizeFlags.ShrinkCenter };
-        panel.AddThemeStyleboxOverride("panel", Box(bg, 6, padH: 8));
-        var label = new Label { Text = text };
-        label.AddThemeFontSizeOverride("font_size", 15);
-        label.AddThemeColorOverride("font_color", fg);
-        panel.AddChild(label);
-        return panel;
-    }
-
-    private static StyleBoxFlat Box(Color bg, int radius, Color? border = null, int borderWidth = 3, int padH = 0, int padV = 2)
-    {
-        var box = new StyleBoxFlat { BgColor = bg };
-        box.SetCornerRadiusAll(radius);
-        if (border is { } b) { box.BorderColor = b; box.SetBorderWidthAll(borderWidth); }
-        box.ContentMarginLeft = box.ContentMarginRight = padH;
-        box.ContentMarginTop = box.ContentMarginBottom = padV;
-        return box;
     }
 }
