@@ -1,8 +1,8 @@
 title: Home_Intro
 ---
 Osaka, July. Even the cicadas sound tired of the heat.
-For a week now, you've woken at exactly three in the morning.
-And every time, there's snow outside the window. Deep, silent snow, in the middle of summer.
+For a week now, you've woken at three in the morning needing the toilet.
+And every time, on the way back to bed, there's snow outside the window. Deep, silent snow, in the middle of summer.
 The glass is cold enough to sting. Your breath fogs in your own room.
 By morning it's gone. The street is hot and loud again, and nobody else saw a thing.
 Tonight, when it comes back, you're going out there.
@@ -10,7 +10,11 @@ Tonight, when it comes back, you're going out there.
 title: Night_First
 ---
 Three in the morning. This time, you open the door.
+<<if met("item:down_coat")>>
+The new coat holds off the worst of it. Your face and hands still sting.
+<<else>>
 The cold goes straight through your pyjamas.
+<<endif>>
 The street is buried. Not a sound, not even wind.
 Past the snow, the road runs on further than you can see.
 ===
