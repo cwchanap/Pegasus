@@ -16,6 +16,7 @@ public static class Items
         var path = $"{Folder}{id}.tres";
         var item = ResourceLoader.Exists(path) ? GD.Load<ItemData>(path) : null;
         if (item == null) GD.PushWarning($"Items: no item data for '{id}' (expected {path}).");
+        else if (item.Id != id) GD.PushWarning($"Items: {path} has Id '{item.Id}'; the file name and the Id must match.");
         return Cache[id] = item;
     }
 
