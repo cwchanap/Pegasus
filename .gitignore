@@ -1,0 +1,20 @@
+# Godot
+.godot/
+.import/
+export.cfg
+export_credentials.cfg
+*.translation
+
+# .NET
+.mono/
+bin/
+obj/
+*.user
+TestResults/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
+.idea/
