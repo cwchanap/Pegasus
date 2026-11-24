@@ -8,5 +8,5 @@ Id = "boots"
 DisplayName = "Snow boots"
 Description = "Lined boots from the winter gear shop. Your feet stay dry and warm in deep snow."
 Price = 6500
-Warmth = 20
+Warmth = 150
 IconColor = Color(0.45, 0.32, 0.22, 1)
