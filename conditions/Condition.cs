@@ -44,7 +44,7 @@ public sealed record StatAtLeast(Stat Stat, int Level) : Condition
 public sealed record MoneyAtLeast(int Amount) : Condition
 {
     public override bool IsMet(GameState state) => state.Money >= Amount;
-    public override string Describe() => $"¥{Amount}";
+    public override string Describe() => Format.Yen(Amount);
 }
 
 public sealed record BondAtLeast(string Character, int Level) : Condition

@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="LocationData" load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://day/LocationData.cs" id="1_loc"]
+[ext_resource type="Resource" path="res://content/activities/study_library.tres" id="a_study_library"]
+[ext_resource type="Resource" path="res://content/activities/train_gym.tres" id="a_train_gym"]
 
 [resource]
 script = ExtResource("1_loc")
@@ -10,3 +12,4 @@ Letter = "U"
 MapPosition = Vector2(429, 179)
 ScenePath = "res://day/locations/university.tscn"
 Blurb = "Lectures are out for summer. The library and the gym stay open."
+Activities = [ExtResource("a_study_library"), ExtResource("a_train_gym")]

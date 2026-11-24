@@ -18,11 +18,7 @@ namespace Pegasus.UI;
 /// </summary>
 public partial class DialogueBox : Control, DialoguePresenterBase
 {
-    private static readonly Color Navy = Ui.Navy;
-    private static readonly Color Cream = Ui.Cream;
-    private static readonly Color TagYellow = Ui.Yellow;
     private const float CharsPerSecond = 60f;
-    private const int MaxBond = 3;
 
     public List<IActionMarkupHandler> ActionMarkupHandlers { get; } = new();
 
@@ -163,11 +159,14 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         if (!string.IsNullOrEmpty(profile?.Subtitle)) details.Add(profile.Subtitle);
         if (profile is { HasBond: true })
         {
-            var bond = Math.Clamp(Game.State.GetBond(profile.Id), 0, MaxBond);
-            details.Add("Bond " + new string('◆', bond) + new string('◇', MaxBond - bond));
+            var bond = Game.State.GetBond(profile.Id);
+            details.Add("Bond " + new string('◆', bond) + new string('◇', GameState.MaxBond - bond));
         }
         _subtitle.Text = string.Join(" · ", details);
-        _plate.AddThemeStyleboxOverride("panel", Ui.Box(profile?.Color ?? Navy, 8, padH: 16, padV: 4));
+        // The plate takes the speaker's colour on top of the theme's NamePlate style.
+        var plate = (StyleBoxFlat)_plate.GetThemeStylebox("panel", "NamePlate").Duplicate();
+        if (profile != null) plate.BgColor = profile.Color;
+        _plate.AddThemeStyleboxOverride("panel", plate);
         // Text starts right of the portrait when there is one.
         _text.OffsetLeft = _portrait.Visible ? 340 : 40;
         _plate.OffsetLeft = _portrait.Visible ? 300 : 24;
@@ -185,12 +184,8 @@ public partial class DialogueBox : Control, DialoguePresenterBase
             Disabled = locked,
             FocusMode = locked ? FocusModeEnum.None : FocusModeEnum.All,
             MouseFilter = MouseFilterEnum.Stop,
+            ThemeTypeVariation = "ChoiceButton",
         };
-        button.AddThemeStyleboxOverride("normal", Ui.Box(Navy, 10));
-        button.AddThemeStyleboxOverride("hover", Ui.Box(Navy.Lightened(0.12f), 10));
-        button.AddThemeStyleboxOverride("pressed", Ui.Box(Colors.White, 10, border: new Color("ff5a3c")));
-        button.AddThemeStyleboxOverride("focus", Ui.Box(Colors.White, 10, border: new Color("ff5a3c")));
-        button.AddThemeStyleboxOverride("disabled", Ui.Box(new Color(0.24f, 0.25f, 0.33f, 0.85f), 10));
 
         var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
         row.AddThemeConstantOverride("separation", 12);
@@ -198,38 +193,35 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         row.OffsetLeft = 14; row.OffsetRight = -16;
         button.AddChild(row);
 
-        var badge = Ui.Tag(number.ToString(), new Color(1, 1, 1, 0.12f), Colors.White, 15);
+        var badge = RowLabel(number.ToString(), "ChoiceNumber");
         row.AddChild(badge);
         var tagText = condition?.Describe() ?? "";
         if (tagText != "")
-            row.AddChild(Ui.Tag(tagText.ToUpperInvariant(), locked ? new Color(1, 1, 1, 0.12f) : TagYellow, locked ? new Color(1, 1, 1, 0.7f) : Navy, 15));
-        var text = new Label
-        {
-            Text = option.Line.TextWithoutCharacterName.Text,
-            SizeFlagsHorizontal = SizeFlags.ExpandFill,
-            VerticalAlignment = VerticalAlignment.Center,
-            MouseFilter = MouseFilterEnum.Ignore,
-            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
-        };
-        text.AddThemeFontSizeOverride("font_size", 20);
-        text.AddThemeColorOverride("font_color", locked ? new Color(1, 1, 1, 0.45f) : Colors.White);
+            row.AddChild(RowLabel(tagText.ToUpperInvariant(), locked ? "TagMuted" : "TagYellow"));
+        var text = RowLabel(option.Line.TextWithoutCharacterName.Text, locked ? "ChoiceTextLocked" : "ChoiceText");
+        text.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        text.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
         row.AddChild(text);
         if (locked && condition is StatAtLeast stat)
-        {
-            var progress = new Label { Text = $"{stat.Stat} {Game.State.GetStat(stat.Stat)} of {stat.Level}", VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore };
-            progress.AddThemeFontSizeOverride("font_size", 14);
-            progress.AddThemeColorOverride("font_color", new Color(1, 1, 1, 0.5f));
-            row.AddChild(progress);
-        }
+            row.AddChild(RowLabel($"{stat.Stat} {Game.State.GetStat(stat.Stat)} of {stat.Level}", "FaintLabel"));
 
         // Dark text on the white focused style.
-        button.FocusEntered += () => { text.AddThemeColorOverride("font_color", Navy); badge.AddThemeStyleboxOverride("panel", Ui.Box(new Color("ff5a3c"), 6, padH: 8)); };
-        button.FocusExited += () => { text.AddThemeColorOverride("font_color", Colors.White); badge.AddThemeStyleboxOverride("panel", Ui.Box(new Color(1, 1, 1, 0.12f), 6, padH: 8)); };
+        button.FocusEntered += () => { text.ThemeTypeVariation = "ChoiceTextFocus"; badge.ThemeTypeVariation = "ChoiceNumberFocus"; };
+        button.FocusExited += () => { text.ThemeTypeVariation = "ChoiceText"; badge.ThemeTypeVariation = "ChoiceNumber"; };
         button.MouseEntered += () => { if (!locked) button.GrabFocus(); };
         button.Pressed += () => _choice?.TrySetResult(option);
         _options.AddChild(button);
         return button;
     }
+
+    private static Label RowLabel(string text, string variation) => new()
+    {
+        Text = text,
+        ThemeTypeVariation = variation,
+        VerticalAlignment = VerticalAlignment.Center,
+        SizeFlagsVertical = SizeFlags.ShrinkCenter,
+        MouseFilter = MouseFilterEnum.Ignore,
+    };
 
     private void Build()
     {
@@ -239,15 +231,12 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         _options.OffsetLeft = 20; _options.OffsetRight = -48; _options.OffsetTop = 40; _options.OffsetBottom = -240;
         AddChild(_options);
 
-        var box = new Panel { MouseFilter = MouseFilterEnum.Ignore };
-        box.AddThemeStyleboxOverride("panel", Ui.Box(Cream, 14, border: Navy, borderWidth: 3));
+        var box = new Panel { MouseFilter = MouseFilterEnum.Ignore, ThemeTypeVariation = "CreamBox" };
         box.AnchorLeft = 0; box.AnchorRight = 1; box.AnchorTop = 1; box.AnchorBottom = 1;
         box.OffsetLeft = 60; box.OffsetRight = -60; box.OffsetTop = -205; box.OffsetBottom = -36;
         AddChild(box);
 
-        _text = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = MouseFilterEnum.Ignore };
-        _text.AddThemeFontSizeOverride("font_size", 23);
-        _text.AddThemeColorOverride("font_color", Navy);
+        _text = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = MouseFilterEnum.Ignore, ThemeTypeVariation = "DialogueText" };
         _text.AnchorRight = 1; _text.AnchorBottom = 1;
         _text.OffsetLeft = 340; _text.OffsetTop = 44; _text.OffsetRight = -40; _text.OffsetBottom = -40;
         box.AddChild(_text);
@@ -257,20 +246,17 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         hintRow.AnchorLeft = 1; hintRow.AnchorRight = 1; hintRow.AnchorTop = 1; hintRow.AnchorBottom = 1;
         hintRow.OffsetLeft = -140; hintRow.OffsetRight = -22; hintRow.OffsetTop = -44; hintRow.OffsetBottom = -14;
         hintRow.Alignment = BoxContainer.AlignmentMode.End;
-        hintRow.AddChild(Ui.Tag("E", new Color("4a4d63"), Colors.White, 15));
-        _hint = new Label { Text = "Next", VerticalAlignment = VerticalAlignment.Center };
-        _hint.AddThemeFontSizeOverride("font_size", 16);
-        _hint.AddThemeColorOverride("font_color", new Color("4a4d63"));
+        hintRow.AddChild(RowLabel("E", "KeyCapGrey"));
+        _hint = RowLabel("Next", "MutedLabel");
         hintRow.AddChild(_hint);
         box.AddChild(hintRow);
 
-        _plate = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore };
+        _plate = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, ThemeTypeVariation = "NamePlate" };
         _plate.AnchorTop = 1; _plate.AnchorBottom = 1;
         _plate.OffsetLeft = 300; _plate.OffsetTop = -232; _plate.OffsetBottom = -190;
         var plateRow = new HBoxContainer();
         plateRow.AddThemeConstantOverride("separation", 12);
-        _name = new Label { VerticalAlignment = VerticalAlignment.Center };
-        _name.AddThemeFontSizeOverride("font_size", 24);
+        _name = new Label { VerticalAlignment = VerticalAlignment.Center, ThemeTypeVariation = "TitleLabel" };
         _subtitle = new Label { VerticalAlignment = VerticalAlignment.Center };
         _subtitle.AddThemeFontSizeOverride("font_size", 15);
         plateRow.AddChild(_name);

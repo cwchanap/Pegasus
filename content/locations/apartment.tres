@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="LocationData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://day/LocationData.cs" id="1_loc"]
+[ext_resource type="Resource" path="res://content/activities/horror_film.tres" id="a_horror_film"]
 
 [resource]
 script = ExtResource("1_loc")
@@ -10,3 +11,4 @@ Letter = "H"
 MapPosition = Vector2(175, 227)
 ScenePath = "res://day/apartment/apartment.tscn"
 Blurb = "Your one-room flat. The bed is here, and the window that shows the snow."
+Activities = [ExtResource("a_horror_film")]

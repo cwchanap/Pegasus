@@ -4,10 +4,11 @@
 [ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
-[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
-[ext_resource type="Script" path="res://ui/hud/DayHeader.cs" id="6_header"]
 [ext_resource type="Resource" path="res://content/locations/apartment.tres" id="7_data"]
 [ext_resource type="Script" path="res://world/bounds/Bounds.cs" id="bounds_script"]
+[ext_resource type="PackedScene" path="res://ui/hud/day_hud.tscn" id="hud"]
+[ext_resource type="Script" path="res://day/ActivitySpot.cs" id="spot_script"]
+[ext_resource type="Resource" path="res://content/activities/horror_film.tres" id="act_horror_film"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -81,13 +82,12 @@ size = Vector3(0.08, 2.2, 1.1)
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.8
 
-[node name="Apartment" type="Node3D" node_paths=PackedStringArray("Header", "Exit", "Bed", "Desk")]
+[node name="Apartment" type="Node3D" node_paths=PackedStringArray("Hud", "Exit", "Bed")]
 script = ExtResource("1_apt")
 Location = ExtResource("7_data")
-Header = NodePath("Hud/Header")
+Hud = NodePath("Hud")
 Exit = NodePath("Door")
 Bed = NodePath("Bed")
-Desk = NodePath("Desk")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("env")
@@ -169,8 +169,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0, -1.9)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
-script = ExtResource("4_interactable")
-Prompt = "Study"
+script = ExtResource("spot_script")
+Activity = ExtResource("act_horror_film")
 PromptHeight = 1.4
 
 [node name="Shape" type="CollisionShape3D" parent="Desk"]
@@ -208,15 +208,4 @@ script = ExtResource("3_camera")
 Distance = 6.5
 Height = 4.5
 
-[node name="Hud" type="CanvasLayer" parent="."]
-
-[node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
-
-[node name="Header" type="Control" parent="Hud"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 28.0
-offset_top = 28.0
-offset_right = 388.0
-offset_bottom = 108.0
-script = ExtResource("6_header")
+[node name="Hud" parent="." instance=ExtResource("hud")]

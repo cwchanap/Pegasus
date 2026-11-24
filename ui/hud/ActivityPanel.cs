@@ -1,0 +1,68 @@
+using Godot;
+using Pegasus.Core;
+using Pegasus.Day;
+
+namespace Pegasus.UI;
+
+/// <summary>
+/// The confirm panel from the HUD mockup: what an activity spends and gives, then
+/// E to do it or Esc to back out. Doing it fades out, passes the time and fades back.
+/// </summary>
+public partial class ActivityPanel : Control
+{
+    private ActivityData? _activity;
+
+    public override void _Ready()
+    {
+        Visible = false;
+        GetNode<Button>("%Do").Pressed += Confirm;
+        GetNode<Button>("%Cancel").Pressed += Close;
+    }
+
+    public void Offer(ActivityData activity)
+    {
+        if (Visible || !InputLock.IsFree) return;
+        var s = Game.State;
+        if (!Clock.CanSpendSlot(s))
+        {
+            Toast.Show("It's late. Nothing left today but sleep.");
+            return;
+        }
+        _activity = activity;
+        GetNode<Label>("%Title").Text = activity.Title;
+        GetNode<Label>("%Spends").Text = $"{s.Slot} slot";
+        GetNode<Label>("%Gain").Text = activity.Gains.Describe(s);
+        GetNode<Label>("%DoText").Text = activity.Verb;
+        Visible = true;
+        InputLock.Acquire(nameof(ActivityPanel));
+    }
+
+    public override void _UnhandledInput(InputEvent e)
+    {
+        if (!Visible) return;
+        if (e.IsActionPressed("interact") || e.IsActionPressed("ui_accept")) { GetViewport().SetInputAsHandled(); Confirm(); }
+        else if (e.IsActionPressed("pause") || e.IsActionPressed("ui_cancel")) { GetViewport().SetInputAsHandled(); Close(); }
+    }
+
+    private void Confirm()
+    {
+        var activity = _activity!;
+        Close();
+        SceneRouter.Instance.Interlude(activity.Outcome, () =>
+        {
+            var s = Game.State;
+            var gained = activity.Gains.Describe(s);
+            Clock.SpendSlot(s);
+            activity.Gains.Apply(s);
+            Toast.Show(gained);
+        });
+    }
+
+    private void Close()
+    {
+        Visible = false;
+        _activity = null;
+        // Release after this frame so the closing key does not also reach the world.
+        Callable.From(() => InputLock.Release(nameof(ActivityPanel))).CallDeferred();
+    }
+}

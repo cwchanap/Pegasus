@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://ui/hud/DayHud.cs" id="1_hud"]
+[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="2_prompt"]
+[ext_resource type="PackedScene" path="res://ui/hud/day_header.tscn" id="3_header"]
+[ext_resource type="PackedScene" path="res://ui/hud/stats_panel.tscn" id="4_stats"]
+[ext_resource type="PackedScene" path="res://ui/hud/activity_panel.tscn" id="5_panel"]
+
+[node name="DayHud" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Prompt" parent="." instance=ExtResource("2_prompt")]
+
+[node name="Header" parent="." instance=ExtResource("3_header")]
+
+[node name="Stats" parent="." instance=ExtResource("4_stats")]
+
+[node name="Hints" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -76.0
+offset_right = 180.0
+offset_bottom = -28.0
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"HintBar"
+
+[node name="Row" type="HBoxContainer" parent="Hints"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="MapKey" type="Label" parent="Hints/Row"]
+layout_mode = 2
+theme_type_variation = &"KeyCap"
+text = "M"
+vertical_alignment = 1
+
+[node name="MapText" type="Label" parent="Hints/Row"]
+layout_mode = 2
+theme_type_variation = &"DarkLabel"
+theme_override_font_sizes/font_size = 17
+text = "City map"
+vertical_alignment = 1
+
+[node name="ActivityPanel" parent="." instance=ExtResource("5_panel")]
