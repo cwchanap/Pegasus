@@ -3,7 +3,7 @@ using Godot;
 namespace Pegasus.Sandbox;
 
 /// <summary>Grey-box test scene. Proves the C# build, input map and 3D setup work.</summary>
-public partial class Sandbox : Node3D
+public partial class SandboxLevel : Node3D
 {
     [Export] public Label? InputLabel { get; set; }
 
