@@ -14,6 +14,11 @@ public partial class Player : CharacterBody3D
     [Export] public float Speed { get; set; } = 4.5f;
     [Export] public float Acceleration { get; set; } = 30f;
     [Export] public Sprite3D? Sprite { get; set; }
+    /// <summary>Footstep sound for this ground (floor by day, snow at night).</summary>
+    [Export] public Sfx Step { get; set; } = Sfx.StepFloor;
+
+    private const float StepLength = 1.4f;
+    private float _sinceStep;
 
     private readonly float _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
@@ -34,8 +39,19 @@ public partial class Player : CharacterBody3D
         velocity.Y = IsOnFloor() ? 0 : velocity.Y - _gravity * dt;
         Velocity = velocity;
         MoveAndSlide();
+        Footsteps(dt);
 
         if (Sprite != null && Mathf.Abs(input.X) > 0.1f) Sprite.FlipH = input.X < 0;
+    }
+
+    private void Footsteps(float dt)
+    {
+        var speed = new Vector2(Velocity.X, Velocity.Z).Length();
+        if (!IsOnFloor() || speed < 0.5f) { _sinceStep = StepLength * 0.7f; return; } // first step comes quickly
+        _sinceStep += speed * dt;
+        if (_sinceStep < StepLength) return;
+        _sinceStep = 0;
+        AudioService.PlaySfx(Step);
     }
 
     private Vector3 CameraRelative(Vector2 input)

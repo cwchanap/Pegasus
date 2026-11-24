@@ -22,6 +22,8 @@ public partial class Puzzle : Control
 
     /// <summary>Flag set in GameState once solved. The 3D world reads it to show the result.</summary>
     [Export] public string SolvedFlag { get; set; } = "";
+    /// <summary>Music while it is open; None keeps the world's.</summary>
+    [Export] public Music Music { get; set; } = Music.None;
 
     public bool Solved => SolvedFlag != "" && Game.State.HasFlag(SolvedFlag);
 
@@ -60,6 +62,7 @@ public partial class Puzzle : Control
         Game.State.TakeItem(held);
         Game.State.TakeItem(other);
         Game.State.GiveItem(made);
+        AudioService.PlaySfx(Sfx.ItemGet);
         Say($"Made_{made}");
         return true;
     }
@@ -71,6 +74,7 @@ public partial class Puzzle : Control
     protected void Solve(string node)
     {
         if (SolvedFlag != "") Game.State.SetFlag(SolvedFlag);
+        AudioService.PlaySfx(Sfx.PuzzleSolved);
         Frame?.Say(node, closeAfter: true);
     }
 }

@@ -8,16 +8,20 @@ using Pegasus.World;
 namespace Pegasus.UI;
 
 /// <summary>
-/// Autoload (ui/menu/menu.tscn). Tab opens one screen with three columns, per the menu
-/// mockup: status, items and the notebook (ui/notebook). It opens only where the player is and only while
-/// the input lock is free, so never over a conversation, a panel or a scene fade. While
-/// open it holds the lock and pauses the tree, so nothing timed (night Warmth) runs.
+/// Autoload (ui/menu/menu.tscn). Two pages. Tab opens the status page, per the menu mockup:
+/// status, items and the notebook (ui/notebook). Esc opens the System page (the pause menu):
+/// resume, settings, quit to title. In the menu, Esc on the status page goes to System and Esc on
+/// System resumes; Tab on System goes back to status and Tab on status closes. It opens only
+/// where the player is and only while the input lock is free, so never over a conversation, a
+/// panel, a close-up or a scene fade. While open it holds the lock and pauses the tree, so
+/// nothing timed (night Warmth) runs.
 /// </summary>
 public partial class Menu : CanvasLayer
 {
     private const int SlotsPerRow = 4;
 
     private bool _noted;
+    private bool _system;
 
     public override void _Ready()
     {
@@ -28,34 +32,62 @@ public partial class Menu : CanvasLayer
             if (!_noted) return;
             _noted = false;
             Toast.Show("Notebook updated");
+            AudioService.PlaySfx(Sfx.Notebook);
+        };
+        GetNode<Button>("%Resume").Pressed += Close;
+        GetNode<Button>("%QuitToTitle").Pressed += () =>
+        {
+            Close();
+            SceneRouter.Instance.GoTo(Scenes.Title);
         };
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (Visible || !e.IsActionPressed("menu") || !InputLock.IsFree || GetTree().GetFirstNodeInGroup("player") == null) return;
+        if (Visible || !InputLock.IsFree || GetTree().GetFirstNodeInGroup("player") == null) return;
+        var menu = e.IsActionPressed("menu");
+        if (!menu && !e.IsActionPressed("pause")) return;
         GetViewport().SetInputAsHandled();
-        Open();
+        Open(system: !menu);
     }
 
     // _Input, not _UnhandledInput: a focused item slot would otherwise eat Tab as "next focus".
     public override void _Input(InputEvent e)
     {
-        if (!Visible || !(e.IsActionPressed("menu") || e.IsActionPressed("pause") || e.IsActionPressed("ui_cancel"))) return;
+        if (!Visible) return;
+        var tab = e.IsActionPressed("menu");
+        var esc = e.IsActionPressed("pause") || e.IsActionPressed("ui_cancel");
+        if (!tab && !esc) return;
         GetViewport().SetInputAsHandled();
-        Close();
+        if (tab == _system) ShowPage(system: !_system); // Tab on System, Esc on status: switch pages
+        else Close();
     }
 
-    private void Open()
+    private void Open(bool system)
     {
         InputLock.Acquire(nameof(Menu));
         GetTree().Paused = true;
         Rebuild();
         Visible = true;
-        // Empty pockets: start on the notebook so the keys still reach it.
-        var first = GetNode<GridContainer>("%Slots").GetChildren().OfType<Button>().FirstOrDefault()
-            ?? GetNode<Notebook>("%Notes").FirstCard();
-        first?.GrabFocus();
+        AudioService.PlaySfx(Sfx.MenuOpen);
+        ShowPage(system);
+    }
+
+    private void ShowPage(bool system)
+    {
+        _system = system;
+        GetNode<Control>("%Columns").Visible = !system;
+        GetNode<Control>("%System").Visible = system;
+        GetNode<Label>("%TabHint").Text = system ? "Status" : "Close";
+        GetNode<Label>("%EscHint").Text = system ? "Resume" : "Pause and settings";
+        if (system) GetNode<Button>("%Resume").GrabFocus();
+        else
+        {
+            // Empty pockets: start on the notebook so the keys still reach it.
+            var first = GetNode<GridContainer>("%Slots").GetChildren().OfType<Button>().FirstOrDefault()
+                ?? GetNode<Notebook>("%Notes").FirstCard();
+            first?.GrabFocus();
+        }
     }
 
     private void Close()

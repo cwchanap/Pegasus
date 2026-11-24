@@ -6,11 +6,12 @@ config_version=5
 
 config/name="Snow Dream"
 config/description="Osaka by day, a snow-buried mirror by night."
-run/main_scene="res://core/boot.tscn"
+run/main_scene="res://ui/title/title.tscn"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 [autoload]
 
+AudioService="*res://core/AudioService.cs"
 SceneRouter="*res://core/SceneRouter.cs"
 Toast="*res://ui/Toast.cs"
 Conversation="*res://ui/dialogue/conversation.tscn"

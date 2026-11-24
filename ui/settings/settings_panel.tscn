@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/settings/SettingsPanel.cs" id="1_settings"]
+
+[node name="SettingsPanel" type="VBoxContainer"]
+custom_minimum_size = Vector2(440, 0)
+theme_override_constants/separation = 14
+script = ExtResource("1_settings")
+
+[node name="Caption" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"MenuCaption"
+text = "SETTINGS"
+
+[node name="Master" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Master"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"BodyText"
+text = "Volume"
+
+[node name="Slider" type="HSlider" parent="Master"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"VolumeSlider"
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Music" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Music"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"BodyText"
+text = "Music"
+
+[node name="Slider" type="HSlider" parent="Music"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"VolumeSlider"
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="SFX" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="SFX"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"BodyText"
+text = "Sound effects"
+
+[node name="Slider" type="HSlider" parent="SFX"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"VolumeSlider"
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Fullscreen" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_type_variation = &"MenuAction"
+toggle_mode = true
+text = "Fullscreen: Off"

@@ -20,8 +20,11 @@ public partial class CityMap : Control
 
     private Control Board => GetNode<Control>("Board");
 
+    [Export] public Music Music { get; set; } = Music.Day;
+
     public override void _Ready()
     {
+        AudioService.PlayMusic(Music);
         GetNode<DayHeader>("Header").Place = "City map";
         foreach (var location in Locations) AddMarker(location);
         GetNode<Button>("%Go").Pressed += () => { if (_selected != null) Travel(_selected); };

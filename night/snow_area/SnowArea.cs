@@ -15,10 +15,12 @@ namespace Pegasus.Night;
 public partial class SnowArea : Node3D
 {
     private const string LightItem = "flashlight";
+    private const float LowWarmth = 0.25f;
 
     [Export] public Interactable? HomeDoor { get; set; }
     [Export] public NightHud? Hud { get; set; }
     [Export] public Light3D? BikeLight { get; set; }
+    [Export] public Music Music { get; set; } = Music.Night;
 
     private int _max;
     private float _warmth;
@@ -28,7 +30,12 @@ public partial class SnowArea : Node3D
 
     public override void _Ready()
     {
-        if (HomeDoor != null) HomeDoor.Interacted += () => End(null);
+        AudioService.PlayMusic(Music);
+        if (HomeDoor != null) HomeDoor.Interacted += () =>
+        {
+            AudioService.PlaySfx(Sfx.Door);
+            End(null);
+        };
         _max = Items.MaxWarmth();
         _warmth = _max;
         if (BikeLight != null) BikeLight.Visible = false;
@@ -47,11 +54,14 @@ public partial class SnowArea : Node3D
     public override void _Process(double delta)
     {
         if (_over || !InputLock.IsFree) return;
+        var before = _warmth;
         _warmth = Mathf.Max(0, _warmth - Warmth.DrainPerSecond * (float)delta);
+        if (before >= _max * LowWarmth && _warmth < _max * LowWarmth) AudioService.PlaySfx(Sfx.WarmthLow);
         Hud?.SetWarmth(_warmth, _max);
         if (_warmth <= 0)
         {
             Game.State.SetFlag(Flags.WhitedOut);
+            AudioService.PlaySfx(Sfx.Whiteout);
             End("Too cold. Everything goes white.");
         }
     }
