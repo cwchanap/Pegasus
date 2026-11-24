@@ -9,6 +9,7 @@ namespace Pegasus.Dev;
 ///   --shot-frames=N       physics frame (60/s) to take it on (default 90)
 ///   --hold=action@A-B     hold an input action from frame A to frame B (repeatable)
 ///   --tap=action@A        press an action for one frame at frame A (repeatable)
+///   --state=file.json     start from this game state (same JSON as the save file)
 /// </summary>
 public partial class DevDriver : Node
 {
@@ -28,6 +29,7 @@ public partial class DevDriver : Node
             {
                 case "--shot": _shotPath = value; break;
                 case "--shot-frames": _shotFrame = int.Parse(value); break;
+                case "--state": Pegasus.Core.Game.Load(Pegasus.Core.SaveData.FromJson(System.IO.File.ReadAllText(value))); break;
                 case "--hold":
                 {
                     var (action, range) = Split(value, '@');
@@ -58,7 +60,8 @@ public partial class DevDriver : Node
         GetViewport().GetTexture().GetImage().SavePng(ProjectSettings.GlobalizePath(_shotPath));
         GD.Print($"Screenshot saved to {_shotPath}");
         if (GetTree().GetFirstNodeInGroup("player") is Node3D player)
-            GD.Print($"Player at {player.GlobalPosition:F2}");
+            GD.Print($"Player at {player.GlobalPosition}");
+        GD.Print($"State: {Pegasus.Core.SaveData.ToJson(Pegasus.Core.Game.State).ReplaceLineEndings("")}");
         GetTree().Quit();
     }
 

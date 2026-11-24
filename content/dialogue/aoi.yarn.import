@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://cl63c2o6yrofw"
+path="res://.godot/imported/aoi.yarn-3dd6912e94ca7a61f023dd13aa4e4464.tres"
+
+[deps]
+
+source_file="res://content/dialogue/aoi.yarn"
+dest_files=["res://.godot/imported/aoi.yarn-3dd6912e94ca7a61f023dd13aa4e4464.tres"]
+
+[params]
+

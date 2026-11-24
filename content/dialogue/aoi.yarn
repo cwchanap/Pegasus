@@ -1,0 +1,43 @@
+title: Aoi_Hangout1
+---
+Aoi: You again. Most people only come here at New Year.
+Aoi: I'm writing up the lantern festival for the folklore club. Nobody else signed up, so I am the whole club.
+-> What's so special about the lanterns?
+    Aoi: They light them from the gate inward, one each night of the festival. The order never changes.
+    Aoi: Old Mr. Kuroda says if you light them in the wrong order, winter comes early.
+-> Can I help?
+    Aoi: You can hold the notebook. That's a start.
+-> Ever had a dream that felt too real? #needs:guts>=1
+    Aoi: ...Snow. I dream about snow. In July. Don't laugh.
+    <<flag aoi_snow_dream>>
+Aoi: Come back sometime. The shrine is quieter than it looks.
+===
+title: Aoi_Hangout2
+---
+Aoi: There's a stone behind the main hall. Moss on the front, carving on the back.
+Aoi: I made a rubbing. The script is old, but I've worked out most of the signs.
+-> Show me.
+    Aoi: This mark is "gate". This one is "cold". This one... I'm still not sure. Maybe "sleep".
+-> Is it about the festival?
+    Aoi: Partly. It reads like instructions. For what, I don't know yet.
+Aoi: Here. I copied my notes for you. You look like someone who will need them.
+<<give aoi_notes>>
+You fold Aoi's notes on the old script into your pocket.
+===
+title: Aoi_Hangout3
+---
+Aoi: Can I tell you something odd? My grandmother lived by this shrine.
+Aoi: She said that some summers, a few people in the neighbourhood wake at three and see snow.
+Aoi: She said they always come back. Mostly.
+-> I've seen it.
+    Aoi: I know. You have the same look she had. Like you're cold in the middle of July.
+    <<flag aoi_knows>>
+-> That's just a story.
+    Aoi: Maybe. Stories are how this town remembers things.
+Aoi: Whatever it is, you're not the only one. Remember that.
+===
+title: Aoi_HangoutAgain
+---
+Aoi: Back again? Sit. The cicadas are loud today.
+You talk about nothing much until the shadows grow long.
+===

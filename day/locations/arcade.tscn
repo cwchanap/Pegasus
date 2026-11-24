@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" path="res://ui/hud/day_hud.tscn" id="hud"]
 [ext_resource type="Script" path="res://day/ActivitySpot.cs" id="spot_script"]
 [ext_resource type="Resource" path="res://content/activities/job_kissa.tres" id="act_job_kissa"]
+[ext_resource type="PackedScene" path="res://world/npc/npc.tscn" id="npc"]
+[ext_resource type="Resource" path="res://content/characters/kenta.tres" id="char_kenta"]
+[ext_resource type="Resource" path="res://content/activities/hangout_kenta.tres" id="act_hangout_kenta"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -191,6 +194,23 @@ PromptHeight = 1.6
 
 [node name="Shape" type="CollisionShape3D" parent="WorkSpot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("spot")
+
+[node name="Kenta" parent="." instance=ExtResource("npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -1.2)
+Profile = ExtResource("char_kenta")
+
+[node name="HangOutKenta" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -1.2)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("spot_script")
+Activity = ExtResource("act_hangout_kenta")
+PromptHeight = 2.0
+
+[node name="Shape" type="CollisionShape3D" parent="HangOutKenta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
 
 [node name="Hud" parent="." instance=ExtResource("hud")]

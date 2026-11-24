@@ -6,7 +6,7 @@ namespace Pegasus.UI;
 
 /// <summary>
 /// The confirm panel from the HUD mockup: what an activity spends and gives, then
-/// E to do it or Esc to back out. Doing it fades out, passes the time and fades back.
+/// E to do it or Esc to back out. Activities.Do runs it.
 /// </summary>
 public partial class ActivityPanel : Control
 {
@@ -31,7 +31,7 @@ public partial class ActivityPanel : Control
         _activity = activity;
         GetNode<Label>("%Title").Text = activity.Title;
         GetNode<Label>("%Spends").Text = $"{s.Slot} slot";
-        GetNode<Label>("%Gain").Text = activity.Gains.Describe(s);
+        GetNode<Label>("%Gain").Text = activity.Describe(s);
         GetNode<Label>("%DoText").Text = activity.Verb;
         Visible = true;
         InputLock.Acquire(nameof(ActivityPanel));
@@ -48,14 +48,8 @@ public partial class ActivityPanel : Control
     {
         if (_activity is not { } activity) return;
         Close();
-        SceneRouter.Instance.Interlude(activity.Outcome, () =>
-        {
-            var s = Game.State;
-            var gained = activity.Gains.Describe(s);
-            Clock.SpendSlot(s);
-            activity.Gains.Apply(s);
-            Toast.Show(gained);
-        });
+        // Start once the panel's lock is gone, so a hangout's conversation can take input.
+        Callable.From(() => Activities.Do(activity)).CallDeferred();
     }
 
     private void Close()

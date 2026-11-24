@@ -34,18 +34,20 @@ public partial class Conversation : CanvasLayer
         Runner!.onDialogueComplete += OnComplete;
     }
 
-    public static void Start(string node)
+    /// <summary>Starts a node. False if one is already running or the node does not exist.</summary>
+    public static bool Start(string node)
     {
-        if (Active) return;
+        if (Active) return false;
         if (!Instance.Runner!.Dialogue.NodeExists(node))
         {
             GD.PushError($"Conversation: no Yarn node named '{node}'.");
-            return;
+            return false;
         }
         Active = true;
         Instance._node = node;
         InputLock.Acquire(nameof(Conversation));
         Instance.Runner!.StartDialogueForget(node);
+        return true;
     }
 
     /// <summary>Ends the running conversation early; Finished still fires.</summary>

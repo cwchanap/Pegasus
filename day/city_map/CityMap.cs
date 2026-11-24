@@ -64,14 +64,23 @@ public partial class CityMap : Control
         list.Visible = location.Activities.Count > 0;
         foreach (var activity in location.Activities)
         {
+            var person = activity.With;
             var row = new VBoxContainer();
             row.AddThemeConstantOverride("separation", 2);
             var head = new HBoxContainer();
             head.AddThemeConstantOverride("separation", 10);
-            head.AddChild(new Label { Text = "1 SLOT", ThemeTypeVariation = "TagOrange", SizeFlagsVertical = SizeFlags.ShrinkCenter });
-            head.AddChild(new Label { Text = activity.Title, ThemeTypeVariation = "DarkTitle" });
+            head.AddChild(new Label
+            {
+                Text = person == null ? "1 SLOT" : "HERE TODAY",
+                ThemeTypeVariation = person == null ? "TagOrange" : "TagPurple",
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+            });
+            head.AddChild(new Label { Text = person?.DisplayName ?? activity.Title, ThemeTypeVariation = "DarkTitle" });
             row.AddChild(head);
-            row.AddChild(new Label { Text = activity.Gains.Describe(Game.State), ThemeTypeVariation = "MutedLabel" });
+            var detail = person == null
+                ? activity.Describe(Game.State)
+                : $"Hang out · spends a slot · Bond {Game.State.GetBond(person.Id)} of {GameState.MaxBond}";
+            row.AddChild(new Label { Text = detail, ThemeTypeVariation = "MutedLabel" });
             list.AddChild(row);
         }
     }

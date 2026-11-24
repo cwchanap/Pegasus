@@ -5,12 +5,13 @@
 [ext_resource type="Resource" path="res://content/dialogue/dialogue.yarnproject" id="3_project"]
 [ext_resource type="Script" path="res://ui/dialogue/DialogueBox.cs" id="4_box"]
 [ext_resource type="Resource" path="res://content/characters/aoi.tres" id="5_aoi"]
+[ext_resource type="Resource" path="res://content/characters/kenta.tres" id="6_kenta"]
 
 [node name="Conversation" type="CanvasLayer" node_paths=PackedStringArray("Runner")]
 layer = 20
 script = ExtResource("1_conv")
 Runner = NodePath("Runner")
-Characters = [ExtResource("5_aoi")]
+Characters = [ExtResource("5_aoi"), ExtResource("6_kenta")]
 
 [node name="Runner" type="Node" parent="." node_paths=PackedStringArray("dialoguePresenters")]
 script = ExtResource("2_runner")
