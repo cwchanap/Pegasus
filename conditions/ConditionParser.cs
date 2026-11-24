@@ -16,7 +16,7 @@ namespace Pegasus.Conditions;
 /// </summary>
 internal static partial class ConditionParser
 {
-    [GeneratedRegex(@"\s*(\(|\)|\||&|!|>=|[A-Za-z_][A-Za-z0-9_]*(?::[A-Za-z0-9_]+)?|\d+)")]
+    [GeneratedRegex(@"\s*(\(|\)|\||&|!|>=|[A-Za-z_][A-Za-z0-9_]*(?::[A-Za-z0-9_]*)?|\d+)")]
     private static partial Regex TokenRegex();
 
     public static Condition Parse(string text)
@@ -76,6 +76,9 @@ internal static partial class ConditionParser
         var colon = token.IndexOf(':');
         var kind = (colon < 0 ? token : token[..colon]).ToLowerInvariant();
         var id = colon < 0 ? "" : token[(colon + 1)..];
+        var needsId = kind is "item" or "flag" or "bond";
+        if (needsId && id == "") throw new ConditionSyntaxException($"'{kind}' needs an id, e.g. {kind}:name");
+        if (!needsId && colon >= 0) throw new ConditionSyntaxException($"'{kind}' takes no id: '{token}'");
         switch (kind)
         {
             case "item": return new HasItem(id);
