@@ -30,6 +30,7 @@ public partial class CloseUp : CanvasLayer
     private Control? _lastFocus;
     private readonly Dictionary<Button, string> _slots = new();
     private Node? _scene;
+    private Music _worldMusic;
 
     public static bool IsOpen => _instance?._puzzle != null;
 
@@ -72,6 +73,8 @@ public partial class CloseUp : CanvasLayer
         // A scene change (he wakes up) ends the close-up too.
         _scene = GetTree().CurrentScene;
         _scene.TreeExiting += Close;
+        _worldMusic = AudioService.Current;
+        if (_puzzle.Music != Music.None) AudioService.PlayMusic(_puzzle.Music);
         _puzzle.Opened();
     }
 
@@ -83,6 +86,7 @@ public partial class CloseUp : CanvasLayer
         Visible = false;
         _puzzle.QueueFree();
         _puzzle = null;
+        AudioService.PlayMusic(_worldMusic);
         HideTag();
         SetRoomInput(true);
         GetViewport().GuiReleaseFocus();

@@ -22,10 +22,12 @@ public partial class DayLocation : Node3D
     [Export] public DayHud? Hud { get; set; }
     /// <summary>Door or path out to the city map.</summary>
     [Export] public Interactable? Exit { get; set; }
+    [Export] public Music Music { get; set; } = Music.Day;
 
     public override void _Ready()
     {
         if (Location != null) Here = Location.Id;
+        AudioService.PlayMusic(Music);
         if (Hud != null)
         {
             Hud.Header.Place = Location?.DisplayName ?? "";
@@ -41,7 +43,11 @@ public partial class DayLocation : Node3D
                 spots.Select(s => s.Activity?.Id).Concat(shops.Select(s => s.Shop?.Id)),
                 (Location?.Activities.Select(a => a.Id) ?? []).Concat(Location?.Shops.Select(s => s.Id) ?? []));
         }
-        if (Exit != null) Exit.Interacted += OpenMap;
+        if (Exit != null) Exit.Interacted += () =>
+        {
+            AudioService.PlaySfx(Sfx.Door);
+            OpenMap();
+        };
     }
 
     /// <summary>The map lists the place's activities and shops; the scene offers its spots. Flag drift early.</summary>

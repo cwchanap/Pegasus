@@ -1,8 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://ui/notebook/notebook.tscn" id="notebook"]
 [ext_resource type="Script" path="res://ui/menu/Menu.cs" id="1_menu"]
 [ext_resource type="PackedScene" path="res://ui/hud/stats_panel.tscn" id="2_stats"]
+[ext_resource type="PackedScene" path="res://ui/settings/settings_panel.tscn" id="3_settings"]
 
 [node name="Menu" type="CanvasLayer"]
 process_mode = 3
@@ -51,6 +52,7 @@ text = "Monday, July 13"
 vertical_alignment = 1
 
 [node name="Columns" type="HBoxContainer" parent="Margin/Col"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 20
@@ -179,17 +181,86 @@ theme_type_variation = &"MenuPanel"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="System" type="CenterContainer" parent="Margin/Col"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="PanelContainer" parent="Margin/Col/System"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_type_variation = &"MenuPanel"
+
+[node name="Col" type="VBoxContainer" parent="Margin/Col/System/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Caption" type="Label" parent="Margin/Col/System/Panel/Col"]
+layout_mode = 2
+theme_type_variation = &"MenuCaption"
+text = "PAUSED"
+
+[node name="Resume" type="Button" parent="Margin/Col/System/Panel/Col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_type_variation = &"MenuAction"
+text = "Resume"
+
+[node name="Gap" type="Control" parent="Margin/Col/System/Panel/Col"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Settings" parent="Margin/Col/System/Panel/Col" instance=ExtResource("3_settings")]
+layout_mode = 2
+
+[node name="Rule" type="Panel" parent="Margin/Col/System/Panel/Col"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"Rule"
+
+[node name="QuitToTitle" type="Button" parent="Margin/Col/System/Panel/Col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_type_variation = &"MenuAction"
+text = "Quit to title"
+
+[node name="QuitNote" type="Label" parent="Margin/Col/System/Panel/Col"]
+layout_mode = 2
+theme_type_variation = &"MenuWarning"
+text = "Progress since you last slept is lost."
+horizontal_alignment = 1
+
 [node name="Footer" type="HBoxContainer" parent="Margin/Col"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="CloseKey" type="Label" parent="Margin/Col/Footer"]
+[node name="TabKey" type="Label" parent="Margin/Col/Footer"]
 layout_mode = 2
 theme_type_variation = &"KeyCapOutline"
 text = "Tab"
 
-[node name="Close" type="Label" parent="Margin/Col/Footer"]
+[node name="TabHint" type="Label" parent="Margin/Col/Footer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MenuMuted"
 text = "Close"
+vertical_alignment = 1
+
+[node name="Gap" type="Control" parent="Margin/Col/Footer"]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+
+[node name="EscKey" type="Label" parent="Margin/Col/Footer"]
+layout_mode = 2
+theme_type_variation = &"KeyCapOutline"
+text = "Esc"
+
+[node name="EscHint" type="Label" parent="Margin/Col/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"MenuMuted"
+text = "Pause and settings"
 vertical_alignment = 1

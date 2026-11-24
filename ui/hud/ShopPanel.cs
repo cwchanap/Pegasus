@@ -44,6 +44,7 @@ public partial class ShopPanel : Control
     private void Buy(ItemData item)
     {
         if (!Game.State.TryBuy(item.Id, item.Price)) return;
+        AudioService.PlaySfx(Sfx.ItemGet);
         Toast.Show($"Bought: {item.DisplayName}");
         Refresh();
     }

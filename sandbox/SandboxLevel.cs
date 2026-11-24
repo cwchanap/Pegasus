@@ -84,6 +84,5 @@ public partial class SandboxLevel : Node3D
             Game.Save();
             Say($"Saved to {ProjectSettings.GlobalizePath(SaveService.Path)}");
         }
-        else if (e.IsActionPressed("pause")) GetTree().Quit();
     }
 }
