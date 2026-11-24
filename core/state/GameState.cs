@@ -5,7 +5,8 @@ namespace Pegasus.Core;
 
 public enum Stat { Knowledge, Guts, Fitness }
 
-public enum TimeSlot { Afternoon, Evening, Night }
+/// <summary>Late = both day slots spent, only bed is left. Night = the snow world.</summary>
+public enum TimeSlot { Afternoon, Evening, Late, Night }
 
 /// <summary>
 /// Everything that persists between scenes and sessions. Plain data with no Godot

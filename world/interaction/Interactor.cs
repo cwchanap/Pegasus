@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Pegasus.Core;
 
 namespace Pegasus.World;
 
@@ -40,7 +41,7 @@ public partial class Interactor : Area3D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (Focused == null || !e.IsActionPressed("interact")) return;
+        if (Focused == null || !e.IsActionPressed("interact") || SceneRouter.Instance?.Busy == true) return;
         GetViewport().SetInputAsHandled();
         Focused.Interact();
     }
