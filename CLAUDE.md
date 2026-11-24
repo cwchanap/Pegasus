@@ -15,6 +15,8 @@ Folders follow the architecture layers. A layer only uses layers below it.
 
 Also: `sandbox/` grey-box test scene, `dev/` dev-only helpers, `tests/` xUnit tests for pure logic only.
 
+State and rules: `core/state/` (GameState, SaveData) and `conditions/` are pure C# with no Godot types, so `tests/` can compile them directly. Keep Godot code out of those folders. Read and change state through `Game.State` (`core/Game.cs`); gates use condition strings such as `"guts >= 2 | item:flashlight"` (`conditions/ConditionParser.cs` has the grammar).
+
 Conventions: snake_case folders and scene files, PascalCase C# files, namespace `Pegasus.<Module>`. Game state is plain C# data kept apart from nodes; scenes rebuild from it on load. Grey-box art and placeholder sound until real assets land.
 
 ## Commands

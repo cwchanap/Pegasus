@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://sandbox/SandboxLevel.cs" id="1_level"]
 [ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
@@ -51,15 +51,25 @@ size = Vector3(0.35, 0.6, 0.35)
 material = SubResource("grey")
 size = Vector3(1.2, 0.8, 0.1)
 
+[sub_resource type="BoxMesh" id="gate_mesh"]
+material = SubResource("grey")
+size = Vector3(3, 2.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="gate_shape"]
+size = Vector3(3, 2.4, 0.3)
+
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.6
 
-[node name="Sandbox" type="Node3D" node_paths=PackedStringArray("InfoLabel", "Lantern", "LanternLight", "Sign")]
+[node name="Sandbox" type="Node3D" node_paths=PackedStringArray("InfoLabel", "StateLabel", "Lantern", "LanternLight", "Sign", "GateButton", "Gate")]
 script = ExtResource("1_level")
 InfoLabel = NodePath("Hud/Info")
 Lantern = NodePath("Lantern")
 LanternLight = NodePath("Lantern/Light")
 Sign = NodePath("Sign")
+StateLabel = NodePath("Hud/State")
+GateButton = NodePath("GateButton")
+Gate = NodePath("Gate")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("env")
@@ -136,6 +146,28 @@ mesh = SubResource("sign_mesh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
 
+[node name="Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.2, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Gate"]
+mesh = SubResource("gate_mesh")
+
+[node name="Shape" type="CollisionShape3D" parent="Gate"]
+shape = SubResource("gate_shape")
+
+[node name="GateButton" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5.4)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Open"
+PromptHeight = 2.8
+
+[node name="Shape" type="CollisionShape3D" parent="GateButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
 [node name="Player" parent="." instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
@@ -152,11 +184,18 @@ offset_left = 16.0
 offset_top = 12.0
 offset_right = 400.0
 offset_bottom = 38.0
-text = "Snow Dream · grey-box sandbox (WASD move, E interact, Esc quit)"
+text = "Snow Dream · grey-box sandbox (WASD move, E interact, Tab save, Esc quit)"
 
 [node name="Info" type="Label" parent="Hud"]
 offset_left = 16.0
 offset_top = 40.0
 offset_right = 900.0
 offset_bottom = 66.0
+text = ""
+
+[node name="State" type="Label" parent="Hud"]
+offset_left = 16.0
+offset_top = 68.0
+offset_right = 900.0
+offset_bottom = 94.0
 text = ""
