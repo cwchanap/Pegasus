@@ -1,0 +1,177 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://day/apartment/Apartment.cs" id="1_apt"]
+[ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
+[ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.93, 0.86, 0.74, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.93, 0.82, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="floor_mat"]
+albedo_color = Color(0.72, 0.6, 0.46, 1)
+
+[sub_resource type="StandardMaterial3D" id="wall_mat"]
+albedo_color = Color(0.9, 0.87, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="bed_mat"]
+albedo_color = Color(0.45, 0.58, 0.75, 1)
+
+[sub_resource type="StandardMaterial3D" id="desk_mat"]
+albedo_color = Color(0.55, 0.42, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="window_mat"]
+albedo_color = Color(0.7, 0.85, 1, 1)
+emission_enabled = true
+emission = Color(0.6, 0.8, 1, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="BoxMesh" id="floor_mesh"]
+material = SubResource("floor_mat")
+size = Vector3(8, 0.2, 6)
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(8, 0.2, 6)
+
+[sub_resource type="BoxMesh" id="back_wall"]
+material = SubResource("wall_mat")
+size = Vector3(8, 3, 0.2)
+
+[sub_resource type="BoxMesh" id="side_wall"]
+material = SubResource("wall_mat")
+size = Vector3(0.2, 3, 6)
+
+[sub_resource type="BoxShape3D" id="back_shape"]
+size = Vector3(8, 3, 0.2)
+
+[sub_resource type="BoxShape3D" id="side_shape"]
+size = Vector3(0.2, 3, 6)
+
+[sub_resource type="BoxMesh" id="bed_mesh"]
+material = SubResource("bed_mat")
+size = Vector3(2.2, 0.6, 1.2)
+
+[sub_resource type="BoxMesh" id="desk_mesh"]
+material = SubResource("desk_mat")
+size = Vector3(1.4, 0.8, 0.7)
+
+[sub_resource type="BoxMesh" id="window_mesh"]
+material = SubResource("window_mat")
+size = Vector3(1.6, 1, 0.05)
+
+[sub_resource type="SphereShape3D" id="spot"]
+radius = 0.8
+
+[node name="Apartment" type="Node3D" node_paths=PackedStringArray("Bed", "Desk", "ClockLabel")]
+script = ExtResource("1_apt")
+Bed = NodePath("Bed")
+Desk = NodePath("Desk")
+ClockLabel = NodePath("Hud/Clock")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 6, 0)
+light_color = Color(1, 0.92, 0.8, 1)
+shadow_enabled = true
+
+[node name="Room" type="StaticBody3D" parent="."]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("floor_mesh")
+
+[node name="FloorShape" type="CollisionShape3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("floor_shape")
+
+[node name="BackWall" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
+mesh = SubResource("back_wall")
+
+[node name="BackShape" type="CollisionShape3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
+shape = SubResource("back_shape")
+
+[node name="LeftWall" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, 0)
+mesh = SubResource("side_wall")
+
+[node name="LeftShape" type="CollisionShape3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, 0)
+shape = SubResource("side_shape")
+
+[node name="RightWall" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5, 0)
+mesh = SubResource("side_wall")
+
+[node name="RightShape" type="CollisionShape3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5, 0)
+shape = SubResource("side_shape")
+
+[node name="Window" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.8, -2.88)
+mesh = SubResource("window_mesh")
+
+[node name="BedMesh" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0.3, -2.1)
+mesh = SubResource("bed_mesh")
+
+[node name="DeskMesh" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0.4, -2.5)
+mesh = SubResource("desk_mesh")
+
+[node name="Bed" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0, -1.3)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Sleep"
+PromptHeight = 1.4
+
+[node name="Shape" type="CollisionShape3D" parent="Bed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("spot")
+
+[node name="Desk" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0, -1.9)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_interactable")
+Prompt = "Study"
+PromptHeight = 1.4
+
+[node name="Shape" type="CollisionShape3D" parent="Desk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("spot")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Camera" type="Camera3D" parent="."]
+fov = 50.0
+script = ExtResource("3_camera")
+Distance = 6.5
+Height = 4.5
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
+
+[node name="Clock" type="Label" parent="Hud"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 500.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.15, 0.12, 0.1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Day 1 · Afternoon"
