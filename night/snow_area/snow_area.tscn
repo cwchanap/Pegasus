@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://world/Gate.cs" id="10_gate"]
 [ext_resource type="Script" path="res://world/interaction/Examine.cs" id="11_examine"]
 [ext_resource type="PackedScene" path="res://puzzles/tablet/tablet.tscn" id="12_tablet"]
+[ext_resource type="PackedScene" path="res://puzzles/cafe/cafe.tscn" id="13_cafe"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -718,6 +719,20 @@ Prompt = "Listen"
 PromptHeight = 2.2
 
 [node name="Shape" type="CollisionShape3D" parent="UnderpassBells"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("spot")
+
+[node name="KissaSpot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -9.1)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("8_puzzle_spot")
+Puzzle = ExtResource("13_cafe")
+Prompt = "Go inside"
+PromptHeight = 2.6
+
+[node name="Shape" type="CollisionShape3D" parent="KissaSpot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("spot")
 

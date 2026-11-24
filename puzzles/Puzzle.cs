@@ -42,6 +42,28 @@ public partial class Puzzle : Control
     /// </summary>
     public virtual void Use(Hotspot spot, string? item) => Say(item == null ? spot.YarnNode : NothingNode);
 
+    /// <summary>Called once the frame shows the puzzle, e.g. to say something on the way in.</summary>
+    public virtual void Opened() { }
+
+    /// <summary>Esc. By default he steps back to the world and partial progress is dropped.</summary>
+    public virtual void StepBack() => Frame?.Close();
+
+    /// <summary>
+    /// He picked <paramref name="other"/> while holding <paramref name="held"/>. If they make
+    /// something (<see cref="Recipes"/>), swap them for it for good and say so; otherwise false,
+    /// and he just switches to the other item.
+    /// </summary>
+    public virtual bool Combine(string held, string other)
+    {
+        var made = Recipes.Combine(held, other);
+        if (made == null) return false;
+        Game.State.TakeItem(held);
+        Game.State.TakeItem(other);
+        Game.State.GiveItem(made);
+        Say($"Made_{made}");
+        return true;
+    }
+
     /// <summary>Play a Yarn node through the dialogue box, over the close-up.</summary>
     protected void Say(string node) => Frame?.Say(node);
 
