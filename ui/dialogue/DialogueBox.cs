@@ -83,6 +83,16 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         var number = 1;
         foreach (var option in options.Where(o => o.IsAvailable))
             _buttons.Add((AddOption(number++, option), option));
+        var stuck = !HasOpenChoice;
+        if (stuck)
+        {
+            // Nothing the player can pick. The vendored runner never finishes an option step
+            // that every presenter answers with null, so fallthrough cannot work: show the
+            // locked rows, then end the conversation on the next press instead of freezing.
+            GD.PushError("DialogueBox: every choice is locked or hidden; ending the conversation.");
+            _hint.Text = "Close";
+            if (_buttons.Count == 0) _choice.TrySetResult(null);
+        }
         _buttons.FirstOrDefault(b => !b.Button.Disabled).Button?.GrabFocus();
 
         DialogueOption? chosen;
@@ -91,6 +101,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         _choice = null;
         foreach (var (button, _) in _buttons) button.QueueFree();
         _buttons.Clear();
+        if (stuck && !cancellationToken.IsCancellationRequested) Conversation.End();
         return chosen;
     }
 
@@ -101,6 +112,11 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         if (!Visible) return;
         if (_choice != null)
         {
+            if (!HasOpenChoice)
+            {
+                if (IsAdvance(e)) { Accept(); _choice.TrySetResult(null); }
+                return;
+            }
             if (e.IsActionPressed("interact") && GetViewport().GuiGetFocusOwner() is Button { Disabled: false } focused)
             {
                 Accept();
@@ -117,9 +133,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
             }
             return;
         }
-        var advancePressed = e.IsActionPressed("interact") || e.IsActionPressed("ui_accept")
-            || e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left };
-        if (!advancePressed || _advance == null) return;
+        if (!IsAdvance(e) || _advance == null) return;
         Accept();
         if (_reveal != null && _reveal.IsRunning())
         {
@@ -128,6 +142,12 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         }
         else _advance.TrySetResult();
     }
+
+    private bool HasOpenChoice => _buttons.Any(b => !b.Button.Disabled);
+
+    private static bool IsAdvance(InputEvent e) =>
+        e.IsActionPressed("interact") || e.IsActionPressed("ui_accept")
+        || e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left };
 
     private void Accept() => GetViewport().SetInputAsHandled();
 
