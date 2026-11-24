@@ -50,6 +50,7 @@ public class ConditionTests
     [InlineData("bond: >= 1")]
     [InlineData("money:foo >= 3")]
     [InlineData("guts:x >= 1")]
+    [InlineData("1 >= 2")]
     public void RejectsBadSyntax(string text) =>
         Assert.Throws<ConditionSyntaxException>(() => Condition.Parse(text));
 

@@ -86,7 +86,7 @@ internal static partial class ConditionParser
             case "bond": return new BondAtLeast(id, ParseAtLeast(t, ref pos));
             case "money": return new MoneyAtLeast(ParseAtLeast(t, ref pos));
         }
-        if (colon < 0 && Enum.TryParse<Stat>(kind, ignoreCase: true, out var stat))
+        if (colon < 0 && !char.IsDigit(kind[0]) && Enum.TryParse<Stat>(kind, ignoreCase: true, out var stat))
             return new StatAtLeast(stat, ParseAtLeast(t, ref pos));
         throw new ConditionSyntaxException($"Unknown condition '{token}'");
     }
