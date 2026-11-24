@@ -60,6 +60,10 @@ title: Cafe_LockOpens
 ---
 The last dial clicks into place. Inside the stove, a bolt slides back, and the firebox door swings open.
 ===
+title: Cafe_DialsBlind
+---
+Signs cut into brass. You can't read them, and turning them blind does nothing.
+===
 title: Cafe_DialsSet
 ---
 The dials won't turn any more. The lock is open.
