@@ -8,6 +8,9 @@ title: Underpass_Bells
 ---
 Out of the underpass, the sound of the street drops away.
 Then, from somewhere ahead, bells. Small ones, the kind that hang on a shop door.
-You don't turn around. Kenta will want to hear about this.
+You don't turn around.
+<<if met("bond:kenta >= 1")>>
+Kenta will want to hear about this.
+<<endif>>
 <<flag clue_underpass_bells>>
 ===

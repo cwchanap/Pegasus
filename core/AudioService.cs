@@ -54,7 +54,6 @@ public enum Sfx
 public partial class AudioService : Node
 {
     private const float FadeSeconds = 1.5f;
-    private const float Silent = -60f;
 
     private static AudioService? _instance;
     private static readonly HashSet<string> Missing = new();
@@ -102,13 +101,20 @@ public partial class AudioService : Node
     {
         _fade?.Kill();
         (_a, _b) = (_b, _a); // _a is now the incoming player, _b the outgoing one
-        _a.Stream = stream;
-        _a.VolumeDb = Silent;
-        if (stream != null) _a.Play();
-        _fade = CreateTween().SetParallel();
-        _fade.TweenProperty(_a, "volume_db", 0f, FadeSeconds);
-        _fade.TweenProperty(_b, "volume_db", Silent, FadeSeconds);
-        _fade.Chain().TweenCallback(Callable.From(_b.Stop));
+        var incoming = _a;
+        var outgoing = _b;
+        var outFrom = Mathf.DbToLinear(outgoing.VolumeDb);
+        incoming.Stream = stream;
+        incoming.VolumeDb = Mathf.LinearToDb(0);
+        if (stream != null) incoming.Play();
+        // Fade in linear volume; a tween over decibels stays near silent for most of the fade.
+        _fade = CreateTween();
+        _fade.TweenMethod(Callable.From<float>(t =>
+        {
+            incoming.VolumeDb = Mathf.LinearToDb(t);
+            outgoing.VolumeDb = Mathf.LinearToDb(outFrom * (1 - t));
+        }), 0f, 1f, FadeSeconds);
+        _fade.TweenCallback(Callable.From(outgoing.Stop));
     }
 
     private static AudioStream? Load(string folder, string cue)

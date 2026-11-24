@@ -15,7 +15,6 @@ namespace Pegasus.Night;
 public partial class SnowArea : Node3D
 {
     private const string LightItem = "flashlight";
-    private const float LowWarmth = 0.25f;
 
     [Export] public Interactable? HomeDoor { get; set; }
     [Export] public NightHud? Hud { get; set; }
@@ -56,7 +55,7 @@ public partial class SnowArea : Node3D
         if (_over || !InputLock.IsFree) return;
         var before = _warmth;
         _warmth = Mathf.Max(0, _warmth - Warmth.DrainPerSecond * (float)delta);
-        if (before >= _max * LowWarmth && _warmth < _max * LowWarmth) AudioService.PlaySfx(Sfx.WarmthLow);
+        if (before >= _max * Warmth.LowShare && _warmth < _max * Warmth.LowShare) AudioService.PlaySfx(Sfx.WarmthLow);
         Hud?.SetWarmth(_warmth, _max);
         if (_warmth <= 0)
         {

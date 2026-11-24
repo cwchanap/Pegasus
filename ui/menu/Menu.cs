@@ -80,6 +80,9 @@ public partial class Menu : CanvasLayer
         GetNode<Control>("%System").Visible = system;
         GetNode<Label>("%TabHint").Text = system ? "Status" : "Close";
         GetNode<Label>("%EscHint").Text = system ? "Resume" : "Pause and settings";
+        GetNode<Label>("%QuitNote").Text = Game.State.Slot == TimeSlot.Night
+            ? "Tonight's progress is lost. You'll start again at 3 AM."
+            : "Today's progress is lost. You'll start again this morning.";
         if (system) GetNode<Button>("%Resume").GrabFocus();
         else
         {
