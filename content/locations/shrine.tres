@@ -10,3 +10,4 @@ Letter = "S"
 MapPosition = Vector2(715, 460)
 ScenePath = "res://day/locations/shrine.tscn"
 Blurb = "A quiet neighbourhood shrine by the river, five stone lanterns along the path."
+Activities = []

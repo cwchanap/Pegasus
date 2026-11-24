@@ -17,7 +17,9 @@ Flow: `core/Boot` enters the world from the state; `core/DayCycle` runs bed → 
 
 Dialogue: Yarn Spinner for Godot is vendored in `addons/YarnSpinner-Godot` (MIT, v0.3.23, upstream commit b0abe88); do not edit it. Scripts live in `content/dialogue/*.yarn` (one `dialogue.yarnproject`). `ui/dialogue/conversation.tscn` (autoload `Conversation`) runs them through our own `ui/dialogue/DialogueBox`. Start one with `Conversation.Start("Node")` or an `world/npc/npc.tscn` with a `CharacterProfile` (`content/characters/*.tres`; register it in the Conversation scene's Characters list). Yarn reads and writes game state only through `dialogue/YarnBindings.cs` (`met("...")`, `<<stat>>`, `<<give>>`, `<<flag>>`, `<<bond>>`...); never keep game facts in Yarn `$variables`. Choices tagged `#needs:guts>=2` stay visible but locked (write the condition with no spaces, and no `<`, `$` or `#`, e.g. `#needs:guts>=2|item:flashlight`); `<<if>>` on a choice hides it instead. Every choice group needs at least one choice the player can always take: if all are locked or hidden the box shows them and then ends the conversation (the vendored runner cannot fall through). Input ownership: `core/InputLock` (dialogue, fades, later menus and puzzles).
 
-Day places: to add one, make a `LocationData` in `content/locations/*.tres`, a scene whose root script is `day/DayLocation` (or derives from it) with that data, an exit and a `world/bounds/Bounds` node around the walkable area, then add the `.tres` to the `Locations` list in `day/city_map/city_map.tscn`. Every scene with open edges needs a `Bounds` node.
+Day places: to add one, make a `LocationData` in `content/locations/*.tres`, a scene whose root script is `day/DayLocation` (or derives from it) with that data, an exit, an instance of `ui/hud/day_hud.tscn` set as its `Hud`, and a `world/bounds/Bounds` node around the walkable area, then add the `.tres` to the `Locations` list in `day/city_map/city_map.tscn`. Every scene with open edges needs a `Bounds` node. Activities: an `ActivityData` in `content/activities/*.tres` (title, verb, gains), offered by a `day/ActivitySpot` in the scene and listed in the place's `LocationData.Activities` for the map. Doing one spends a slot behind a fade (`SceneRouter.Interlude`). Stats and bonds cap at 3 (`GameState.MaxStat`, `MaxBond`).
+
+UI: all styling lives in `ui/theme.tres`, the project's default theme. Give nodes a type variation from it (`NavyPanel`, `CreamPanel`, `TagOrange`, `KeyCap`, `PrimaryButton`, `ChoiceButton`...) rather than colour or stylebox overrides, so the A6 UI kit is a theme swap. Build new screens as `.tscn` scenes.
 
 Also: `sandbox/` grey-box test scene, `dev/` dev-only helpers, `tests/` xUnit tests for pure logic only.
 
@@ -30,5 +32,5 @@ Conventions: snake_case folders and scene files, PascalCase C# files, namespace 
 - Build: `dotnet build`
 - Tests: `dotnet test`
 - Run headless: `godot --headless --quit-after 120 [res://scene.tscn]` (main scene is `core/boot.tscn`: continues the save; add `-- --new-game` to start fresh)
-- Screenshot: `scripts/shot.sh out.png [res://scene.tscn] [frames] [extra dev args, e.g. --hold=move_right@1-40 --tap=interact@60]` (see `dev/DevDriver.cs`)
+- Screenshot: `[SHOT_SIZE=1600x700] scripts/shot.sh out.png [res://scene.tscn] [frames] [extra dev args, e.g. --hold=move_right@1-40 --tap=interact@60]` (see `dev/DevDriver.cs`)
 - After adding new assets, import once: `godot --headless --import`

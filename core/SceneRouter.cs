@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Godot;
 
@@ -6,6 +7,7 @@ namespace Pegasus.Core;
 /// <summary>
 /// Autoload. Changes scenes behind a fade to black, with an optional caption on the
 /// black screen ("3:00 AM"). The game is paused while the screen is dark.
+/// Interlude does the same without changing scene, e.g. to pass time on an activity.
 /// </summary>
 public partial class SceneRouter : CanvasLayer
 {
@@ -40,7 +42,21 @@ public partial class SceneRouter : CanvasLayer
         AddChild(_caption);
     }
 
-    public async void GoTo(string scenePath, string? caption = null)
+    public void GoTo(string scenePath, string? caption = null) => Run(caption, async () =>
+    {
+        GetTree().ChangeSceneToFile(scenePath);
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+    });
+
+    /// <summary>Fade out, show the caption, run <paramref name="whileDark"/>, fade back in. Same scene.</summary>
+    public void Interlude(string? caption, Action whileDark) => Run(caption, () =>
+    {
+        whileDark();
+        return Task.CompletedTask;
+    });
+
+    private async void Run(string? caption, Func<Task> whileDark)
     {
         if (Busy) return;
         Busy = true;
@@ -49,18 +65,16 @@ public partial class SceneRouter : CanvasLayer
         GetTree().Paused = true;
 
         await Tween(_fade, 1f, FadeSeconds);
-        if (caption != null)
+        if (!string.IsNullOrEmpty(caption))
         {
             _caption.Text = caption;
             await Tween(_caption, 1f, FadeSeconds);
             await ToSignal(GetTree().CreateTimer(CaptionSeconds, processAlways: true), SceneTreeTimer.SignalName.Timeout);
         }
 
-        GetTree().ChangeSceneToFile(scenePath);
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        await whileDark();
 
-        if (caption != null) await Tween(_caption, 0f, FadeSeconds);
+        if (!string.IsNullOrEmpty(caption)) await Tween(_caption, 0f, FadeSeconds);
         GetTree().Paused = false;
         await Tween(_fade, 0f, FadeSeconds);
         _fade.MouseFilter = Control.MouseFilterEnum.Ignore;

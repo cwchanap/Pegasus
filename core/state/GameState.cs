@@ -16,6 +16,10 @@ public enum TimeSlot { Afternoon, Evening, Late, Night }
 /// </summary>
 public class GameState
 {
+    /// <summary>Stats and bonds both run 0 to 3 in the slice.</summary>
+    public const int MaxStat = 3;
+    public const int MaxBond = 3;
+
     public int Day { get; set; } = 1;
     public TimeSlot Slot { get; set; } = TimeSlot.Afternoon;
     public int Money { get; set; }
@@ -32,8 +36,8 @@ public class GameState
     public bool HasItem(string item) => Items.Contains(item);
     public bool HasFlag(string flag) => Flags.Contains(flag);
 
-    public void AddStat(Stat stat, int amount) => Mutate(() => Stats[stat] = GetStat(stat) + amount);
-    public void AddBond(string character, int amount) => Mutate(() => Bonds[character] = GetBond(character) + amount);
+    public void AddStat(Stat stat, int amount) => Mutate(() => Stats[stat] = Math.Clamp(GetStat(stat) + amount, 0, MaxStat));
+    public void AddBond(string character, int amount) => Mutate(() => Bonds[character] = Math.Clamp(GetBond(character) + amount, 0, MaxBond));
     public void AddMoney(int amount) => Mutate(() => Money += amount);
     public void GiveItem(string item) => Mutate(() => Items.Add(item));
     public void TakeItem(string item) => Mutate(() => Items.Remove(item));

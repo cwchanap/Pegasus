@@ -1,0 +1,143 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/hud/ActivityPanel.cs" id="1_panel"]
+
+[node name="ActivityPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("1_panel")
+
+[node name="Card" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"CreamPanel"
+
+[node name="Col" type="VBoxContainer" parent="Card"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Head" type="PanelContainer" parent="Card/Col"]
+layout_mode = 2
+theme_type_variation = &"PanelHead"
+
+[node name="Title" type="Label" parent="Card/Col/Head"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Activity"
+
+[node name="Body" type="MarginContainer" parent="Card/Col"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="Col" type="VBoxContainer" parent="Card/Col/Body"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Grid" type="GridContainer" parent="Card/Col/Body/Col"]
+layout_mode = 2
+theme_override_constants/h_separation = 36
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="SpendsName" type="Label" parent="Card/Col/Body/Col/Grid"]
+layout_mode = 2
+theme_type_variation = &"CaptionDark"
+text = "SPENDS"
+
+[node name="Spends" type="Label" parent="Card/Col/Body/Col/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SpendLabel"
+text = "Afternoon slot"
+
+[node name="GainName" type="Label" parent="Card/Col/Body/Col/Grid"]
+layout_mode = 2
+theme_type_variation = &"CaptionDark"
+text = "GAIN"
+
+[node name="Gain" type="Label" parent="Card/Col/Body/Col/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"GainLabel"
+text = "Knowledge +1"
+
+[node name="Buttons" type="HBoxContainer" parent="Card/Col/Body/Col"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Do" type="Button" parent="Card/Col/Body/Col/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_type_variation = &"PrimaryButton"
+
+[node name="Row" type="HBoxContainer" parent="Card/Col/Body/Col/Buttons/Do"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Key" type="Label" parent="Card/Col/Body/Col/Buttons/Do/Row"]
+layout_mode = 2
+theme_type_variation = &"KeyCapLight"
+text = "E"
+vertical_alignment = 1
+
+[node name="DoText" type="Label" parent="Card/Col/Body/Col/Buttons/Do/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Do it"
+vertical_alignment = 1
+
+[node name="Cancel" type="Button" parent="Card/Col/Body/Col/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_type_variation = &"SecondaryButton"
+
+[node name="Row" type="HBoxContainer" parent="Card/Col/Body/Col/Buttons/Cancel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Key" type="Label" parent="Card/Col/Body/Col/Buttons/Cancel/Row"]
+layout_mode = 2
+theme_type_variation = &"KeyCap"
+text = "Esc"
+vertical_alignment = 1
+
+[node name="Text" type="Label" parent="Card/Col/Body/Col/Buttons/Cancel/Row"]
+layout_mode = 2
+theme_type_variation = &"DarkLabel"
+theme_override_font_sizes/font_size = 20
+text = "Not now"
+vertical_alignment = 1

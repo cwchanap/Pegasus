@@ -4,10 +4,9 @@
 [ext_resource type="PackedScene" path="res://world/player/player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://world/camera/FollowCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://world/interaction/Interactable.cs" id="4_interactable"]
-[ext_resource type="PackedScene" path="res://ui/interact_prompt.tscn" id="5_prompt"]
-[ext_resource type="Script" path="res://ui/hud/DayHeader.cs" id="6_header"]
 [ext_resource type="Resource" path="res://content/locations/shrine.tres" id="7_data"]
 [ext_resource type="Script" path="res://world/bounds/Bounds.cs" id="bounds_script"]
+[ext_resource type="PackedScene" path="res://ui/hud/day_hud.tscn" id="hud"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -41,11 +40,11 @@ albedo_color = Color(0.62, 0.62, 0.6, 1)
 [sub_resource type="SphereShape3D" id="spot"]
 radius = 0.8
 
-[node name="Shrine" type="Node3D" node_paths=PackedStringArray("Header", "Exit")]
+[node name="Shrine" type="Node3D" node_paths=PackedStringArray("Hud", "Exit")]
 script = ExtResource("1_loc")
 Location = ExtResource("7_data")
 Spot = ""
-Header = NodePath("Hud/Header")
+Hud = NodePath("Hud")
 Exit = NodePath("Exit")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -212,15 +211,4 @@ script = ExtResource("3_camera")
 Distance = 7
 Height = 4.5
 
-[node name="Hud" type="CanvasLayer" parent="."]
-
-[node name="Prompt" parent="Hud" instance=ExtResource("5_prompt")]
-
-[node name="Header" type="Control" parent="Hud"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 28.0
-offset_top = 28.0
-offset_right = 388.0
-offset_bottom = 108.0
-script = ExtResource("6_header")
+[node name="Hud" parent="." instance=ExtResource("hud")]

@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Pegasus.Core;
 using Pegasus.UI;
@@ -7,7 +8,7 @@ namespace Pegasus.Day;
 
 /// <summary>
 /// Root script for a daytime place. Remembers where the player is for the map,
-/// opens the map on M, and feeds the place name to the day header.
+/// opens the map on M, feeds the HUD and hands its activity spots to the HUD panel.
 /// </summary>
 public partial class DayLocation : Node3D
 {
@@ -17,15 +18,20 @@ public partial class DayLocation : Node3D
     [Export] public LocationData? Location { get; set; }
     /// <summary>Sub-place shown after the name, e.g. "Library".</summary>
     [Export] public string Spot { get; set; } = "";
-    [Export] public DayHeader? Header { get; set; }
+    [Export] public DayHud? Hud { get; set; }
     /// <summary>Door or path out to the city map.</summary>
     [Export] public Interactable? Exit { get; set; }
 
     public override void _Ready()
     {
         if (Location != null) Here = Location.Id;
-        if (Header != null) Header.Place = Location?.DisplayName ?? "";
-        if (Header != null) Header.Spot = Spot;
+        if (Hud != null)
+        {
+            Hud.Header.Place = Location?.DisplayName ?? "";
+            Hud.Header.Spot = Spot;
+            foreach (var spot in FindChildren("*", "Area3D", owned: false).OfType<ActivitySpot>())
+                spot.Interacted += () => { if (spot.Activity != null) Hud.Offer(spot.Activity); };
+        }
         if (Exit != null) Exit.Interacted += OpenMap;
     }
 
