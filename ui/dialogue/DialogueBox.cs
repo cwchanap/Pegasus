@@ -103,9 +103,20 @@ public partial class DialogueBox : Control, DialoguePresenterBase
 
     // ---- Input ----
 
+    // Clicks advance in _Input so a full-screen blocker (the close-up's) can't eat them;
+    // while choices are open the buttons take the click through the GUI instead.
+    public override void _Input(InputEvent e)
+    {
+        if (Visible && IsClick(e) && !(_choice != null && HasOpenChoice)) Handle(e);
+    }
+
     public override void _UnhandledInput(InputEvent e)
     {
-        if (!Visible) return;
+        if (Visible && !IsClick(e)) Handle(e);
+    }
+
+    private void Handle(InputEvent e)
+    {
         if (_choice != null)
         {
             if (!HasOpenChoice)
@@ -142,8 +153,9 @@ public partial class DialogueBox : Control, DialoguePresenterBase
     private bool HasOpenChoice => _buttons.Any(b => !b.Button.Disabled);
 
     private static bool IsAdvance(InputEvent e) =>
-        e.IsActionPressed("interact") || e.IsActionPressed("ui_accept")
-        || e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left };
+        e.IsActionPressed("interact") || e.IsActionPressed("ui_accept") || IsClick(e);
+
+    private static bool IsClick(InputEvent e) => e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left };
 
     private void Accept() => GetViewport().SetInputAsHandled();
 
