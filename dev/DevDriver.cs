@@ -13,7 +13,8 @@ namespace Pegasus.Dev;
 ///   --open=res://x.tscn   open this puzzle scene in the close-up on frame 5 (pass a gameplay
 ///                         scene too: the title's fade holds the input lock then); exits 1 if it can't
 ///   --click=X,Y@A         left-click at viewport position X,Y on frame A (repeatable)
-///   --at=X,Z              put the player at X,Z on frame 2 (skip the walk to a spot)
+///   --at=X,Z              put the player at X,Z on frame 2 (skip the walk to a spot; needs a
+///                         gameplay scene, exits 1 if there is no player)
 /// Frames count while the tree is paused too (fades, the Tab menu), so a shot can catch them.
 /// </summary>
 public partial class DevDriver : Node
@@ -79,7 +80,16 @@ public partial class DevDriver : Node
             if (_frame == from) Press(action, true);
             if (_frame == to + 1) Press(action, false);
         }
-        if (_frame == 2 && _at is { } at0 && GetTree().GetFirstNodeInGroup("player") is Node3D p) p.GlobalPosition = at0;
+        if (_frame == 2 && _at is { } at0)
+        {
+            if (GetTree().GetFirstNodeInGroup("player") is Node3D p) p.GlobalPosition = at0;
+            else
+            {
+                GD.PushError("--at: no player on frame 2 (pass a gameplay scene)");
+                GetTree().Quit(1);
+                return;
+            }
+        }
         if (_frame == 5 && _puzzle != null)
         {
             Pegasus.Puzzles.CloseUp.Open(GD.Load<PackedScene>(_puzzle));
