@@ -41,8 +41,7 @@ vertical_alignment = 1
 
 [node name="MapText" type="Label" parent="Hints/Row"]
 layout_mode = 2
-theme_type_variation = &"DarkLabel"
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HintLabel"
 text = "City map"
 vertical_alignment = 1
 
@@ -59,8 +58,7 @@ vertical_alignment = 1
 
 [node name="MenuText" type="Label" parent="Hints/Row"]
 layout_mode = 2
-theme_type_variation = &"DarkLabel"
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HintLabel"
 text = "Menu"
 vertical_alignment = 1
 

@@ -30,7 +30,7 @@ columns = 2
 [node name="KnowledgeName" type="Label" parent="Col/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HudLabel"
 text = "Knowledge"
 
 [node name="Knowledge" type="HBoxContainer" parent="Col/Grid"]
@@ -42,7 +42,7 @@ theme_override_constants/separation = 6
 [node name="GutsName" type="Label" parent="Col/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HudLabel"
 text = "Guts"
 
 [node name="Guts" type="HBoxContainer" parent="Col/Grid"]
@@ -54,7 +54,7 @@ theme_override_constants/separation = 6
 [node name="FitnessName" type="Label" parent="Col/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HudLabel"
 text = "Fitness"
 
 [node name="Fitness" type="HBoxContainer" parent="Col/Grid"]
@@ -76,7 +76,7 @@ mouse_filter = 2
 [node name="MoneyName" type="Label" parent="Col/MoneyRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 17
+theme_type_variation = &"HudLabel"
 text = "Money"
 
 [node name="Money" type="Label" parent="Col/MoneyRow"]
