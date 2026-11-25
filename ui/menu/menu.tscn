@@ -94,6 +94,7 @@ text = "Warmth"
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MenuMuted"
+autowrap_mode = 3
 text = "No winter gear yet"
 
 [node name="Warmth" type="Label" parent="Margin/Col/Columns/Status/Col/WarmthRow"]
