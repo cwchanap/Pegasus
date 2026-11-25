@@ -10,7 +10,8 @@ namespace Pegasus.Dev;
 ///   --hold=action@A-B     hold an input action from frame A to frame B (repeatable)
 ///   --tap=action@A        press an action for one frame at frame A (repeatable)
 ///   --state=file.json     start from this game state (same JSON as the save file)
-///   --open=res://x.tscn   open this puzzle scene in the close-up on frame 5
+///   --open=res://x.tscn   open this puzzle scene in the close-up on frame 5 (pass a gameplay
+///                         scene too: the title's fade holds the input lock then); exits 1 if it can't
 ///   --click=X,Y@A         left-click at viewport position X,Y on frame A (repeatable)
 /// Frames count while the tree is paused too (fades, the Tab menu), so a shot can catch them.
 /// </summary>
@@ -70,7 +71,15 @@ public partial class DevDriver : Node
             if (_frame == from) Press(action, true);
             if (_frame == to + 1) Press(action, false);
         }
-        if (_frame == 5 && _puzzle != null) Pegasus.Puzzles.CloseUp.Open(GD.Load<PackedScene>(_puzzle));
+        if (_frame == 5 && _puzzle != null)
+        {
+            Pegasus.Puzzles.CloseUp.Open(GD.Load<PackedScene>(_puzzle));
+            if (!Pegasus.Puzzles.CloseUp.IsOpen)
+            {
+                GD.PushError($"--open: could not open {_puzzle} on frame 5 (input lock busy; pass a gameplay scene)");
+                GetTree().Quit(1);
+            }
+        }
         foreach (var (at, frame) in _clicks)
         {
             if (_frame == frame - 1) Input.ParseInputEvent(new InputEventMouseMotion { Position = at, GlobalPosition = at });
