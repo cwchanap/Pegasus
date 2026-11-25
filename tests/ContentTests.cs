@@ -183,4 +183,23 @@ public class ContentTests
         Assert.NotEmpty(names);
         Assert.Empty(bad);
     }
+
+    /// <summary>The night budgets in ShopAndWarmthTests assume these gear values; this reads the real items.</summary>
+    [Fact]
+    public void NightBudgetsHoldWithTheRealGear()
+    {
+        (string, int) Item(string id)
+        {
+            var path = Path.Combine(Root, "content", "items", id + ".tres");
+            if (!File.Exists(path)) return (id, 0);
+            var m = Regex.Match(File.ReadAllText(path), @"^Warmth = (\d+)", RegexOptions.Multiline);
+            return (id, m.Success ? int.Parse(m.Groups[1].Value) : 0);
+        }
+        var s = new Pegasus.Core.GameState();
+        s.GiveItem("down_coat");
+        Assert.Equal(60f, Pegasus.Core.Warmth.Seconds(Pegasus.Core.Warmth.Max(s, Item)), 3); // the shrine and some wandering
+        s.GiveItem("boots");
+        s.AddStat(Pegasus.Core.Stat.Fitness, Pegasus.Core.GameState.MaxStat);
+        Assert.Equal(105f, Pegasus.Core.Warmth.Seconds(Pegasus.Core.Warmth.Max(s, Item)), 3); // shrine, underpass and arcade
+    }
 }
