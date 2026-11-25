@@ -65,10 +65,14 @@ public partial class CityMap : Control
         var list = GetNode<VBoxContainer>("%Activities");
         foreach (var child in list.GetChildren()) child.QueueFree();
         list.Visible = location.Activities.Count + location.Shops.Count > 0;
+        var slotsLeft = Clock.CanSpendSlot(Game.State);
         foreach (var activity in location.Activities)
         {
             var person = activity.With;
-            list.AddChild(person == null
+            if (!slotsLeft)
+                list.AddChild(Row("NO SLOTS LEFT", "TagSlate", person?.DisplayName ?? activity.Title,
+                    "Come back tomorrow", "MutedLabel"));
+            else list.AddChild(person == null
                 ? Row("1 SLOT", "TagOrange", activity.Title, activity.Describe(Game.State))
                 : Row("HERE TODAY", "TagPurple", person.DisplayName,
                     $"Hang out · spends a slot · Bond {Game.State.GetBond(person.Id)} of {GameState.MaxBond}"));
@@ -78,14 +82,14 @@ public partial class CityMap : Control
                 string.Join(" · ", shop.Stock.Select(i => $"{i.DisplayName} {Format.Yen(i.Price)}"))));
     }
 
-    private static VBoxContainer Row(string tag, string tagStyle, string title, string detail)
+    private static VBoxContainer Row(string tag, string tagStyle, string title, string detail, string titleStyle = "DarkTitle")
     {
         var row = new VBoxContainer();
         row.AddThemeConstantOverride("separation", 2);
         var head = new HBoxContainer();
         head.AddThemeConstantOverride("separation", 10);
         head.AddChild(new Label { Text = tag, ThemeTypeVariation = tagStyle, SizeFlagsVertical = SizeFlags.ShrinkCenter });
-        head.AddChild(new Label { Text = title, ThemeTypeVariation = "DarkTitle" });
+        head.AddChild(new Label { Text = title, ThemeTypeVariation = titleStyle });
         row.AddChild(head);
         row.AddChild(new Label { Text = detail, ThemeTypeVariation = "MutedLabel" });
         return row;
