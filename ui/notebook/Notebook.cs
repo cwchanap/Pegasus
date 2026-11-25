@@ -38,6 +38,8 @@ public partial class Notebook : VBoxContainer
         }
     }
 
+    public Control? FirstCard() => GetNode<VBoxContainer>("%Entries").GetChildren().OfType<Control>().FirstOrDefault();
+
     private static ClueData? Get(string flag)
     {
         if (Cache.TryGetValue(flag, out var cached)) return cached;

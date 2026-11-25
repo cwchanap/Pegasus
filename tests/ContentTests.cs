@@ -156,7 +156,7 @@ public class ContentTests
     [Fact]
     public void Every_clue_has_a_notebook_entry_and_every_entry_a_clue()
     {
-        var set = Find(@"<<flag\s+(clue_\w+)\s*>>", ".yarn").Concat(Find(@"SetFlag\(""(clue_\w+)""", ".cs"))
+        var set = Find(@"<<flag\s+(clue_\w+)\s*>>", ".yarn").Concat(Find(@"SetFlag\(""(clue_\w+)""\s*\)", ".cs"))
             .Select(m => m.Value).ToHashSet();
         var entries = Ids("content/clues");
         Assert.NotEmpty(set);
