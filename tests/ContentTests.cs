@@ -135,6 +135,7 @@ public class ContentTests
             .Concat(Find(@"Conversation\.Start\(""([^""]+)""", ".cs"))
             .Concat(Find(@"(?:Say|Solve)\(""([^""]+)""", ".cs").Where(m => m.File.StartsWith("puzzles")))
             .Concat(Find(@"Node = ""([^""]+)"";", ".cs"))
+            .Concat(Find(@"<<jump\s+(\w+)\s*>>", ".yarn"))
             .ToList();
         Assert.NotEmpty(played);
         Assert.Empty(played.Where(p => !nodes.Contains(p.Value)).Select(p => $"{p.File}: no Yarn node '{p.Value}'"));
