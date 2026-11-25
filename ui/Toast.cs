@@ -6,7 +6,8 @@ namespace Pegasus.UI;
 
 /// <summary>
 /// Autoload. One short line of feedback near the bottom of the screen. Lines wait their turn,
-/// and none starts while a fade is up, so a toast shown just before a fade is still seen after it.
+/// none starts while a fade is up, and the one showing waits out a fade, so a toast shown
+/// just before a fade is still seen after it.
 /// </summary>
 public partial class Toast : CanvasLayer
 {
@@ -41,7 +42,14 @@ public partial class Toast : CanvasLayer
 
     public override void _Process(double delta)
     {
-        if (_tween?.IsRunning() == true || SceneRouter.Instance.Busy || !_waiting.TryDequeue(out var text)) return;
+        var busy = SceneRouter.Instance.Busy;
+        // The line on screen holds still behind a fade, so it keeps the rest of its time for after.
+        if (_tween?.IsValid() == true)
+        {
+            if (busy) _tween.Pause(); else _tween.Play();
+            return;
+        }
+        if (busy || !_waiting.TryDequeue(out var text)) return;
         _label.Text = text;
         _tween = CreateTween();
         _tween.TweenProperty(_label, "modulate:a", 1f, 0.15f);

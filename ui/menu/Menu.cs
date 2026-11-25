@@ -52,7 +52,10 @@ public partial class Menu : CanvasLayer
         GetTree().Paused = true;
         Rebuild();
         Visible = true;
-        GetNode<GridContainer>("%Slots").GetChildren().OfType<Button>().FirstOrDefault()?.GrabFocus();
+        // Empty pockets: start on the notebook so the keys still reach it.
+        var first = GetNode<GridContainer>("%Slots").GetChildren().OfType<Button>().FirstOrDefault()
+            ?? GetNode<Notebook>("%Notes").FirstCard();
+        first?.GrabFocus();
     }
 
     private void Close()
