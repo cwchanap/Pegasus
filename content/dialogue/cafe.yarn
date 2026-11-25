@@ -48,7 +48,9 @@ title: Cafe_Plate
 A brass plate under the three dials, engraved in plain letters.
 SPEAK THE OLD RULE, AND I WILL BURN.
 <<if met("flag:tablet_read")>>
-The old rule. The tablet in the shrine hall had one.
+The old rule. The tablet in the shrine hall had one, and you remember it, top to bottom.
+GATE, two posts and a beam. COLD, three strokes, each shorter than the last. SLEEP, a closed eye. FIRE, three flames, the middle one tallest. WAKE, an open eye in a frame.
+"Through the gate, into the cold, one sleeps. Only a fire wakes the sleeper."
 <<endif>>
 <<flag clue_cafe_lock>>
 ===
