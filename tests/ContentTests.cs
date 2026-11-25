@@ -69,7 +69,7 @@ public class ContentTests
         var set = Find(@"^SolvedFlag = ""(\w+)""", ".tscn")
             .Concat(Find(@"<<flag\s+(\w+)\s*>>", ".yarn"))
             .Concat(Find(@"SetFlag\(""(\w+)""", ".cs"))
-            .Concat(Find(@"const string \w+ = ""(\w+)""", ".cs").Where(m => m.File.EndsWith("Flags.cs")))
+            .Concat(Find(@"const string \w+ = ""(\w+)""", ".cs")) // Flags.cs and a puzzle's own flag names
             .Select(m => m.Value).ToHashSet();
         var used = Find(@"met\(""([^""]*)""\)", ".yarn")
             .Concat(Find(@"#needs:(\S+)", ".yarn"))
