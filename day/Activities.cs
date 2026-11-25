@@ -11,7 +11,8 @@ public static class Activities
     {
         var node = activity.SceneFor(Game.State);
         if (node == "") PassTime(activity);
-        else Conversation.Start(node, () => PassTime(activity));
+        // No scene, no slot spent: a missed milestone scene must stay replayable.
+        else if (!Conversation.Start(node, () => PassTime(activity))) Toast.Show("Not now");
     }
 
     /// <summary>Fade out with the outcome line, spend the slot and apply the gains, then toast them.</summary>
