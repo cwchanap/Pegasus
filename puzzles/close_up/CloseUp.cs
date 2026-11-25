@@ -72,21 +72,26 @@ public partial class CloseUp : CanvasLayer
         FocusFirst();
         // A scene change (he wakes up) ends the close-up too.
         _scene = GetTree().CurrentScene;
-        _scene.TreeExiting += Close;
+        _scene.TreeExiting += SceneLeaving;
         _worldMusic = AudioService.Current;
         if (_puzzle.Music != Music.None) AudioService.PlayMusic(_puzzle.Music);
         _puzzle.Opened();
     }
 
-    internal void Close()
+    // The next scene names its own music, so the world's cue isn't put back on the way out.
+    private void SceneLeaving() => Close(restoreMusic: false);
+
+    internal void Close() => Close(restoreMusic: true);
+
+    private void Close(bool restoreMusic)
     {
         if (_puzzle == null) return;
-        if (_scene != null && IsInstanceValid(_scene)) _scene.TreeExiting -= Close;
+        if (_scene != null && IsInstanceValid(_scene)) _scene.TreeExiting -= SceneLeaving;
         _scene = null;
         Visible = false;
         _puzzle.QueueFree();
         _puzzle = null;
-        AudioService.PlayMusic(_worldMusic);
+        if (restoreMusic) AudioService.PlayMusic(_worldMusic);
         HideTag();
         SetRoomInput(true);
         GetViewport().GuiReleaseFocus();
@@ -105,7 +110,11 @@ public partial class CloseUp : CanvasLayer
         else if (e.IsActionPressed("interact") && !e.IsActionPressed("ui_accept") && GetViewport().GuiGetFocusOwner() is BaseButton button)
         {
             GetViewport().SetInputAsHandled();
-            if (button.ToggleMode) button.ButtonPressed = !button.ButtonPressed;
+            if (button.ToggleMode)
+            {
+                button.ButtonPressed = !button.ButtonPressed;
+                AudioService.PlaySfx(Sfx.UiClick); // setting ButtonPressed doesn't emit Pressed, so no click by itself
+            }
             else button.EmitSignal(BaseButton.SignalName.Pressed);
         }
     }

@@ -13,11 +13,14 @@ public partial class Title : Control
     [Export] public Music Music { get; set; } = Music.Title;
 
     private GameState? _saved;
+    private static bool _launched;
 
     public override void _Ready()
     {
         AudioService.PlayMusic(Music);
-        var args = OS.GetCmdlineUserArgs();
+        // The launch shortcuts act once per run; later visits (quit to title) show the menu.
+        var args = _launched ? System.Array.Empty<string>() : OS.GetCmdlineUserArgs();
+        _launched = true;
         if (args.Contains("--new-game")) { Callable.From(StartNew).CallDeferred(); return; }
         if (args.Contains("--continue")) { Callable.From(ContinueOrNew).CallDeferred(); return; }
 
