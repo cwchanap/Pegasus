@@ -220,9 +220,15 @@ public partial class CloseUp : CanvasLayer
         var slots = GetNode<HBoxContainer>("%Slots").GetChildren().OfType<Button>().ToList();
         var spots = Hotspots(_puzzle!.Views[_view]).ToList();
         if (slots.Count == 0 || spots.Count == 0) return;
-        foreach (var spot in spots) spot.FocusNeighborBottom = slots[0].GetPath();
+        // Only spots with nothing under them go down to the items, so a column (the tablet) still steps down itself.
+        foreach (var spot in spots.Where(s => !spots.Any(o => o != s && IsBelow(o, s))))
+            spot.FocusNeighborBottom = slots[0].GetPath();
         foreach (var slot in slots) slot.FocusNeighborTop = spots[0].GetPath();
     }
+
+    private static bool IsBelow(Control o, Control s) =>
+        o.GlobalPosition.Y > s.GlobalPosition.Y + s.Size.Y / 2
+        && o.GlobalPosition.X < s.GlobalPosition.X + s.Size.X && s.GlobalPosition.X < o.GlobalPosition.X + o.Size.X;
 
     private void ShowUsing()
     {
