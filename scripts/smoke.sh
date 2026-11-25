@@ -12,12 +12,12 @@ fail=0
 
 run() { # name, expected scene, expected flag, shot args...
   local name=$1 scene=$2 flag=$3; shift 3
-  local log
-  log=$(SHOT_SIZE=1280x720 scripts/shot.sh "$out/$name.png" "$@" 2>&1)
-  if grep -q "^Scene: $scene$" <<<"$log" && grep -q "^State: .*\"$flag\"" <<<"$log"; then
+  local log status
+  log=$(SHOT_SIZE=1280x720 scripts/shot.sh "$out/$name.png" "$@" 2>&1); status=$?
+  if [ $status -eq 0 ] && grep -q "^Scene: $scene$" <<<"$log" && grep -q "^State: .*\"$flag\"" <<<"$log"; then
     echo "PASS $name"
   else
-    echo "FAIL $name (wanted $scene with $flag)"; grep -E "^(Scene|State):" <<<"$log"; fail=1
+    echo "FAIL $name (exit $status; wanted $scene with $flag)"; grep -E "^(Scene|State):" <<<"$log"; fail=1
   fi
 }
 
