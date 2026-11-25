@@ -73,7 +73,13 @@ public partial class Conversation : CanvasLayer
     public CharacterProfile? FindCharacter(string? displayName) =>
         displayName == null ? null : Characters.FirstOrDefault(c => c.DisplayName == displayName);
 
-    private void OnComplete()
+    // The runner emits onDialogueComplete before it disposes that conversation's cancellation
+    // source, so a Finished handler that starts the next node right away would have its new
+    // source torn down (and could no longer be stopped). Finish on the next idle instead; Active
+    // and the lock stay held until then.
+    private void OnComplete() => Callable.From(Complete).CallDeferred();
+
+    private void Complete()
     {
         Active = false;
         // Release a moment later so the key that closed the box does not also trigger the world,
