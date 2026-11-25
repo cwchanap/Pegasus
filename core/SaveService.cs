@@ -12,18 +12,23 @@ public static class SaveService
     /// <summary>Set by dev runs that start from a --state fixture, so they never overwrite the real save.</summary>
     public static bool Off { get; set; }
 
-    /// <summary>Writes a temp file and renames it over the slot, so a failed write keeps the old save. False if it failed (logged).</summary>
+    /// <summary>Writes a temp file and moves it over the slot, so a failed write keeps the old save. False if it failed (logged).
+    /// System.IO reports a failed flush on close, and its move replaces the slot without deleting it first.</summary>
     public static bool Save(GameState state, string path = Path)
     {
         if (Off) return true;
-        var temp = path + ".tmp";
-        using (var file = FileAccess.Open(temp, FileAccess.ModeFlags.Write))
+        var full = ProjectSettings.GlobalizePath(path);
+        var temp = full + ".tmp";
+        try
         {
-            if (file == null) return Fail($"Could not open {temp}: {FileAccess.GetOpenError()}");
-            if (!file.StoreString(SaveData.ToJson(state))) return Fail($"Could not write {temp}: {file.GetError()}");
+            System.IO.File.WriteAllText(temp, SaveData.ToJson(state));
+            System.IO.File.Move(temp, full, overwrite: true);
+            return true;
         }
-        var error = DirAccess.RenameAbsolute(ProjectSettings.GlobalizePath(temp), ProjectSettings.GlobalizePath(path));
-        return error == Error.Ok || Fail($"Could not replace {path}: {error}");
+        catch (System.Exception e) when (e is System.IO.IOException or System.UnauthorizedAccessException)
+        {
+            return Fail($"Could not save {path}: {e.Message}");
+        }
     }
 
     /// <summary>The saved state, or null when there is none or it can't be read (then the title offers only New game).</summary>
