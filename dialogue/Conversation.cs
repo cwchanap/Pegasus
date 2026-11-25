@@ -50,7 +50,7 @@ public partial class Conversation : CanvasLayer
         return true;
     }
 
-    /// <summary>Starts a node and runs <paramref name="then"/> once it ends, or at once if it could not start.</summary>
+    /// <summary>Starts a node and runs <paramref name="then"/> once it ends. If it could not start, nothing runs.</summary>
     public static bool Start(string node, Action then)
     {
         void Done(string _)
@@ -60,7 +60,7 @@ public partial class Conversation : CanvasLayer
         }
         Finished += Done;
         if (Start(node)) return true;
-        Done(node);
+        Finished -= Done;
         return false;
     }
 

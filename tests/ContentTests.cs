@@ -131,7 +131,7 @@ public class ContentTests
     {
         var nodes = YarnNodes();
         var played = Find(@"^(?:YarnNode|LockedYarnNode) = ""([^""]+)""", ".tscn", ".tres")
-            .Concat(Find(@"^YarnScene = ""([^""]+)""", ".tscn", ".tres").Select(m => (m.File, Value: m.Value + "1")))
+            .Concat(Find(@"^YarnScene = ""([^""]+)""", ".tscn", ".tres").SelectMany(m => new[] { "1", "2", "3", "Again" }.Select(n => (m.File, Value: m.Value + n))))
             .Concat(Find(@"Conversation\.Start\(""([^""]+)""", ".cs"))
             .Concat(Find(@"(?:Say|Solve)\(""([^""]+)""", ".cs").Where(m => m.File.StartsWith("puzzles")))
             .Concat(Find(@"Node = ""([^""]+)"";", ".cs"))
