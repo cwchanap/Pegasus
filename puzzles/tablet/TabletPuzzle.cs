@@ -25,6 +25,12 @@ public partial class TabletPuzzle : Puzzle
     {
         // Aoi's notes held over a sign is just reading it with the notes.
         if (item == "aoi_notes") item = null;
+        // Once read, any sign gives the whole rule again.
+        if (item == null && Solved && _signs.Contains(spot))
+        {
+            Say("Tablet_Rule");
+            return;
+        }
         if (item != null || !_signs.Contains(spot) || Solved)
         {
             base.Use(spot, item);
