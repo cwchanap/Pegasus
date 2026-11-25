@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://world/interaction/Examine.cs" id="11_examine"]
 [ext_resource type="PackedScene" path="res://puzzles/tablet/tablet.tscn" id="12_tablet"]
 [ext_resource type="PackedScene" path="res://puzzles/cafe/cafe.tscn" id="13_cafe"]
+[ext_resource type="Script" path="res://world/Cutaway.cs" id="14_cutaway"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -97,6 +98,9 @@ radius = 0.035
 height = 0.07
 radial_segments = 6
 rings = 3
+
+[sub_resource type="BoxShape3D" id="cutaway_box"]
+size = Vector3(5, 2, 6)
 
 [node name="SnowArea" type="Node3D" node_paths=PackedStringArray("HomeDoor", "Hud", "BikeLight")]
 script = ExtResource("1_snow")
@@ -509,6 +513,17 @@ material = SubResource("mat_5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.8, -6)
 size = Vector3(3.6, 0.2, 6.4)
 material = SubResource("mat_2")
+
+[node name="UnderBridge" type="Area3D" parent="Railway" node_paths=PackedStringArray("Fade")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -6)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("14_cutaway")
+Fade = [NodePath("../Bridge"), NodePath("../BridgeCap"), NodePath("../EmbankmentS"), NodePath("../EmbankmentSCap")]
+
+[node name="Shape" type="CollisionShape3D" parent="Railway/UnderBridge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("cutaway_box")
 
 [node name="Arcade" type="Node3D" parent="."]
 
