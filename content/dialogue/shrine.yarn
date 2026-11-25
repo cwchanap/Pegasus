@@ -71,3 +71,50 @@ title: CloseUp_Nothing
 ---
 Nothing happens.
 ===
+title: Hall_Sealed
+---
+The hall doors are packed with snow, frozen as hard as stone.
+Along the path behind you, the lanterns stand dark.
+===
+title: Tablet_Unreadable
+---
+A stone slab, taller than you, stands in the middle of the hall. Five signs are carved down its face.
+The marks are old and strange. You can't read a single one.
+Someone who has studied the old script could. Or a friend who has.
+===
+title: Tablet_Gate
+---
+Two posts and a beam, like the torii outside. Gate.
+===
+title: Tablet_Cold
+---
+Three strokes, each shorter than the last, like snow settling. Cold.
+===
+title: Tablet_Sleep
+---
+A closed eye. Sleep.
+===
+title: Tablet_Fire
+---
+Three flames, the middle one tallest. Fire.
+===
+title: Tablet_Wake
+---
+An open eye in a frame. Wake.
+===
+title: Tablet_Read
+---
+<<if met("knowledge >= 2")>>
+The library books were good for something. The last sign gives itself up.
+<<else>>
+Aoi's notes fill in the last sign. She was right about "sleep".
+<<endif>>
+<<jump Tablet_Rule>>
+===
+
+title: Tablet_Rule
+---
+Read top to bottom, it is a rule, not a prayer.
+Through the gate, into the cold, one sleeps. Only a fire wakes the sleeper.
+<<flag clue_tablet>>
+===

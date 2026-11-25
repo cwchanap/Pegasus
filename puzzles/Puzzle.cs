@@ -29,6 +29,13 @@ public partial class Puzzle : Control
 
     internal CloseUp? Frame { get; set; }
 
+    /// <summary>The frame's entry point: a locked hotspot plays its locked line, else <see cref="Use"/>.</summary>
+    internal void Press(Hotspot spot, string? item)
+    {
+        if (spot.IsOpen) Use(spot, item);
+        else Say(spot.LockedYarnNode);
+    }
+
     /// <summary>
     /// He clicked <paramref name="spot"/>, holding <paramref name="item"/> (an item id) or
     /// nothing. By default he looks at it, or nothing happens if he holds an item.
