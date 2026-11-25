@@ -7,7 +7,8 @@ namespace Pegasus.Sandbox;
 
 /// <summary>
 /// Grey-box test scene for the shared kit: walk, interact, conditions and save.
-/// Starts from its own save slot (sandbox_save.json) if there is one. F5 saves, Esc quits.
+/// Starts from its own save slot (sandbox_save.json) if there is one, unless a --state fixture
+/// already loaded the state (saving is then off). F5 saves, Esc quits.
 /// </summary>
 public partial class SandboxLevel : Node3D
 {
@@ -26,7 +27,7 @@ public partial class SandboxLevel : Node3D
 
     public override void _Ready()
     {
-        if (SaveService.Load(SavePath) is { } saved)
+        if (!SaveService.Off && SaveService.Load(SavePath) is { } saved)
         {
             Game.Load(saved);
             Say("Loaded the sandbox save.");
@@ -89,7 +90,8 @@ public partial class SandboxLevel : Node3D
     {
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.F5 })
         {
-            Say(SaveService.Save(Game.State, SavePath)
+            if (SaveService.Off) Say("Saving is off in a --state fixture run.");
+            else Say(SaveService.Save(Game.State, SavePath)
                 ? $"Saved to {ProjectSettings.GlobalizePath(SavePath)}"
                 : "Save failed (see the log); the old save is kept.");
         }
