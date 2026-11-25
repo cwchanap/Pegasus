@@ -78,6 +78,7 @@ public partial class DevDriver : Node
             {
                 GD.PushError($"--open: could not open {_puzzle} on frame 5 (input lock busy; pass a gameplay scene)");
                 GetTree().Quit(1);
+                return; // or a shot due this frame would quit again with 0
             }
         }
         foreach (var (at, frame) in _clicks)
