@@ -23,6 +23,8 @@ public partial class TabletPuzzle : Puzzle
 
     public override void Use(Hotspot spot, string? item)
     {
+        // Aoi's notes held over a sign is just reading it with the notes.
+        if (item == "aoi_notes") item = null;
         if (item != null || !_signs.Contains(spot) || Solved)
         {
             base.Use(spot, item);
