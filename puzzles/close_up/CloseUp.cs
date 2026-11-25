@@ -84,7 +84,7 @@ public partial class CloseUp : CanvasLayer
         _puzzle.QueueFree();
         _puzzle = null;
         HideTag();
-        GetNode<Control>("%Blocker").Visible = false;
+        SetRoomInput(true);
         GetViewport().GuiReleaseFocus();
         Callable.From(() => InputLock.Release(nameof(CloseUp))).CallDeferred();
     }
@@ -123,14 +123,26 @@ public partial class CloseUp : CanvasLayer
             return;
         }
         HideTag();
-        GetNode<Control>("%Blocker").Visible = true;
+        SetRoomInput(false);
         GetViewport().GuiReleaseFocus();
+    }
+
+    /// <summary>
+    /// While a line plays the room is out of reach: the blocker stops the mouse and the room's
+    /// controls drop out of keyboard focus, so Tab, arrows and Space only reach the dialogue.
+    /// </summary>
+    private void SetRoomInput(bool on)
+    {
+        GetNode<Control>("%Blocker").Visible = !on;
+        var focus = on ? Control.FocusBehaviorRecursiveEnum.Inherited : Control.FocusBehaviorRecursiveEnum.Disabled;
+        foreach (var name in new[] { "%Stage", "%Prev", "%Next", "%Slots" })
+            GetNode<Control>(name).FocusBehaviorRecursive = focus;
     }
 
     private void OnConversationFinished(string node)
     {
         if (_puzzle == null) return;
-        GetNode<Control>("%Blocker").Visible = false;
+        SetRoomInput(true);
         if (_closeAfter)
         {
             Close();
@@ -163,6 +175,7 @@ public partial class CloseUp : CanvasLayer
 
     private void Turn(int step)
     {
+        if (_puzzle == null || Conversation.Active) return;
         var count = _puzzle!.Views.Count;
         _view = (_view + step + count) % count;
         ShowView();
@@ -224,7 +237,12 @@ public partial class CloseUp : CanvasLayer
     /// </summary>
     private void OnSlot(string id, bool on)
     {
-        if (on && _using != null && _using != id && !Conversation.Active && _puzzle!.Combine(_using, id))
+        if (Conversation.Active)
+        {
+            foreach (var (slot, slotId) in _slots) slot.SetPressedNoSignal(slotId == _using);
+            return;
+        }
+        if (on && _using != null && _using != id && _puzzle!.Combine(_using, id))
         {
             _using = null; // the slots rebuild once the line ends
             return;
