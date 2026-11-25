@@ -32,10 +32,14 @@ public partial class SettingsPanel : VBoxContainer
     }
 
     // The menu's panel lives in an autoload, so it reads the settings again each time it shows
-    // (the title screen's panel may have changed them since).
+    // (the title screen's panel may have changed them since), and writes them when it hides.
     public override void _Notification(int what)
     {
-        if (what == NotificationVisibilityChanged && IsNodeReady() && IsVisibleInTree()) Refresh();
+        if (what == NotificationVisibilityChanged && IsNodeReady())
+        {
+            if (IsVisibleInTree()) Refresh(); else Settings.Save();
+        }
+        else if (what == NotificationExitTree) Settings.Save();
     }
 
     private void Refresh()
@@ -45,11 +49,6 @@ public partial class SettingsPanel : VBoxContainer
         var fullscreen = GetNode<Button>("%Fullscreen");
         fullscreen.SetPressedNoSignal(Settings.Fullscreen);
         ShowFullscreen(fullscreen);
-    }
-
-    public override void _Notification(int what)
-    {
-        if (what == NotificationVisibilityChanged && !IsVisibleInTree() || what == NotificationExitTree) Settings.Save();
     }
 
     private static void ShowFullscreen(Button button) => button.Text = $"Fullscreen: {(button.ButtonPressed ? "On" : "Off")}";
