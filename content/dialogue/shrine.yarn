@@ -10,6 +10,7 @@ title: Lantern_1
 The lantern by the gate burns steadily. Snow drips from its cap.
 <<else>>
 The lantern by the gate. Its stone is black with old soot.
+Down the path, each lantern is cleaner than the one before it, from the black one by the gate to the almost white one by the hall.
 <<flag clue_lantern_soot>>
 <<endif>>
 ===
@@ -19,6 +20,7 @@ title: Lantern_2
 The second lantern burns steadily.
 <<else>>
 Dark grey with soot. Not quite as black as the one by the gate.
+Down the path, each lantern is cleaner than the one before it, from the black one by the gate to the almost white one by the hall.
 <<flag clue_lantern_soot>>
 <<endif>>
 ===
@@ -28,6 +30,7 @@ title: Lantern_3
 The middle lantern burns steadily.
 <<else>>
 The middle lantern. A little soot, about half as much as the first.
+Down the path, each lantern is cleaner than the one before it, from the black one by the gate to the almost white one by the hall.
 <<flag clue_lantern_soot>>
 <<endif>>
 ===
@@ -37,6 +40,7 @@ title: Lantern_4
 The fourth lantern burns steadily.
 <<else>>
 Only a faint ring of soot under the cap.
+Down the path, each lantern is cleaner than the one before it, from the black one by the gate to the almost white one by the hall.
 <<flag clue_lantern_soot>>
 <<endif>>
 ===
@@ -46,6 +50,7 @@ title: Lantern_5
 The lantern by the hall burns steadily. Its stone looks new in the light.
 <<else>>
 The lantern by the hall. The stone is almost clean, as if it has hardly ever burned.
+Down the path, each lantern is cleaner than the one before it, from the black one by the gate to the almost white one by the hall.
 <<flag clue_lantern_soot>>
 <<endif>>
 ===
