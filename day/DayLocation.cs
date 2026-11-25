@@ -16,6 +16,10 @@ public partial class DayLocation : Node3D
     /// <summary>Where the player is in the daytime city. Runtime only, never saved.</summary>
     public static string Here { get; private set; } = "apartment";
 
+    /// <summary>Where he stood when he opened the map. Backing out of the map (or choosing the same
+    /// place) puts him back there; going anywhere else uses that place's normal spawn.</summary>
+    private static (string Place, Vector3 At)? _mapReturn;
+
     [Export] public LocationData? Location { get; set; }
     /// <summary>Sub-place shown after the name, e.g. "Library".</summary>
     [Export] public string Spot { get; set; } = "";
@@ -27,6 +31,7 @@ public partial class DayLocation : Node3D
     public override void _Ready()
     {
         if (Location != null) Here = Location.Id;
+        ReturnFromMap();
         AudioService.PlayMusic(Music);
         if (Hud != null)
         {
@@ -59,7 +64,22 @@ public partial class DayLocation : Node3D
             GD.PushWarning($"{Name}: map lists [{string.Join(", ", map)}] but the scene offers [{string.Join(", ", scene)}].");
     }
 
-    public static void OpenMap() => SceneRouter.Instance.GoTo(Scenes.CityMap);
+    private void OpenMap()
+    {
+        if (GetTree().GetFirstNodeInGroup(Player.Group) is Node3D player) _mapReturn = (Here, player.GlobalPosition);
+        SceneRouter.Instance.GoTo(Scenes.CityMap);
+    }
+
+    private void ReturnFromMap()
+    {
+        if (_mapReturn is { } back && back.Place == Here && GetTree().GetFirstNodeInGroup(Player.Group) is Node3D player)
+        {
+            player.GlobalPosition = back.At;
+            player.ResetPhysicsInterpolation();
+            (GetViewport().GetCamera3D() as FollowCamera)?.Snap();
+        }
+        _mapReturn = null;
+    }
 
     public override void _UnhandledInput(InputEvent e)
     {
