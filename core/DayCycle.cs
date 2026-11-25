@@ -43,6 +43,6 @@ public static class DayCycle
         SceneRouter.Instance.GoTo(Scenes.EndCard, caption);
     }
 
-    private static string Caption(GameState s) =>
-        s.Slot == TimeSlot.Night ? "3:00 AM" : $"Day {s.Day} · Morning";
+    private static string? Caption(GameState s) =>
+        s.HasFlag(Flags.Ended) ? null : s.Slot == TimeSlot.Night ? "3:00 AM" : $"Day {s.Day} · Morning";
 }
