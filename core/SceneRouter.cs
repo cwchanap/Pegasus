@@ -7,7 +7,7 @@ namespace Pegasus.Core;
 
 /// <summary>
 /// Autoload. Changes scenes behind a fade to black, with an optional caption on the
-/// black screen ("3:00 AM"). The game is paused while the screen is dark.
+/// black screen ("3:00 AM"). The game is paused until the fade back in has finished.
 /// Interlude does the same without changing scene, e.g. to pass time on an activity.
 /// </summary>
 public partial class SceneRouter : CanvasLayer
@@ -92,10 +92,11 @@ public partial class SceneRouter : CanvasLayer
         }
         finally
         {
-            // Always come back from black, even if the work in the dark failed.
+            // Always come back from black, even if the work in the dark failed. The tree stays paused
+            // through the fade-in so a focused button can't be pressed before the scene is ready.
             _caption.Modulate = Colors.Transparent;
-            GetTree().Paused = false;
             await Tween(_fade, 0f, FadeSeconds);
+            GetTree().Paused = false;
             _fade.MouseFilter = Control.MouseFilterEnum.Ignore;
             InputLock.Release(nameof(SceneRouter));
             Busy = false;
