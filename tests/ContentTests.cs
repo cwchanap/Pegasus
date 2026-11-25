@@ -69,8 +69,11 @@ public class ContentTests
         var set = Find(@"^SolvedFlag = ""(\w+)""", ".tscn")
             .Concat(Find(@"<<flag\s+(\w+)\s*>>", ".yarn"))
             .Concat(Find(@"SetFlag\(""(\w+)""", ".cs"))
-            .Concat(Find(@"const string \w+ = ""(\w+)""", ".cs")) // Flags.cs and a puzzle's own flag names
             .Select(m => m.Value).ToHashSet();
+        // A constant counts only when it is what SetFlag gets (Flags.Ended, a puzzle's LockOpen), not an item id.
+        var setNames = Find(@"SetFlag\((?:\w+\.)?([A-Z]\w*)\)", ".cs").Select(m => m.Value).ToHashSet();
+        set.UnionWith(Find(@"const string (\w+ = ""\w+"")", ".cs").Select(m => m.Value.Split(" = "))
+            .Where(p => setNames.Contains(p[0])).Select(p => p[1].Trim('"')));
         var used = Find(@"met\(""([^""]*)""\)", ".yarn")
             .Concat(Find(@"#needs:(\S+)", ".yarn"))
             .Concat(Find(@"^(?:Requires|Condition|OpenWhen) = ""([^""]*)""", ".tscn", ".tres"))
@@ -83,7 +86,10 @@ public class ContentTests
     [Fact]
     public void The_tablet_opens_with_either_key()
     {
-        var conditions = Find(@"^Requires = ""([^""]*)""", ".tscn").Where(m => m.File.Contains("tablet")).Select(m => m.Value).Distinct().ToList();
+        var tablet = Find(@"^Requires = ""([^""]*)""", ".tscn").Where(m => m.File.Contains("tablet")).ToList();
+        // Every sign must be gated: one without Requires would be readable from the start.
+        Assert.Equal(Find(@"^\[node name=""(Sign\w+)"" type=""Button""", ".tscn").Count(m => m.File.Contains("tablet")), tablet.Count);
+        var conditions = tablet.Select(m => m.Value).Distinct().ToList();
         Assert.NotEmpty(conditions);
         var scholar = new Pegasus.Core.GameState();
         scholar.AddStat(Pegasus.Core.Stat.Knowledge, 2);
