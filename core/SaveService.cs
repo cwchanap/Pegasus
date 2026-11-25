@@ -9,9 +9,13 @@ public static class SaveService
 
     public static bool Exists => FileAccess.FileExists(Path);
 
+    /// <summary>Set by dev runs that start from a --state fixture, so they never overwrite the real save.</summary>
+    public static bool Off { get; set; }
+
     /// <summary>Writes a temp file and renames it over the slot, so a failed write keeps the old save. False if it failed (logged).</summary>
     public static bool Save(GameState state, string path = Path)
     {
+        if (Off) return true;
         var temp = path + ".tmp";
         using (var file = FileAccess.Open(temp, FileAccess.ModeFlags.Write))
         {
