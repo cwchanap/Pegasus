@@ -63,6 +63,41 @@ public class ContentTests
     }
 
     [Fact]
+    public void Flags_in_conditions_are_set_somewhere()
+    {
+        // A typo such as "flag:lanterns_lti" parses fine but leaves a gate shut forever.
+        var set = Find(@"^SolvedFlag = ""(\w+)""", ".tscn")
+            .Concat(Find(@"<<flag\s+(\w+)\s*>>", ".yarn"))
+            .Concat(Find(@"SetFlag\(""(\w+)""", ".cs"))
+            .Concat(Find(@"const string \w+ = ""(\w+)""", ".cs").Where(m => m.File.EndsWith("Flags.cs")))
+            .Select(m => m.Value).ToHashSet();
+        var used = Find(@"met\(""([^""]*)""\)", ".yarn")
+            .Concat(Find(@"#needs:(\S+)", ".yarn"))
+            .Concat(Find(@"^(?:Requires|Condition|OpenWhen) = ""([^""]*)""", ".tscn", ".tres"))
+            .SelectMany(c => Regex.Matches(c.Value, @"flag:(\w+)").Select(m => (c.File, Flag: m.Groups[1].Value)))
+            .ToList();
+        Assert.NotEmpty(used);
+        Assert.Empty(used.Where(u => !set.Contains(u.Flag)).Select(u => $"{u.File}: nothing sets flag '{u.Flag}'"));
+    }
+
+    [Fact]
+    public void The_tablet_opens_with_either_key()
+    {
+        var conditions = Find(@"^Requires = ""([^""]*)""", ".tscn").Where(m => m.File.Contains("tablet")).Select(m => m.Value).Distinct().ToList();
+        Assert.NotEmpty(conditions);
+        var scholar = new Pegasus.Core.GameState();
+        scholar.AddStat(Pegasus.Core.Stat.Knowledge, 2);
+        var friend = new Pegasus.Core.GameState();
+        friend.GiveItem("aoi_notes");
+        foreach (var c in conditions)
+        {
+            Assert.True(Condition.Check(c, scholar), $"Knowledge 2 should read \"{c}\"");
+            Assert.True(Condition.Check(c, friend), $"Aoi's notes should read \"{c}\"");
+            Assert.False(Condition.Check(c, new Pegasus.Core.GameState()), $"\"{c}\" should stay locked at the start");
+        }
+    }
+
+    [Fact]
     public void Items_named_in_scripts_exist()
     {
         var items = Ids("content/items");
