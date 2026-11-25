@@ -144,6 +144,7 @@ public partial class DevDriver : Node
         GD.Print($"Screenshot saved to {_shotPath}");
         if (GetTree().GetFirstNodeInGroup("player") is Node3D player)
             GD.Print($"Player at {player.GlobalPosition}");
+        GD.Print($"Scene: {GetTree().CurrentScene?.SceneFilePath}");
         GD.Print($"State: {Pegasus.Core.SaveData.ToJson(Pegasus.Core.Game.State).ReplaceLineEndings("")}");
         GetTree().Quit();
     }
