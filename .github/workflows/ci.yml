@@ -15,3 +15,16 @@ jobs:
           dotnet-version: 8.0.x
       - run: dotnet build Pegasus.sln
       - run: dotnet test Pegasus.sln --no-build
+      - name: Install Godot .NET
+        run: |
+          curl -fsSLo godot.zip https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_mono_linux_x86_64.zip
+          unzip -q godot.zip -d "$RUNNER_TEMP"
+          echo "GODOT=$RUNNER_TEMP/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64" >> "$GITHUB_ENV"
+      # dotnet build does not compile the .yarn scripts; the Yarn importer does. A fresh import can
+      # fail its first pass on new files, so run two and check both logs.
+      - name: Import and compile Yarn
+        run: |
+          "$GODOT" --headless --import > import1.log 2>&1 || true
+          "$GODOT" --headless --import > import2.log 2>&1
+          if grep -h "Error compiling" import1.log import2.log; then exit 1; fi
+          grep -lq "Home_Intro" .godot/imported/dialogue.yarnproject-*.tres
