@@ -149,7 +149,8 @@ public partial class CloseUp : CanvasLayer
             return;
         }
         BuildSlots(); // what he saw may have given him something
-        if (_lastFocus != null && IsInstanceValid(_lastFocus)) _lastFocus.GrabFocus();
+        // The last hotspot may be on a wall he has turned away from since.
+        if (_lastFocus != null && IsInstanceValid(_lastFocus) && _lastFocus.IsVisibleInTree()) _lastFocus.GrabFocus();
         else FocusFirst();
     }
 

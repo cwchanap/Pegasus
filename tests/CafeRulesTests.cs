@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Pegasus.Puzzles;
 using Xunit;
@@ -43,6 +44,10 @@ public class CafeRulesTests
     private static void Set(GlyphLock dials, params Glyph[] signs)
     {
         for (var d = 0; d < signs.Length; d++)
-            while (dials.Dials[d] != signs[d]) dials.Turn(d);
+            for (var turns = 0; dials.Dials[d] != signs[d]; turns++)
+            {
+                Assert.True(turns < Enum.GetValues<Glyph>().Length, $"dial {d} never shows {signs[d]}");
+                dials.Turn(d);
+            }
     }
 }
