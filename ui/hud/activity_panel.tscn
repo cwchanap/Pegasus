@@ -108,7 +108,7 @@ vertical_alignment = 1
 [node name="DoText" type="Label" parent="Card/Col/Body/Col/Buttons/Do/Row"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_type_variation = &"ButtonText"
 text = "Do it"
 vertical_alignment = 1
 
@@ -137,7 +137,6 @@ vertical_alignment = 1
 
 [node name="Text" type="Label" parent="Card/Col/Body/Col/Buttons/Cancel/Row"]
 layout_mode = 2
-theme_type_variation = &"DarkLabel"
-theme_override_font_sizes/font_size = 20
+theme_type_variation = &"ButtonTextDark"
 text = "Not now"
 vertical_alignment = 1

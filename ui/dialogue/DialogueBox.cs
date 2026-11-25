@@ -269,8 +269,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         var plateRow = new HBoxContainer();
         plateRow.AddThemeConstantOverride("separation", 12);
         _name = new Label { VerticalAlignment = VerticalAlignment.Center, ThemeTypeVariation = "TitleLabel" };
-        _subtitle = new Label { VerticalAlignment = VerticalAlignment.Center };
-        _subtitle.AddThemeFontSizeOverride("font_size", 15);
+        _subtitle = new Label { VerticalAlignment = VerticalAlignment.Center, ThemeTypeVariation = "SubtitleLabel" };
         plateRow.AddChild(_name);
         plateRow.AddChild(_subtitle);
         _plate.AddChild(plateRow);
