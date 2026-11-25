@@ -187,7 +187,13 @@ public partial class CloseUp : CanvasLayer
     private void BuildSlots()
     {
         var row = GetNode<HBoxContainer>("%Slots");
-        foreach (var child in row.GetChildren()) { row.RemoveChild(child); child.QueueFree(); }
+        foreach (var child in row.GetChildren())
+        {
+            // Out of the group first, or pressing the new slot below unpresses this one and drops _using.
+            if (child is Button slot) slot.ButtonGroup = null;
+            row.RemoveChild(child);
+            child.QueueFree();
+        }
         if (_using != null && !Game.State.HasItem(_using)) _using = null;
         foreach (var id in Game.State.Items)
         {
