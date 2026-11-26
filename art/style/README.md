@@ -47,7 +47,7 @@ Day, night and cast values are measured from the approved art. Fire orange (not 
 | Ink navy (UI panel) | `#1C1F3B` | Protagonist down coat | `#AE4333` |
 | UI orange (tag) | `#FF5A3C` | Aoi skirt | `#423F54` |
 | UI yellow | `#FFD24D` | Aoi hair | `#3D3944` |
-| Vermilion (torii, omamori) | `#D8432F` | Kenta jacket | `#4F6E50` |
+| Vermilion (torii, omamori) | `#D8432F` | Kenta jacket | `#2C825B` |
 | Skin | `#FBDBC0` | Kenta hair | `#6E4934` |
 | Skin shade | `#E8B896` | Khaki trousers | `#D9C098` |
 
