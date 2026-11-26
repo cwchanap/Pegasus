@@ -87,6 +87,45 @@ Finished images live in `content/characters/`, and the game shows them (the grey
 - Made with Codex from the character sheets: neutral first, then smile and worried as expression-only edits of the neutral one. Codex's image tool would not make 1000×2240, so each came out at 838×1877 (same ratio) and was scaled to 94% of the canvas width and bottom-anchored, leaving a side margin.
 - Framing: crown at about 17 to 18% from the top, chin at about 51% (Aoi) and 47% (Kenta), widest row at 94% of the width.
 
+## Scenes, screens and icons (step 3)
+
+Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everything else in `content/art/ui/`. Only the PNGs are committed; the step that puts them in the game adds their `.import` files.
+
+**Close-up views:** `lanterns/lantern_path.png`, `tablet/main_hall.png`, `cafe/{counter|stove|door|booth}.png`.
+
+- 2172×1044, which is 2× the 1086×522 view area of the close-up. View coordinates in a puzzle scene × 2 give pixels.
+- Painted over a clean guide rendered from the view's ColorRects in its `.tscn` (no UI outlines), so every object sits under its hotspot. The style came from `parts/mood_night.png`, and the three later Kissa Mori views also got the finished counter so the room stays the same room.
+- Codex returned 1808×870 (its image tool stops near 1.57 megapixels), scaled up with Lanczos.
+
+**Overlays:** full-canvas transparent PNGs the size of their view, drawn straight over it.
+
+- Lanterns: `lantern_glow_{1..5}.png`, one per lit lantern, each kept to its own lantern.
+- Stove, in drawing order: `stove.png` (door shut), `stove_open.png` (door open, empty firebox), `stove_kindling.png` (paper, sticks and charcoal, only until it is lit), `stove_lit.png` (the fire and the warm room, drawn over the open state; it covers the whole view).
+- Made by asking Codex to edit the finished base ("change nothing else"), then solving each pixel for the least alpha that turns the base into the edit, inside a soft box around the change. Each overlay is relative to the state below it, so kindling and lit were edits of the open state.
+
+**Cut-outs:** square, transparent, 2× their square in the scene.
+
+- `tablet/glyph_{gate|cold|sleep|fire|wake}.png`: 116×116 carved stone tiles. Each is centred on its sign button (x 514, y 100 + 62 × index in view units, 58 square).
+- `cafe/dial_{gate|cold|sleep|fire|wake}.png`: 112×112 brass dial faces for the three dials at x 460, 524 and 588, y 194 (56 square). The pointer notch is at the top.
+- The glyph strokes follow the scene's stroke rectangles.
+
+**Screens:** 2560×1440 (Codex returned 1672×941).
+
+- `title.png`: the protagonist at his window at 3 AM. The left third is calm for the logo and menu.
+- `logo.png`: the transparent "Snow Dream" wordmark, trimmed to its edges plus a 24 px margin.
+- `city_map.png`: matches the map drawing (river, three roads, five blocks, the park), with each landmark under its marker and no text.
+- `end_card.png`: Kissa Mori with the stove lit, the window frost melting, and a figure outside under a dead streetlight. The centre stays dark for the text and button.
+
+**Icons:** `ui/icons/items/{item id}.png`, `ui/icons/stats/{knowledge|guts|fitness}.png`, `ui/icons/hud/{warmth|bike_light}.png`.
+
+- 512×512, transparent. The icon fills 87.5% on its longer side, centred.
+- Thick dark outline with a cream rim, so they read on both the navy and the cream panels. Checked at 48 and 96 px.
+
+**Codex notes for this batch:**
+
+- When two runs share the machine, Codex can copy the other run's image. Take the file from that run's own `~/.codex/generated_images/<session id>/` folder.
+- Ask for 1808×870 or 1672×941 and scale up; it does not make exact sizes.
+
 ## Prompt preamble
 
 Paste this block first in every Codex art prompt, then the item-specific text.
