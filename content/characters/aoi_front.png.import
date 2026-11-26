@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4h70x875kn6d"
-path="res://.godot/imported/placeholder_player.png-2b9f5610016f44bedececc266c46f1ce.ctex"
+uid="uid://bnto1cgyrhnb1"
+path="res://.godot/imported/aoi_front.png-8c64261866e8317536091be594b46d65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/player/placeholder_player.png"
-dest_files=["res://.godot/imported/placeholder_player.png-2b9f5610016f44bedececc266c46f1ce.ctex"]
+source_file="res://content/characters/aoi_front.png"
+dest_files=["res://.godot/imported/aoi_front.png-8c64261866e8317536091be594b46d65.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

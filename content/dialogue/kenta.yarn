@@ -1,40 +1,40 @@
 title: Kenta_Hangout1
 ---
-Kenta: Hey! You're in my seminar, right? The one who always looks half asleep.
+Kenta: Hey! You're in my seminar, right? The one who always looks half asleep. #mood:smile
 Kenta: I'm collecting Osaka urban legends. Want to hear about the underpass by the river?
 -> Sure.
     Kenta: People say if you walk through it at night, you hear bells. In summer. From the far side.
-    Kenta: Nobody has walked all the way through. Too dark, they say.
+    Kenta: Nobody has walked all the way through. Too dark, they say. #mood:worried
     <<flag clue_kenta_bells>>
 -> I don't believe in that stuff.
-    Kenta: That's what everyone says before the bells.
-Kenta: Come on, the claw machine owes me a rematch.
+    Kenta: That's what everyone says before the bells. #mood:smile
+Kenta: Come on, the claw machine owes me a rematch. #mood:smile
 ===
 title: Kenta_Hangout2
 ---
-Kenta: I went to the underpass last night. Got about ten steps in.
-Kenta: Darkest place I've ever been. My phone light did nothing.
+Kenta: I went to the underpass last night. Got about ten steps in. #mood:worried
+Kenta: Darkest place I've ever been. My phone light did nothing. #mood:worried
 -> You should have brought a real light.
-    Kenta: That's the thing. I did. I just... ran.
+    Kenta: That's the thing. I did. I just... ran. #mood:worried
 -> Did you hear the bells?
-    Kenta: ...Don't make me answer that.
+    Kenta: ...Don't make me answer that. #mood:worried
 Kenta: Take this. It's my old bike light. Brighter than it looks.
 <<give flashlight>>
-Kenta: If you go, you tell me everything. Deal?
+Kenta: If you go, you tell me everything. Deal? #mood:smile
 ===
 title: Kenta_Hangout3
 ---
-Kenta: Real talk. My brother used to tell me these stories. He moved to Tokyo and stopped calling.
+Kenta: Real talk. My brother used to tell me these stories. He moved to Tokyo and stopped calling. #mood:worried
 Kenta: Chasing legends is kind of how I talk to him now. Weird, huh.
 -> Not weird.
-    Kenta: Thanks. Don't tell anyone I said that.
+    Kenta: Thanks. Don't tell anyone I said that. #mood:smile
 -> You should call him.
-    Kenta: ...Yeah. Maybe I will.
+    Kenta: ...Yeah. Maybe I will. #mood:worried
 <<flag kenta_confided>>
-Kenta: Anyway! Rematch. The claw machine fears me now.
+Kenta: Anyway! Rematch. The claw machine fears me now. #mood:smile
 ===
 title: Kenta_HangoutAgain
 ---
-Kenta: You came! The claw machine has been waiting.
+Kenta: You came! The claw machine has been waiting. #mood:smile
 You win a stuffed penguin neither of you wanted.
 ===

@@ -20,10 +20,11 @@ namespace Pegasus.Dialogue;
 /// A choice that needs something is tagged, not wrapped in &lt;&lt;if&gt;&gt;, so it stays visible
 /// but locked with its requirement: <c>-&gt; Tell her about the snow #needs:guts&gt;=3</c>.
 /// &lt;&lt;if&gt;&gt; on a choice hides it entirely.
+/// A line picks the speaker's portrait with a mood tag: <c>Aoi: Don't laugh. #mood:worried</c>
+/// (smile or worried; untagged lines are neutral). Tag parsing lives in LineTags.
 /// </summary>
 public static class YarnBindings
 {
-    public const string NeedsTag = "needs:";
     public const string CluePrefix = "clue_";
 
     /// <summary>Raised when &lt;&lt;flag clue_*&gt;&gt; sets a clue flag for the first time.</summary>
@@ -46,13 +47,5 @@ public static class YarnBindings
         runner.AddCommandHandler("bond", (Action<string, int>)((who, amount) => Game.State.AddBond(who, amount)));
         runner.AddCommandHandler("wake_up", (Action<string>)(why => DayCycle.WakeUp(why)));
         runner.AddCommandHandler("end_game", (Action<string>)(caption => DayCycle.Finish(caption)));
-    }
-
-    /// <summary>The condition text of a "#needs:..." tag on a choice, or null.</summary>
-    public static string? Needs(string[] metadata)
-    {
-        foreach (var tag in metadata)
-            if (tag.StartsWith(NeedsTag)) return tag[NeedsTag.Length..];
-        return null;
     }
 }

@@ -22,8 +22,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("body")
 
 [node name="Sprite" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-pixel_size = 0.00625
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7625, 0)
+pixel_size = 0.003125
 billboard = 2
 shaded = true
 alpha_cut = 1

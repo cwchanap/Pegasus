@@ -12,8 +12,6 @@ namespace Pegasus.Day;
 /// one line about winter gear. That line is the only guidance the night ever gives.</summary>
 public partial class Apartment : DayLocation
 {
-    private const string Coat = "down_coat";
-
     [Export] public Interactable? Bed { get; set; }
 
     public override void _Ready()
@@ -35,7 +33,7 @@ public partial class Apartment : DayLocation
                 Toast.Show("E or Space to look, talk and use");
             });
         }
-        else if (s.HasFlag(Flags.WhitedOut) && !s.HasFlag(Flags.GearHint) && !s.HasItem(Coat))
+        else if (s.HasFlag(Flags.WhitedOut) && !s.HasFlag(Flags.GearHint) && !s.HasItem(Wardrobe.CoatItem))
         {
             s.SetFlag(Flags.GearHint);
             Conversation.Start("Home_GearHint");
