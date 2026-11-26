@@ -113,7 +113,7 @@ Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everyth
 
 - `title.png`: the protagonist at his window at 3 AM. The left third is calm for the logo and menu.
 - `logo.png`: the transparent "Snow Dream" wordmark, trimmed to its edges plus a 24 px margin.
-- `city_map.png`: matches the map drawing (river, three roads, five blocks, the park), with each landmark under its marker and no text.
+- `city_map.png`: matches the map drawing (three roads, five blocks, the park), with each landmark under its marker and no text. The one change: the river bends south around the shrine's park, where the drawing runs it underneath.
 - `end_card.png`: Kissa Mori with the stove lit, the window frost melting, and a figure outside under a dead streetlight. The centre stays dark for the text and button.
 
 **Icons:** `ui/icons/items/{item id}.png`, `ui/icons/stats/{knowledge|guts|fitness}.png`, `ui/icons/hud/{warmth|bike_light}.png`.
