@@ -103,7 +103,7 @@ radial_segments = 6
 rings = 3
 
 [sub_resource type="BoxShape3D" id="cutaway_box"]
-size = Vector3(2.8, 2, 6)
+size = Vector3(2.2, 2, 6)
 
 [node name="SnowArea" type="Node3D" node_paths=PackedStringArray("HomeDoor", "Hud", "BikeLight")]
 script = ExtResource("1_snow")
