@@ -189,7 +189,7 @@ public class ContentTests
     public void Moods_are_known()
     {
         // An unknown mood falls back to neutral in play, so a typo would never show.
-        var moods = Find(@"#mood:(\S+)", ".yarn");
+        var moods = Find(@"#mood:(\S*)", ".yarn"); // \S* so a bare "#mood:" is caught too
         Assert.NotEmpty(moods);
         Assert.Empty(moods.Where(m => !LineTags.TryMood(m.Value, out _)).Select(m => $"{m.File}: unknown mood '{m.Value}'"));
     }

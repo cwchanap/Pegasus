@@ -13,6 +13,8 @@ public class LineTagsTests
     [InlineData(new[] { "line:a1b2" }, Mood.Neutral)]
     [InlineData(new[] { "mood:grumpy" }, Mood.Neutral)]
     [InlineData(new[] { "mood:1" }, Mood.Neutral)]
+    [InlineData(new[] { "mood:smile,worried" }, Mood.Neutral)]
+    [InlineData(new[] { "mood:" }, Mood.Neutral)]
     public void MoodComesFromTheTagAndDefaultsToNeutral(string[] tags, Mood expected) =>
         Assert.Equal(expected, LineTags.GetMood(tags));
 
