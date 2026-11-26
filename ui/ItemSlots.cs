@@ -15,18 +15,24 @@ public static class ItemSlots
         var col = new VBoxContainer { Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = Control.MouseFilterEnum.Ignore };
         col.SetAnchorsPreset(Control.LayoutPreset.FullRect);
         col.AddThemeConstantOverride("separation", 8);
-        Control icon = item.Icon != null
-            ? new TextureRect { Texture = item.Icon, ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered }
-            : new ColorRect { Color = item.IconColor };
-        icon.CustomMinimumSize = new Vector2(40, 40);
+        var icon = Icon(item.Icon, 40);
         icon.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-        icon.MouseFilter = Control.MouseFilterEnum.Ignore;
         col.AddChild(icon);
         col.AddChild(new Label { Text = item.DisplayName, HorizontalAlignment = HorizontalAlignment.Center, ThemeTypeVariation = "MenuMuted", MouseFilter = Control.MouseFilterEnum.Ignore });
         slot.AddChild(col);
         slot.MouseEntered += slot.GrabFocus;
         return slot;
     }
+
+    /// <summary>A square icon at <paramref name="size"/> px that ignores the mouse (empty if there is no texture).</summary>
+    public static TextureRect Icon(Texture2D? texture, float size) => new()
+    {
+        Texture = texture,
+        ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+        StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+        CustomMinimumSize = new Vector2(size, size),
+        MouseFilter = Control.MouseFilterEnum.Ignore,
+    };
 
     public static Panel Empty(Vector2 size) => new() { ThemeTypeVariation = "ItemSlotEmpty", CustomMinimumSize = size };
 }

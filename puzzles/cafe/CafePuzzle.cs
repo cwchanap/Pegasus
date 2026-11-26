@@ -112,9 +112,9 @@ public partial class CafePuzzle : Puzzle
             foreach (var glyph in System.Enum.GetValues<Glyph>())
                 _dials[d].GetNode<CanvasItem>(glyph.ToString()).Visible = glyph == shown;
         }
-        _firebox.GetNode<CanvasItem>("Shut").Visible = !open;
-        _firebox.GetNode<CanvasItem>("Open").Visible = open;
-        _firebox.GetNode<CanvasItem>("Kindling").Visible = Has(Loaded) && !Solved;
-        _firebox.GetNode<CanvasItem>("Flames").Visible = Solved;
+        // The wall's art shows the door shut; these overlays sit over it in drawing order.
+        GetNode<CanvasItem>("Stove/Open").Visible = open;
+        GetNode<CanvasItem>("Stove/Kindling").Visible = Has(Loaded) && !Solved;
+        GetNode<CanvasItem>("Stove/Lit").Visible = Solved;
     }
 }

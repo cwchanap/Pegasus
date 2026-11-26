@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/title/Title.cs" id="1_title"]
 [ext_resource type="PackedScene" path="res://ui/settings/settings_panel.tscn" id="2_settings"]
+[ext_resource type="Texture2D" path="res://content/art/ui/title.png" id="3_art"]
+[ext_resource type="Texture2D" path="res://content/art/ui/logo.png" id="4_logo"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -12,32 +14,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_title")
 
-[node name="Backdrop" type="Panel" parent="."]
+[node name="Art" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"MenuBackdrop"
+mouse_filter = 2
+texture = ExtResource("3_art")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.4
 anchor_bottom = 1.0
-grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Col" type="VBoxContainer" parent="Center"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Logo" type="Label" parent="Center/Col"]
+[node name="Logo" type="TextureRect" parent="Center/Col"]
+custom_minimum_size = Vector2(440, 111)
 layout_mode = 2
-theme_type_variation = &"TitleLogo"
-text = "Snow Dream"
-horizontal_alignment = 1
+texture = ExtResource("4_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Tagline" type="Label" parent="Center/Col"]
 layout_mode = 2

@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" path="res://puzzles/tablet/TabletPuzzle.cs" id="1_puzzle"]
 [ext_resource type="Script" path="res://puzzles/Hotspot.cs" id="2_spot"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/main_hall.png" id="3_hall"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/glyph_gate.png" id="4_gate"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/glyph_cold.png" id="4_cold"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/glyph_sleep.png" id="4_sleep"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/glyph_fire.png" id="4_fire"]
+[ext_resource type="Texture2D" path="res://content/art/closeups/tablet/glyph_wake.png" id="4_wake"]
 
 [node name="Tablet" type="Control"]
 layout_mode = 3
@@ -24,205 +30,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Wall" type="ColorRect" parent="MainHall"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 1086.0
-offset_bottom = 522.0
+[node name="Art" type="TextureRect" parent="MainHall"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-color = Color(0.11, 0.09, 0.1, 1)
-
-[node name="Plank0" type="ColorRect" parent="MainHall"]
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 44.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank1" type="ColorRect" parent="MainHall"]
-offset_left = 130.0
-offset_top = 40.0
-offset_right = 134.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank2" type="ColorRect" parent="MainHall"]
-offset_left = 220.0
-offset_top = 40.0
-offset_right = 224.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank3" type="ColorRect" parent="MainHall"]
-offset_left = 310.0
-offset_top = 40.0
-offset_right = 314.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank4" type="ColorRect" parent="MainHall"]
-offset_left = 400.0
-offset_top = 40.0
-offset_right = 404.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank5" type="ColorRect" parent="MainHall"]
-offset_left = 490.0
-offset_top = 40.0
-offset_right = 494.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank6" type="ColorRect" parent="MainHall"]
-offset_left = 580.0
-offset_top = 40.0
-offset_right = 584.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank7" type="ColorRect" parent="MainHall"]
-offset_left = 670.0
-offset_top = 40.0
-offset_right = 674.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank8" type="ColorRect" parent="MainHall"]
-offset_left = 760.0
-offset_top = 40.0
-offset_right = 764.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank9" type="ColorRect" parent="MainHall"]
-offset_left = 850.0
-offset_top = 40.0
-offset_right = 854.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank10" type="ColorRect" parent="MainHall"]
-offset_left = 940.0
-offset_top = 40.0
-offset_right = 944.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Plank11" type="ColorRect" parent="MainHall"]
-offset_left = 1030.0
-offset_top = 40.0
-offset_right = 1034.0
-offset_bottom = 400.0
-mouse_filter = 2
-color = Color(0.15, 0.12, 0.12, 1)
-
-[node name="Beam" type="ColorRect" parent="MainHall"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 1086.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.18, 0.12, 0.1, 1)
-
-[node name="Floor" type="ColorRect" parent="MainHall"]
-offset_left = 0.0
-offset_top = 400.0
-offset_right = 1086.0
-offset_bottom = 522.0
-mouse_filter = 2
-color = Color(0.2, 0.15, 0.12, 1)
-
-[node name="Moonlight" type="ColorRect" parent="MainHall"]
-offset_left = 300.0
-offset_top = 400.0
-offset_right = 786.0
-offset_bottom = 522.0
-mouse_filter = 2
-color = Color(0.6, 0.7, 0.9, 0.08)
-
-[node name="BlownSnow" type="ColorRect" parent="MainHall"]
-offset_left = 0.0
-offset_top = 476.0
-offset_right = 260.0
-offset_bottom = 522.0
-mouse_filter = 2
-color = Color(0.85, 0.9, 0.98, 0.9)
-
-[node name="PillarL" type="ColorRect" parent="MainHall"]
-offset_left = 60.0
-offset_top = 0.0
-offset_right = 110.0
-offset_bottom = 430.0
-mouse_filter = 2
-color = Color(0.32, 0.12, 0.11, 1)
-
-[node name="PillarR" type="ColorRect" parent="MainHall"]
-offset_left = 976.0
-offset_top = 0.0
-offset_right = 1026.0
-offset_bottom = 430.0
-mouse_filter = 2
-color = Color(0.32, 0.12, 0.11, 1)
-
-[node name="Plinth" type="ColorRect" parent="MainHall"]
-offset_left = 380.0
-offset_top = 420.0
-offset_right = 706.0
-offset_bottom = 470.0
-mouse_filter = 2
-color = Color(0.3, 0.32, 0.38, 1)
-
-[node name="Slab" type="ColorRect" parent="MainHall"]
-offset_left = 413.0
-offset_top = 60.0
-offset_right = 673.0
-offset_bottom = 430.0
-mouse_filter = 2
-color = Color(0.42, 0.45, 0.52, 1)
-
-[node name="Frost" type="ColorRect" parent="MainHall"]
-offset_left = 405.0
-offset_top = 50.0
-offset_right = 681.0
-offset_bottom = 66.0
-mouse_filter = 2
-color = Color(0.85, 0.9, 0.98, 1)
-
-[node name="Inset" type="ColorRect" parent="MainHall"]
-offset_left = 433.0
-offset_top = 88.0
-offset_right = 653.0
-offset_bottom = 412.0
-mouse_filter = 2
-color = Color(0.36, 0.39, 0.46, 1)
-
-[node name="MossA" type="ColorRect" parent="MainHall"]
-offset_left = 413.0
-offset_top = 330.0
-offset_right = 427.0
-offset_bottom = 420.0
-mouse_filter = 2
-color = Color(0.25, 0.35, 0.25, 1)
-
-[node name="MossB" type="ColorRect" parent="MainHall"]
-offset_left = 655.0
-offset_top = 120.0
-offset_right = 673.0
-offset_bottom = 190.0
-mouse_filter = 2
-color = Color(0.25, 0.35, 0.25, 1)
+texture = ExtResource("3_hall")
+expand_mode = 1
 
 [node name="SignGate" type="Button" parent="MainHall"]
 offset_left = 478.0
@@ -235,37 +52,14 @@ YarnNode = "Tablet_Gate"
 Requires = "knowledge >= 2 | item:aoi_notes"
 LockedYarnNode = "Tablet_Unreadable"
 
-[node name="Stroke0" type="ColorRect" parent="MainHall/SignGate"]
-offset_left = 35.0
-offset_top = 8.0
-offset_right = 95.0
-offset_bottom = 16.0
+[node name="Glyph" type="TextureRect" parent="MainHall/SignGate"]
+show_behind_parent = true
+offset_left = 36.0
+offset_right = 94.0
+offset_bottom = 58.0
 mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke1" type="ColorRect" parent="MainHall/SignGate"]
-offset_left = 42.0
-offset_top = 20.0
-offset_right = 88.0
-offset_bottom = 25.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke2" type="ColorRect" parent="MainHall/SignGate"]
-offset_left = 44.0
-offset_top = 16.0
-offset_right = 51.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke3" type="ColorRect" parent="MainHall/SignGate"]
-offset_left = 79.0
-offset_top = 16.0
-offset_right = 86.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
+texture = ExtResource("4_gate")
+expand_mode = 1
 
 [node name="Word" type="Label" parent="MainHall/SignGate"]
 visible = false
@@ -288,29 +82,14 @@ YarnNode = "Tablet_Cold"
 Requires = "knowledge >= 2 | item:aoi_notes"
 LockedYarnNode = "Tablet_Unreadable"
 
-[node name="Stroke0" type="ColorRect" parent="MainHall/SignCold"]
-offset_left = 38.0
-offset_top = 12.0
-offset_right = 92.0
-offset_bottom = 17.0
+[node name="Glyph" type="TextureRect" parent="MainHall/SignCold"]
+show_behind_parent = true
+offset_left = 36.0
+offset_right = 94.0
+offset_bottom = 58.0
 mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke1" type="ColorRect" parent="MainHall/SignCold"]
-offset_left = 44.0
-offset_top = 26.0
-offset_right = 86.0
-offset_bottom = 31.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke2" type="ColorRect" parent="MainHall/SignCold"]
-offset_left = 50.0
-offset_top = 40.0
-offset_right = 80.0
-offset_bottom = 45.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
+texture = ExtResource("4_cold")
+expand_mode = 1
 
 [node name="Word" type="Label" parent="MainHall/SignCold"]
 visible = false
@@ -333,37 +112,14 @@ YarnNode = "Tablet_Sleep"
 Requires = "knowledge >= 2 | item:aoi_notes"
 LockedYarnNode = "Tablet_Unreadable"
 
-[node name="Stroke0" type="ColorRect" parent="MainHall/SignSleep"]
+[node name="Glyph" type="TextureRect" parent="MainHall/SignSleep"]
+show_behind_parent = true
 offset_left = 36.0
-offset_top = 22.0
 offset_right = 94.0
-offset_bottom = 28.0
+offset_bottom = 58.0
 mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke1" type="ColorRect" parent="MainHall/SignSleep"]
-offset_left = 44.0
-offset_top = 28.0
-offset_right = 48.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke2" type="ColorRect" parent="MainHall/SignSleep"]
-offset_left = 63.0
-offset_top = 28.0
-offset_right = 67.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke3" type="ColorRect" parent="MainHall/SignSleep"]
-offset_left = 82.0
-offset_top = 28.0
-offset_right = 86.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
+texture = ExtResource("4_sleep")
+expand_mode = 1
 
 [node name="Word" type="Label" parent="MainHall/SignSleep"]
 visible = false
@@ -386,29 +142,14 @@ YarnNode = "Tablet_Fire"
 Requires = "knowledge >= 2 | item:aoi_notes"
 LockedYarnNode = "Tablet_Unreadable"
 
-[node name="Stroke0" type="ColorRect" parent="MainHall/SignFire"]
-offset_left = 44.0
-offset_top = 34.0
-offset_right = 51.0
-offset_bottom = 52.0
+[node name="Glyph" type="TextureRect" parent="MainHall/SignFire"]
+show_behind_parent = true
+offset_left = 36.0
+offset_right = 94.0
+offset_bottom = 58.0
 mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke1" type="ColorRect" parent="MainHall/SignFire"]
-offset_left = 61.0
-offset_top = 8.0
-offset_right = 69.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke2" type="ColorRect" parent="MainHall/SignFire"]
-offset_left = 79.0
-offset_top = 24.0
-offset_right = 86.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
+texture = ExtResource("4_fire")
+expand_mode = 1
 
 [node name="Word" type="Label" parent="MainHall/SignFire"]
 visible = false
@@ -431,45 +172,14 @@ YarnNode = "Tablet_Wake"
 Requires = "knowledge >= 2 | item:aoi_notes"
 LockedYarnNode = "Tablet_Unreadable"
 
-[node name="Stroke0" type="ColorRect" parent="MainHall/SignWake"]
-offset_left = 40.0
-offset_top = 8.0
-offset_right = 90.0
-offset_bottom = 14.0
+[node name="Glyph" type="TextureRect" parent="MainHall/SignWake"]
+show_behind_parent = true
+offset_left = 36.0
+offset_right = 94.0
+offset_bottom = 58.0
 mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke1" type="ColorRect" parent="MainHall/SignWake"]
-offset_left = 40.0
-offset_top = 46.0
-offset_right = 90.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke2" type="ColorRect" parent="MainHall/SignWake"]
-offset_left = 40.0
-offset_top = 8.0
-offset_right = 46.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke3" type="ColorRect" parent="MainHall/SignWake"]
-offset_left = 84.0
-offset_top = 8.0
-offset_right = 90.0
-offset_bottom = 52.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
-
-[node name="Stroke4" type="ColorRect" parent="MainHall/SignWake"]
-offset_left = 60.0
-offset_top = 25.0
-offset_right = 70.0
-offset_bottom = 35.0
-mouse_filter = 2
-color = Color(0.15, 0.16, 0.21, 1)
+texture = ExtResource("4_wake")
+expand_mode = 1
 
 [node name="Word" type="Label" parent="MainHall/SignWake"]
 visible = false

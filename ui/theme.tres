@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=88 format=3]
+[gd_resource type="Theme" load_steps=87 format=3]
 
 [sub_resource type="StyleBoxEmpty" id="empty"]
 
@@ -918,18 +918,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 12
 
-[sub_resource type="StyleBoxFlat" id="sb_62"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(1.000, 0.650, 0.200, 1)
-corner_radius_top_left = 9
-corner_radius_top_right = 9
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 9
-corner_detail = 12
-
 [sub_resource type="StyleBoxFlat" id="sb_63"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -1537,8 +1525,6 @@ KeyCapOutline/styles/normal = SubResource("sb_61")
 NightCaption/base_type = &"Label"
 NightCaption/colors/font_color = Color(1.000, 1.000, 1.000, 0.85)
 NightCaption/font_sizes/font_size = 13
-WarmthIcon/base_type = &"Panel"
-WarmthIcon/styles/panel = SubResource("sb_62")
 WarmthBar/base_type = &"ProgressBar"
 WarmthBar/styles/background = SubResource("sb_63")
 WarmthBar/styles/fill = SubResource("sb_64")
@@ -1588,9 +1574,6 @@ MenuAction/font_sizes/font_size = 19
 BodyTextOn/base_type = &"Label"
 BodyTextOn/colors/font_color = Color(1.000, 0.824, 0.302, 1)
 BodyTextOn/font_sizes/font_size = 17
-TitleLogo/base_type = &"Label"
-TitleLogo/colors/font_color = Color(1.000, 1.000, 1.000, 1)
-TitleLogo/font_sizes/font_size = 76
 MenuWarning/base_type = &"Label"
 MenuWarning/colors/font_color = Color(1.000, 0.702, 0.541, 1)
 MenuWarning/font_sizes/font_size = 14

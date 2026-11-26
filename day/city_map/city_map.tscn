@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://day/city_map/CityMap.cs" id="1_map"]
 [ext_resource type="Resource" path="res://content/locations/apartment.tres" id="2_apt"]
 [ext_resource type="Resource" path="res://content/locations/university.tres" id="3_uni"]
 [ext_resource type="Resource" path="res://content/locations/arcade.tres" id="4_arc"]
 [ext_resource type="Resource" path="res://content/locations/shrine.tres" id="5_shr"]
-[ext_resource type="Script" path="res://day/city_map/MapDrawing.cs" id="6_draw"]
+[ext_resource type="Texture2D" path="res://content/art/ui/city_map.png" id="6_art"]
 [ext_resource type="PackedScene" path="res://ui/hud/day_header.tscn" id="7_header"]
 
 [node name="CityMap" type="Control"]
@@ -22,7 +22,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color(0.949, 0.902, 0.816, 1)
+color = Color(0.91, 0.83, 0.61, 1)
 
 [node name="Board" type="Control" parent="."]
 layout_mode = 1
@@ -38,7 +38,17 @@ offset_bottom = 360.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("6_draw")
+
+[node name="Art" type="TextureRect" parent="Board"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_art")
+expand_mode = 1
 
 [node name="Panel" type="PanelContainer" parent="Board"]
 layout_mode = 0

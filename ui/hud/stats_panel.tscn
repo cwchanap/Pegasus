@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/hud/StatsPanel.cs" id="1_stats"]
+[ext_resource type="Texture2D" path="res://content/art/ui/icons/stats/knowledge.png" id="2_knowledge"]
+[ext_resource type="Texture2D" path="res://content/art/ui/icons/stats/guts.png" id="2_guts"]
+[ext_resource type="Texture2D" path="res://content/art/ui/icons/stats/fitness.png" id="2_fitness"]
 
 [node name="StatsPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(300, 0)
@@ -24,8 +27,16 @@ theme_override_constants/separation = 12
 [node name="Grid" type="GridContainer" parent="Col"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
-columns = 2
+columns = 3
+
+[node name="KnowledgeIcon" type="TextureRect" parent="Col/Grid"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_knowledge")
+expand_mode = 1
 
 [node name="KnowledgeName" type="Label" parent="Col/Grid"]
 layout_mode = 2
@@ -39,6 +50,13 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
+[node name="GutsIcon" type="TextureRect" parent="Col/Grid"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_guts")
+expand_mode = 1
+
 [node name="GutsName" type="Label" parent="Col/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -50,6 +68,13 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
+
+[node name="FitnessIcon" type="TextureRect" parent="Col/Grid"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_fitness")
+expand_mode = 1
 
 [node name="FitnessName" type="Label" parent="Col/Grid"]
 layout_mode = 2

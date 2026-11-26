@@ -193,18 +193,37 @@ public partial class CloseUp : CanvasLayer
         if (first != null) first.GrabFocus();
     }
 
+    /// <summary>
+    /// The tag goes above the hotspot, else below, right or left: the first place on the stage
+    /// that covers no other hotspot and nothing drawn on one (a dial face, a sign's word).
+    /// </summary>
     private void ShowTag(Hotspot spot)
     {
+        const float gap = 8;
         var tag = GetNode<Label>("%Tag");
         tag.Visible = spot.Label != "";
         if (!tag.Visible) return;
         tag.Text = spot.Label;
         tag.ResetSize();
+        var size = tag.Size;
         var rect = spot.GetGlobalRect();
+        var mid = rect.GetCenter();
         var stage = GetNode<Control>("%Stage").GetGlobalRect();
-        var x = rect.End.X + 12;
-        if (x + tag.Size.X > stage.End.X) x = rect.Position.X - 12 - tag.Size.X;
-        tag.Position = new Vector2(x, rect.GetCenter().Y - tag.Size.Y / 2);
+        var x = Mathf.Clamp(mid.X - size.X / 2, stage.Position.X, stage.End.X - size.X);
+        Vector2[] tries =
+        [
+            new(x, rect.Position.Y - gap - size.Y),
+            new(x, rect.End.Y + gap),
+            new(rect.End.X + gap, mid.Y - size.Y / 2),
+            new(rect.Position.X - gap - size.X, mid.Y - size.Y / 2),
+        ];
+        var spots = Hotspots(_puzzle!.Views[_view]).Where(h => h.IsVisibleInTree()).ToList();
+        var taken = spots.Where(h => h != spot)
+            .Concat(spots.SelectMany(h => h.GetChildren().OfType<Control>()).Where(c => c.IsVisibleInTree()))
+            .Select(c => c.GetGlobalRect()).ToList();
+        var onStage = tries.Select(p => new Rect2(p, size)).Where(r => stage.Encloses(r)).ToList();
+        tag.Position = onStage.Where(r => !taken.Any(t => r.Intersects(t))).Concat(onStage)
+            .Select(r => r.Position).DefaultIfEmpty(tries[0]).First();
     }
 
     private void HideTag() => GetNode<Label>("%Tag").Visible = false;

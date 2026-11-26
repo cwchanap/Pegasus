@@ -101,6 +101,10 @@ ui_down={
 
 common/physics_interpolation=true
 
+[rendering]
+
+textures/canvas_textures/default_texture_filter=2
+
 [layer_names]
 
 3d_physics/layer_1="world"

@@ -15,7 +15,6 @@ public partial class ItemData : Resource
     /// <summary>Shop price in yen; 0 if it isn't sold.</summary>
     [Export] public int Price { get; set; }
     [Export] public int Warmth { get; set; }
-    /// <summary>Placeholder swatch until the A6 icon lands in Icon.</summary>
-    [Export] public Color IconColor { get; set; } = Colors.White;
+    /// <summary>content/art/ui/icons/items/{Id}.png, shown in the menu, the shop and the close-up item bar.</summary>
     [Export] public Texture2D? Icon { get; set; }
 }
