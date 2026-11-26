@@ -70,7 +70,9 @@ public partial class Player : CharacterBody3D
             var moved = GetRealVelocity();
             var onScreen = new Vector2(moved.Dot(right), -moved.Dot(forward));
             var dir = onScreen.LengthSquared() > 0.25f ? onScreen : input;
-            Face(Mathf.Abs(dir.X) >= Mathf.Abs(dir.Y) ? Facing.Side : dir.Y > 0 ? Facing.Front : Facing.Back, dir.X < 0);
+            // Diagonals show the side; the 0.95 keeps measured velocity's rounding from tipping a
+            // diagonal over to front or back.
+            Face(Mathf.Abs(dir.X) >= Mathf.Abs(dir.Y) * 0.95f ? Facing.Side : dir.Y > 0 ? Facing.Front : Facing.Back, dir.X < 0);
         }
 
         // One gentle bob per step, landing as the footstep plays; it settles when he stops.
