@@ -32,6 +32,21 @@ expand_mode = 1
 
 [node name="Prompt" parent="." instance=ExtResource("2_prompt")]
 
+[node name="ColdLine" type="CenterContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 172.0
+offset_bottom = 216.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="ColdLine"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_type_variation = &"ToastLabel"
+text = "You can't feel your fingers. Not long now."
+
 [node name="WarmthBox" type="HBoxContainer" parent="."]
 anchors_preset = 2
 anchor_top = 1.0

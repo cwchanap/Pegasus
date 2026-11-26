@@ -58,7 +58,7 @@ public partial class SnowArea : Node3D
         if (before >= _max * Warmth.LowShare && _warmth < _max * Warmth.LowShare)
         {
             AudioService.PlaySfx(Sfx.WarmthLow);
-            Toast.Show("You can't feel your fingers. Not long now.");
+            Hud?.WarnLow();
         }
         Hud?.SetWarmth(_warmth, _max);
         if (_warmth <= 0)
