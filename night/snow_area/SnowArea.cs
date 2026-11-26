@@ -47,7 +47,7 @@ public partial class SnowArea : Node3D
     {
         if (Game.State.HasFlag(Flags.NightSeen)) return;
         Game.State.SetFlag(Flags.NightSeen);
-        Conversation.Start("Night_First", () => Toast.Show("Warmth drains out here"));
+        Conversation.Start("Night_First", () => Toast.Show("The cold drains Warmth, even standing still"));
     }
 
     public override void _Process(double delta)
@@ -55,7 +55,11 @@ public partial class SnowArea : Node3D
         if (_over || !InputLock.IsFree) return;
         var before = _warmth;
         _warmth = Mathf.Max(0, _warmth - Warmth.DrainPerSecond * (float)delta);
-        if (before >= _max * Warmth.LowShare && _warmth < _max * Warmth.LowShare) AudioService.PlaySfx(Sfx.WarmthLow);
+        if (before >= _max * Warmth.LowShare && _warmth < _max * Warmth.LowShare)
+        {
+            AudioService.PlaySfx(Sfx.WarmthLow);
+            Toast.Show("You can't feel your fingers. Not long now.");
+        }
         Hud?.SetWarmth(_warmth, _max);
         if (_warmth <= 0)
         {

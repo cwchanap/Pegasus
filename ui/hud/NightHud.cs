@@ -5,7 +5,8 @@ namespace Pegasus.UI;
 
 /// <summary>
 /// The night HUD from the mockup: only the Warmth bar (bottom left) and the held light
-/// (bottom right, shown once he owns one). The snow area feeds it.
+/// (bottom right, shown once he owns one). The snow area feeds it. As Warmth runs low,
+/// frost creeps in from the screen edges so the white-out never comes unannounced.
 /// </summary>
 public partial class NightHud : CanvasLayer
 {
@@ -14,6 +15,9 @@ public partial class NightHud : CanvasLayer
 
     /// <summary>How full the Warmth meter is, 0 to 1.</summary>
     public float Share { get; private set; } = 1;
+
+    /// <summary>Below this share of the meter frost starts to creep in; it is thickest at zero.</summary>
+    private const float FrostShare = 0.5f;
 
     public override void _EnterTree() => Current = this;
 
@@ -29,7 +33,11 @@ public partial class NightHud : CanvasLayer
         bar.Value = current;
         Share = max > 0 ? current / max : 0;
         bar.ThemeTypeVariation = BarStyle(Share);
+        GetNode<CanvasItem>("%Frost").Modulate = new Color(1, 1, 1, FrostAlpha(Share));
     }
+
+    /// <summary>0 above <see cref="FrostShare"/>, rising to 1 at an empty meter.</summary>
+    public static float FrostAlpha(float share) => Mathf.Clamp(1 - share / FrostShare, 0, 1);
 
     /// <summary>Show the held light by name, or hide the slot when <paramref name="name"/> is null.</summary>
     public void SetLight(string? name, bool on)

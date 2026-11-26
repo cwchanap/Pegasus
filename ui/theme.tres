@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=87 format=3]
+[gd_resource type="Theme" load_steps=88 format=3]
 
 [sub_resource type="StyleBoxEmpty" id="empty"]
 
@@ -1284,6 +1284,18 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 corner_detail = 12
 
+[sub_resource type="StyleBoxFlat" id="sb_prompt"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+bg_color = Color(0.110, 0.122, 0.231, 0.88)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
+
 [resource]
 default_font_size = 16
 NavyPanel/base_type = &"PanelContainer"
@@ -1596,3 +1608,8 @@ WeekdayLabel/base_type = &"Label"
 WeekdayLabel/font_sizes/font_size = 14
 SubtitleLabel/base_type = &"Label"
 SubtitleLabel/font_sizes/font_size = 15
+PromptPill/base_type = &"PanelContainer"
+PromptPill/styles/panel = SubResource("sb_prompt")
+PromptLabel/base_type = &"Label"
+PromptLabel/colors/font_color = Color(1.000, 1.000, 1.000, 1)
+PromptLabel/font_sizes/font_size = 19
