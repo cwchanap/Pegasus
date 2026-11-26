@@ -19,6 +19,8 @@ public partial class NightHud : CanvasLayer
     /// <summary>Below this share of the meter frost starts to creep in; it is thickest at zero.</summary>
     private const float FrostShare = 0.5f;
 
+    private Tween? _warning;
+
     public override void _EnterTree() => Current = this;
 
     public override void _ExitTree()
@@ -38,6 +40,20 @@ public partial class NightHud : CanvasLayer
 
     /// <summary>0 above <see cref="FrostShare"/>, rising to 1 at an empty meter.</summary>
     public static float FrostAlpha(float share) => Mathf.Clamp(1 - share / FrostShare, 0, 1);
+
+    /// <summary>
+    /// The one line that warns Warmth is low. It lives in this HUD rather than the toast
+    /// queue, so it goes with the night instead of carrying over into the morning.
+    /// </summary>
+    public void WarnLow()
+    {
+        var label = GetNode<Label>("%Label");
+        _warning?.Kill();
+        _warning = CreateTween();
+        _warning.TweenProperty(label, "modulate:a", 1f, 0.15f);
+        _warning.TweenInterval(2.5f);
+        _warning.TweenProperty(label, "modulate:a", 0f, 0.6f);
+    }
 
     /// <summary>Show the held light by name, or hide the slot when <paramref name="name"/> is null.</summary>
     public void SetLight(string? name, bool on)
