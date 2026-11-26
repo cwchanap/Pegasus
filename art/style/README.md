@@ -68,6 +68,24 @@ Day, night and cast values are measured from the approved art. Fire orange (not 
 | `parts/sample_prop.png` | Stone lantern: line, base, shade, final (used in the style sheet) |
 | `parts/mood_day.png`, `parts/mood_night.png` | The two mood frames (used in the style sheet) |
 
+## Game assets (step 2)
+
+Finished images live in `content/characters/`. The old `*_sprite.png` and `*_portrait.png` placeholders stay until the "show the new character art in game" ticket swaps them. Godot creates the `.import` files the first time it opens the project.
+
+**World sprites:** `player_{summer|coat}_{front|back|side}.png` and `{aoi|kenta}_{front|side}.png`.
+
+- 256×512, transparent. The feet end on row 500 (12 px margin) and are centred horizontally. Side views face right; the game flips them for left. No ground shadow.
+- Cut straight from the approved character sheets (background removed, then scaled), so faces and outfits are identical to the sheets.
+- Figure heights follow the cast, so one pixel size keeps their relative heights: Kenta 484 px (hair spikes included), protagonist 468, Aoi 452.
+- At 1280×720 a 512 px canvas is about 136 px tall.
+- Aoi's tote sits on her left in the front and back views and on the near side in her side view. The game flips side sprites, so nobody will notice.
+
+**Dialogue portraits:** `{aoi|kenta}_portrait_{neutral|smile|worried}.png`.
+
+- 1000×2240, transparent, waist-up, facing the viewer. The game shows them at 250×560, bottom-left of the dialogue box.
+- Made with Codex from the character sheets: neutral first, then smile and worried as expression-only edits of the neutral one. Codex's image tool would not make 1000×2240, so each came out at 838×1877 (same ratio) and was scaled to 94% of the canvas width and bottom-anchored, leaving a side margin.
+- Framing: crown at about 17 to 18% from the top, chin at about 51% (Aoi) and 47% (Kenta), widest row at 94% of the width.
+
 ## Prompt preamble
 
 Paste this block first in every Codex art prompt, then the item-specific text.
@@ -87,4 +105,5 @@ codex exec --model gpt-6-luna -c model_reasoning_effort=xhigh -s workspace-write
 - The prompt is a short header (generate one image with the built-in image tool, do not draw it with code, save it as a PNG at this path), then the preamble, then the item brief.
 - Codex's built-in `image_gen` tool writes to `~/.codex/generated_images`, and Codex copies the result to the path you named. No resizing happens, so check the pixel size.
 - To keep a character on model, pass its sheet with `-i` and say to match it exactly. Style sheet, mood frames and sheets for new characters should reference an existing sheet for line and shading.
+- The image tool returns true transparent PNGs when asked for a transparent background, and it will not make exactly 1000×2240; it gave 838×1877. Tell Codex to call the image tool exactly once, or it keeps retrying on its own.
 - Look at every image before committing it. Retry only for real defects (wrong layout, missing limbs, garbled labels, off-palette colours, stray text).
