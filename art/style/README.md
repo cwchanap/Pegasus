@@ -28,17 +28,17 @@ One look for every image in the game: **clean TV-anime characters over soft, pai
 
 ## Palette
 
-Target values. Swatches are on `style_sheet.png`.
+Day, night and cast values are measured from the approved art. Fire orange (not in the frames yet), line brown, skin shade and the UI colours are targets. Swatches are on `style_sheet.png`.
 
 | Day | Hex | Night | Hex |
 |---|---|---|---|
 | Cream | `#FBF1E3` | Cold navy | `#0F1F46` |
 | Plaster | `#F5DBC4` | Dusk blue | `#1F3D7B` |
-| Sunlit orange | `#E8944F` | Shade blue | `#34508C` |
+| Sunlit orange | `#EFA269` | Shade blue | `#34508C` |
 | Timber | `#9E7F51` | Ice blue | `#6D90D7` |
-| Leaf green | `#6FA84B` | Pale ice | `#99B4ED` |
-| Deep leaf | `#3F6B38` | Snow white | `#E6EEFF` |
-| Sky blue | `#3D98EA` | Amber glow | `#FFC96B` |
+| Leaf green | `#6A8C41` | Pale ice | `#99B4ED` |
+| Deep leaf | `#3B5B32` | Snow white | `#E6EEFF` |
+| Sky blue | `#3D98EA` | Amber glow | `#EDC07F` |
 | Haze blue | `#BCD6F4` | Fire orange | `#FF8A3D` |
 
 | Shared | Hex | Cast (measured from the sheets) | Hex |
@@ -47,7 +47,7 @@ Target values. Swatches are on `style_sheet.png`.
 | Ink navy (UI panel) | `#1C1F3B` | Protagonist down coat | `#AE4333` |
 | UI orange (tag) | `#FF5A3C` | Aoi skirt | `#423F54` |
 | UI yellow | `#FFD24D` | Aoi hair | `#3D3944` |
-| Vermilion (torii, omamori) | `#D8432F` | Kenta jacket | `#4E7153` |
+| Vermilion (torii, omamori) | `#D8432F` | Kenta jacket | `#4F6E50` |
 | Skin | `#FBDBC0` | Kenta hair | `#6E4934` |
 | Skin shade | `#E8B896` | Khaki trousers | `#D9C098` |
 
@@ -55,7 +55,7 @@ Target values. Swatches are on `style_sheet.png`.
 
 - **Protagonist** (no name in the game): 20, ordinary and likeable, a little sleepy-eyed. Short messy black hair with one cowlick (his silhouette mark), navy canvas bag strap across the body. Summer: orange tee, khaki cropped chinos, white sneakers. Down coat: deep-red hip-length puffer with horizontal baffles, cream scarf, dark trousers and boots.
 - **Aoi**: 19, the folklore club's only member, earnest and a little guarded. Straight blue-black bob with blunt bangs, white short-sleeve blouse, indigo pleated skirt, cream canvas tote with a notebook and a small red omamori charm. Reserved posture, arms close.
-- **Kenta**: 20, loud and friendly, collects Osaka urban legends. Messy spiky chestnut hair, wide grin, green zip jacket with sleeves pushed up over a cream graphic tee, dark cargo shorts, navy high-tops, a sticker-covered sling bag. In the side view the bag hangs on the near hip, in front and back views on his right hip; keep it on his right hip in sprites.
+- **Kenta**: 20, loud and friendly, collects Osaka urban legends. Messy spiky chestnut hair, wide grin, green zip jacket with sleeves pushed up over a cream graphic tee, dark cargo shorts, navy high-tops, a sticker-covered sling bag. The bag hangs on his right hip in every view, strap over his left shoulder.
 
 ## Files
 
@@ -73,7 +73,7 @@ Target values. Swatches are on `style_sheet.png`.
 Paste this block first in every Codex art prompt, then the item-specific text.
 
 ```text
-Style: clean TV-anime character art over soft, painted anime-film backgrounds, for a 2.5D game set in a summer Osaka neighbourhood that is buried in snow at 3 AM. Characters: clean dark-brown line art (#3B2418), even line weight with a slightly heavier outer contour, two-tone cel shading (one flat base colour plus one hard-edged shadow tone, one flat highlight band on hair), large simple anime eyes with two flat highlights, simplified hands, about 5 to 6 heads tall, a clear silhouette that still reads at 140 px tall. No gradients, airbrush or texture noise on characters, no baked ground shadow. Backgrounds and props: painted, soft gradients, detailed skies, no hard baked cast shadows (the game lights the scene). No text, logos or watermarks unless the prompt asks for specific short labels. Day palette (warm and bright): cream #FBF1E3, plaster #F5DBC4, sunlit orange #E8944F, timber #9E7F51, leaf green #6FA84B, deep leaf #3F6B38, sky blue #3D98EA, haze blue #BCD6F4. Night palette (cold, the same streets under heavy snow at 3 AM): cold navy #0F1F46, dusk blue #1F3D7B, shade blue #34508C, ice blue #6D90D7, pale ice #99B4ED, snow white #E6EEFF; amber #FFC96B and fire orange #FF8A3D (lantern, window and fire light) are the only warm colours at night, so warmth reads as safety. UI match: navy #1C1F3B panels, cream #FBF1E3 dialogue boxes, orange #FF5A3C tags, yellow #FFD24D accents.
+Style: clean TV-anime character art over soft, painted anime-film backgrounds, for a 2.5D game set in a summer Osaka neighbourhood that is buried in snow at 3 AM. Characters: clean dark-brown line art (#3B2418), even line weight with a slightly heavier outer contour, two-tone cel shading (one flat base colour plus one hard-edged shadow tone, one flat highlight band on hair), large simple anime eyes with two flat highlights, simplified hands, about 5 to 6 heads tall, a clear silhouette that still reads at 140 px tall. No gradients, airbrush or texture noise on characters, no baked ground shadow. Backgrounds and props: painted, soft gradients, detailed skies, no hard baked cast shadows (the game lights the scene). No text, logos or watermarks unless the prompt asks for specific short labels. Day palette (warm and bright): cream #FBF1E3, plaster #F5DBC4, sunlit orange #EFA269, timber #9E7F51, leaf green #6A8C41, deep leaf #3B5B32, sky blue #3D98EA, haze blue #BCD6F4. Night palette (cold, the same streets under heavy snow at 3 AM): cold navy #0F1F46, dusk blue #1F3D7B, shade blue #34508C, ice blue #6D90D7, pale ice #99B4ED, snow white #E6EEFF; amber #EDC07F and fire orange #FF8A3D (lantern, window and fire light) are the only warm colours at night, so warmth reads as safety. UI match: navy #1C1F3B panels, cream #FBF1E3 dialogue boxes, orange #FF5A3C tags, yellow #FFD24D accents.
 ```
 
 ## Running Codex
