@@ -62,9 +62,16 @@ public partial class Player : CharacterBody3D
     private void Animate(Vector2 input, float dt)
     {
         if (Sprite == null) return;
-        // The camera looks north, so "back" (down the screen) walks toward it. Diagonals show the side.
         if (input.LengthSquared() > 0.01f)
-            Face(Mathf.Abs(input.X) >= Mathf.Abs(input.Y) ? Facing.Side : input.Y > 0 ? Facing.Front : Facing.Back, input.X < 0);
+        {
+            // Face the way he actually goes (sliding along a wall shows the slide), or the way he
+            // pushes when he is stuck. On screen, +Y is toward the camera, so it shows his front.
+            var (right, forward) = CameraAxes();
+            var moved = GetRealVelocity();
+            var onScreen = new Vector2(moved.Dot(right), -moved.Dot(forward));
+            var dir = onScreen.LengthSquared() > 0.25f ? onScreen : input;
+            Face(Mathf.Abs(dir.X) >= Mathf.Abs(dir.Y) ? Facing.Side : dir.Y > 0 ? Facing.Front : Facing.Back, dir.X < 0);
+        }
 
         // One gentle bob per step, landing as the footstep plays; it settles when he stops.
         var walking = IsOnFloor() && new Vector2(Velocity.X, Velocity.Z).Length() >= 0.5f;
@@ -98,11 +105,15 @@ public partial class Player : CharacterBody3D
     private Vector3 CameraRelative(Vector2 input)
     {
         if (input == Vector2.Zero) return Vector3.Zero;
-        var camera = GetViewport().GetCamera3D();
-        var basis = camera?.GlobalBasis ?? Basis.Identity;
-        var forward = -basis.Z with { Y = 0 };
-        var right = basis.X with { Y = 0 };
-        var dir = right.Normalized() * input.X - forward.Normalized() * input.Y;
+        var (right, forward) = CameraAxes();
+        var dir = right * input.X - forward * input.Y;
         return dir.LengthSquared() > 1 ? dir.Normalized() : dir;
+    }
+
+    /// <summary>The active camera's right and forward, flat on the ground.</summary>
+    private (Vector3 Right, Vector3 Forward) CameraAxes()
+    {
+        var basis = GetViewport().GetCamera3D()?.GlobalBasis ?? Basis.Identity;
+        return ((basis.X with { Y = 0 }).Normalized(), (-basis.Z with { Y = 0 }).Normalized());
     }
 }

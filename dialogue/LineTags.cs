@@ -20,10 +20,17 @@ public static class LineTags
     /// <summary>The mood of a "#mood:..." tag on a line; neutral when there is none or it is unknown.</summary>
     public static Mood GetMood(string[] tags) => TryMood(Value(tags, MoodTag), out var mood) ? mood : Mood.Neutral;
 
+    /// <summary>Exactly one mood name, any case. (Enum.TryParse would also take "1" and "smile,worried".)</summary>
     public static bool TryMood(string? text, out Mood mood)
     {
+        foreach (var known in Enum.GetValues<Mood>())
+            if (string.Equals(known.ToString(), text, StringComparison.OrdinalIgnoreCase))
+            {
+                mood = known;
+                return true;
+            }
         mood = Mood.Neutral;
-        return text != null && !int.TryParse(text, out _) && Enum.TryParse(text, ignoreCase: true, out mood);
+        return false;
     }
 
     private static string? Value(string[] tags, string prefix)

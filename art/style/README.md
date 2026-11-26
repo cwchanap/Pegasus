@@ -70,7 +70,7 @@ Day, night and cast values are measured from the approved art. Fire orange (not 
 
 ## Game assets (step 2)
 
-Finished images live in `content/characters/`, and the game shows them (the grey-box placeholders are gone). Their `.import` files turn mipmaps on and keep the PNGs lossless: the game draws sprites at about a quarter of their size and portraits at a quarter at 720p, and line art shimmers without mipmaps. Copy one of those `.import` files for any new character image.
+Finished images live in `content/characters/`, and the game shows them (the grey-box placeholders are gone). Their `.import` files turn mipmaps on and keep the PNGs lossless: the game draws sprites at about a quarter of their size and portraits at a quarter at 720p, and line art shimmers without mipmaps. For a new character image, let Godot write its `.import` file (open the editor or run `godot --headless --import`), then set the same values in it: `mipmaps/generate=true`, `compress/mode=0` and `detect_3d/compress_to=0`. Don't copy another image's `.import` file, which would duplicate its UID.
 
 **World sprites:** `player_{summer|coat}_{front|back|side}.png` and `{aoi|kenta}_{front|side}.png`.
 
