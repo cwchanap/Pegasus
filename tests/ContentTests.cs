@@ -11,8 +11,8 @@ namespace Pegasus.Tests;
 
 /// <summary>
 /// Checks the content files against each other, as text: every condition parses and names
-/// real items, every item given exists, every Yarn node a scene or script plays exists, and
-/// every "Name:" line is a known character. These typos otherwise only show up in play.
+/// real items, every item given exists and has its icon, every Yarn node a scene or script plays
+/// exists, and every "Name:" line is a known character. These typos otherwise only show up in play.
 /// </summary>
 public class ContentTests
 {
@@ -113,6 +113,18 @@ public class ContentTests
             .ToList();
         Assert.NotEmpty(named);
         Assert.Empty(named.Where(n => !items.Contains(n.Value)).Select(n => $"{n.File}: no item '{n.Value}'"));
+    }
+
+    [Fact]
+    public void Every_item_has_its_icon()
+    {
+        var missing = Ids("content/items").Where(id =>
+        {
+            var icon = $"content/art/ui/icons/items/{id}.png";
+            return !File.ReadAllText(Path.Combine(Root, "content", "items", id + ".tres")).Contains($"path=\"res://{icon}\"")
+                || !File.Exists(Path.Combine(Root, icon));
+        });
+        Assert.Empty(missing.Select(id => $"content/items/{id}.tres: no Icon at content/art/ui/icons/items/{id}.png"));
     }
 
     [Fact]

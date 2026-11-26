@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://world/items/ItemData.cs" id="1_item"]
+[ext_resource type="Texture2D" path="res://content/art/ui/icons/items/aoi_notes.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_item")
@@ -9,4 +10,4 @@ DisplayName = "Aoi's notes"
 Description = "Aoi's copy of her notes on the old script. Gate, cold, and a sign she thinks means sleep."
 Price = 0
 Warmth = 0
-IconColor = Color(0.93, 0.89, 0.8, 1)
+Icon = ExtResource("2_icon")

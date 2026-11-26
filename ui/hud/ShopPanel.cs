@@ -7,7 +7,7 @@ using Pegasus.World;
 namespace Pegasus.UI;
 
 /// <summary>
-/// A shop counter: one row per item with what it does and its price. Up/down picks,
+/// A shop counter: one row per item with its icon, what it does and its price. Up/down picks,
 /// E or click buys, Esc leaves. Browsing and buying are free of time.
 /// </summary>
 public partial class ShopPanel : Control
@@ -73,6 +73,9 @@ public partial class ShopPanel : Control
         var line = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
         line.AddThemeConstantOverride("separation", 16);
         margin.AddChild(line);
+        var icon = ItemSlots.Icon(item.Icon, 52);
+        icon.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        line.AddChild(icon);
 
         var text = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Ignore };
         text.AddThemeConstantOverride("separation", 2);

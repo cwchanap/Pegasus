@@ -5,8 +5,9 @@ using Pegasus.Core;
 namespace Pegasus.Puzzles;
 
 /// <summary>
-/// A clickable area in a close-up view. Put the placeholder (later illustrated) art inside
-/// it with mouse_filter = Ignore. By default a click plays <see cref="YarnNode"/> through
+/// A clickable area in a close-up view, fitted over a painted object. Art drawn on it (a dial
+/// face, a carved glyph) is a child with mouse_filter = Ignore and show_behind_parent, so the
+/// focus ring stays on top. By default a click plays <see cref="YarnNode"/> through
 /// the dialogue box; a puzzle can handle it instead in <see cref="Puzzle.Use"/>. With
 /// <see cref="Requires"/> set, a click plays <see cref="LockedYarnNode"/> until it holds.
 /// </summary>

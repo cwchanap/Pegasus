@@ -13,15 +13,15 @@ namespace Pegasus.Puzzles;
 public partial class LanternPuzzle : Puzzle
 {
     private const string Matches = "matchbox";
-    private static readonly Color LitColor = new(1f, 0.8f, 0.42f);
-    private static readonly Color DarkColor = new(0.13f, 0.15f, 0.22f);
 
     private LanternPath _path = new();
     private Hotspot[] _lanterns = System.Array.Empty<Hotspot>();
+    private CanvasItem[] _glows = System.Array.Empty<CanvasItem>();
 
     public override void _Ready()
     {
         _lanterns = Enumerable.Range(1, LanternPath.Count).Select(i => GetNode<Hotspot>($"LanternPath/Lantern{i}")).ToArray();
+        _glows = Enumerable.Range(1, LanternPath.Count).Select(i => GetNode<CanvasItem>($"LanternPath/Glow{i}")).ToArray();
         _path = new LanternPath(Solved);
         Refresh();
     }
@@ -56,10 +56,6 @@ public partial class LanternPuzzle : Puzzle
 
     private void Refresh()
     {
-        for (var i = 0; i < _lanterns.Length; i++)
-        {
-            _lanterns[i].GetNode<ColorRect>("Lamp").Color = _path.Lit[i] ? LitColor : DarkColor;
-            _lanterns[i].GetNode<CanvasItem>("Glow").Visible = _path.Lit[i];
-        }
+        for (var i = 0; i < _glows.Length; i++) _glows[i].Visible = _path.Lit[i];
     }
 }

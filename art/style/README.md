@@ -89,7 +89,7 @@ Finished images live in `content/characters/`, and the game shows them (the grey
 
 ## Scenes, screens and icons (step 3)
 
-Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everything else in `content/art/ui/`. Only the PNGs are committed; the step that puts them in the game adds their `.import` files.
+Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everything else in `content/art/ui/`. The game shows them all. Their `.import` files keep them lossless with mipmaps on (`mipmaps/generate=true`, `detect_3d/compress_to=0`), and the project draws 2D textures linear with mipmaps, so a 512 px icon stays clean at 26 px. Set the same for any new image here.
 
 **Close-up views:** `lanterns/lantern_path.png`, `tablet/main_hall.png`, `cafe/{counter|stove|door|booth}.png`.
 
@@ -113,7 +113,7 @@ Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everyth
 
 - `title.png`: the protagonist at his window at 3 AM. The left third is calm for the logo and menu.
 - `logo.png`: the transparent "Snow Dream" wordmark, trimmed to its edges plus a 24 px margin.
-- `city_map.png`: follows the map drawing (river, three roads, five blocks), with each landmark under its marker and no text. One change: the shrine's park moved off the river into the grid cell south of the arcade, at (567, 336) to (800, 456) in map coordinates, and the river runs straight. The shrine marker goes to about (685, 395) when this art goes in.
+- `city_map.png`: follows the map drawing (river, three roads, five blocks), with each landmark under its marker and no text. One change: the shrine's park moved off the river into the grid cell south of the arcade, at (567, 336) to (800, 456) in map coordinates, and the river runs straight. The shrine marker sits at (685, 395).
 - `end_card.png`: Kissa Mori with the stove lit, the window frost melting, and a figure outside under a dead streetlight. The centre stays dark for the text and button.
 
 **Icons:** `ui/icons/items/{item id}.png`, `ui/icons/stats/{knowledge|guts|fitness}.png`, `ui/icons/hud/{warmth|bike_light}.png`.

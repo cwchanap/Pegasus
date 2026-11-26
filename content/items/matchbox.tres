@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://world/items/ItemData.cs" id="1_item"]
+[ext_resource type="Texture2D" path="res://content/art/ui/icons/items/matchbox.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_item")
@@ -9,4 +10,4 @@ DisplayName = "Matchbox"
 Description = "Found in the shrine's offering box under the snow. Dry, somehow. Plenty of matches left."
 Price = 0
 Warmth = 0
-IconColor = Color(0.76, 0.22, 0.17, 1)
+Icon = ExtResource("2_icon")
