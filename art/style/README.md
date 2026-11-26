@@ -91,7 +91,7 @@ Finished images live in `content/characters/`. The old `*_sprite.png` and `*_por
 Paste this block first in every Codex art prompt, then the item-specific text.
 
 ```text
-Style: clean TV-anime character art over soft, painted anime-film backgrounds, for a 2.5D game set in a summer Osaka neighbourhood that is buried in snow at 3 AM. Characters: clean dark-brown line art (#3B2418), even line weight with a slightly heavier outer contour, two-tone cel shading (one flat base colour plus one hard-edged shadow tone, one flat highlight band on hair), large simple anime eyes with two flat highlights, simplified hands, about 5 to 6 heads tall, a clear silhouette that still reads at 140 px tall. No gradients, airbrush or texture noise on characters, no baked ground shadow. Backgrounds and props: painted, soft gradients, detailed skies, no hard baked cast shadows (the game lights the scene). No text, logos or watermarks unless the prompt asks for specific short labels. Day palette (warm and bright): cream #FBF1E3, plaster #F5DBC4, sunlit orange #EFA269, timber #9E7F51, leaf green #6A8C41, deep leaf #3B5B32, sky blue #3D98EA, haze blue #BCD6F4. Night palette (cold, the same streets under heavy snow at 3 AM): cold navy #0F1F46, dusk blue #1F3D7B, shade blue #34508C, ice blue #6D90D7, pale ice #99B4ED, snow white #E6EEFF; amber #EDC07F and fire orange #FF8A3D (lantern, window and fire light) are the only warm colours at night, so warmth reads as safety. UI match: navy #1C1F3B panels, cream #FBF1E3 dialogue boxes, orange #FF5A3C tags, yellow #FFD24D accents.
+Style: clean TV-anime character art over soft, painted anime-film backgrounds, for a 2.5D game set in a summer Osaka neighbourhood that is buried in snow at 3 AM. Characters: clean dark-brown line art (#3B2418), even line weight with a slightly heavier outer contour, two-tone cel shading (one flat base colour plus one hard-edged shadow tone, one flat highlight band on hair), large simple anime eyes with two flat highlights, simplified hands, about 5 to 6 heads tall, a clear silhouette that still reads at 140 px tall. No gradients, airbrush or texture noise on characters, no baked ground shadow. Backgrounds and props: painted, soft gradients, detailed skies, no hard baked cast shadows (the game lights the scene). No text, logos or watermarks unless the prompt asks for specific short labels. Day palette (warm and bright): cream #FBF1E3, plaster #F5DBC4, sunlit orange #EFA269, timber #9E7F51, leaf green #6A8C41, deep leaf #3B5B32, sky blue #3D98EA, haze blue #BCD6F4. Night palette (cold, the same streets under heavy snow at 3 AM): cold navy #0F1F46, dusk blue #1F3D7B, shade blue #34508C, ice blue #6D90D7, pale ice #99B4ED, snow white #E6EEFF; amber #EDC07F and fire orange #FF8A3D (lantern, window and fire light) are the only warm colours at night, so warmth reads as safety; the only exceptions are two small warm landmarks, the red torii (vermilion #D8432F) and the vending-machine glow. UI match: navy #1C1F3B panels, cream #FBF1E3 dialogue boxes, orange #FF5A3C tags, yellow #FFD24D accents.
 ```
 
 ## Running Codex
@@ -99,8 +99,11 @@ Style: clean TV-anime character art over soft, painted anime-film backgrounds, f
 This is how the sheets were made:
 
 ```sh
-codex exec --model gpt-6-luna -c model_reasoning_effort=xhigh -s workspace-write -C <repo> [-i reference.png] -o last.txt - < prompt.txt
+REPO=~/path/to/pegasus   # your checkout
+codex exec --model gpt-6-luna -c model_reasoning_effort=xhigh -s workspace-write -C "$REPO" -i reference.png -o last.txt - < prompt.txt
 ```
+
+Drop `-i reference.png` when there is no reference image.
 
 - The prompt is a short header (generate one image with the built-in image tool, do not draw it with code, save it as a PNG at this path), then the preamble, then the item brief.
 - Codex's built-in `image_gen` tool writes to `~/.codex/generated_images`, and Codex copies the result to the path you named. No resizing happens, so check the pixel size.
