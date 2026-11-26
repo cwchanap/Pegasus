@@ -75,6 +75,9 @@ size = Vector3(9.5, 2, 1.8)
 [sub_resource type="BoxShape3D" id="tunnel_shape"]
 size = Vector3(4, 3, 6)
 
+[sub_resource type="BoxShape3D" id="tunnel_mouth"]
+size = Vector3(1.6, 1.2, 6.4)
+
 [sub_resource type="StandardMaterial3D" id="dark_mat"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
@@ -100,7 +103,7 @@ radial_segments = 6
 rings = 3
 
 [sub_resource type="BoxShape3D" id="cutaway_box"]
-size = Vector3(5, 2, 6)
+size = Vector3(2.8, 2, 6)
 
 [node name="SnowArea" type="Node3D" node_paths=PackedStringArray("HomeDoor", "Hud", "BikeLight")]
 script = ExtResource("1_snow")
@@ -721,7 +724,7 @@ PromptHeight = 2.4
 
 [node name="Shape" type="CollisionShape3D" parent="UnderpassGate/LookIn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-shape = SubResource("spot")
+shape = SubResource("tunnel_mouth")
 
 [node name="UnderpassBells" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.4, 0, -6.6)

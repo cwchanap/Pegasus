@@ -107,7 +107,17 @@ public partial class DialogueBox : Control, DialoguePresenterBase
     // while choices are open the buttons take the click through the GUI instead.
     public override void _Input(InputEvent e)
     {
-        if (Visible && IsClick(e) && !(_choice != null && HasOpenChoice)) Handle(e);
+        if (!Visible || !IsClick(e)) return;
+        if (_choice != null && HasOpenChoice) Callable.From(ShowFocus).CallDeferred();
+        else Handle(e);
+    }
+
+    // A click beside the choices hides the focused row's highlight; bring it back so the
+    // player still sees which one E will pick.
+    private void ShowFocus()
+    {
+        if (_choice != null && GetViewport().GuiGetFocusOwner() is Button focused && _buttons.Any(b => b.Button == focused))
+            focused.GrabFocus();
     }
 
     public override void _UnhandledInput(InputEvent e)
@@ -217,9 +227,14 @@ public partial class DialogueBox : Control, DialoguePresenterBase
         if (locked && condition is StatAtLeast stat)
             row.AddChild(RowLabel($"{stat.Stat} {Game.State.GetStat(stat.Stat)} of {stat.Level}", "FaintLabel"));
 
-        // Dark text on the white focused style.
-        button.FocusEntered += () => { text.ThemeTypeVariation = "ChoiceTextFocus"; badge.ThemeTypeVariation = "ChoiceNumberFocus"; };
-        button.FocusExited += () => { text.ThemeTypeVariation = "ChoiceText"; badge.ThemeTypeVariation = "ChoiceNumber"; };
+        // Dark text only while the white focus style is drawn: a mouse click keeps focus on the
+        // button but hides its style, which left dark text on the dark row.
+        button.Draw += () =>
+        {
+            var lit = button.HasFocus(ignoreHiddenFocus: true);
+            text.ThemeTypeVariation = lit ? "ChoiceTextFocus" : locked ? "ChoiceTextLocked" : "ChoiceText";
+            badge.ThemeTypeVariation = lit ? "ChoiceNumberFocus" : "ChoiceNumber";
+        };
         button.MouseEntered += () => { if (!locked) button.GrabFocus(); };
         button.Pressed += () => _choice?.TrySetResult(option);
         _options.AddChild(button);

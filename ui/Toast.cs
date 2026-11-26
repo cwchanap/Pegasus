@@ -58,6 +58,8 @@ public partial class Toast : CanvasLayer
         if (busy || !_waiting.TryDequeue(out var text)) return;
         _label.Text = text;
         _tween = CreateTween();
+        // Drop it once done: playing a finished tween only logs an error.
+        _tween.Finished += () => _tween = null;
         _tween.TweenProperty(_label, "modulate:a", 1f, 0.15f);
         _tween.TweenInterval(2.5f);
         _tween.TweenProperty(_label, "modulate:a", 0f, 0.6f);
