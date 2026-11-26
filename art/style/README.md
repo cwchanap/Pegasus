@@ -76,6 +76,7 @@ Finished images live in `content/characters/`. The old `*_sprite.png` and `*_por
 
 - 256×512, transparent. The feet end on row 500 (12 px margin) and are centred horizontally. Side views face right; the game flips them for left. No ground shadow.
 - Cut straight from the approved character sheets (background removed, then scaled), so faces and outfits are identical to the sheets.
+- The cut leaves a pale cream halo outside the dark line. It is cleaned up so the sprites sit on the navy night backdrop: edge pixels outside the line take the line colour and fade by how much of the line they cover, and stray low-alpha specks are cleared. Do the same for any sprite cut from a light sheet.
 - Figure heights follow the cast, so one pixel size keeps their relative heights: Kenta 484 px (hair spikes included), protagonist 468, Aoi 452.
 - At 1280×720 a 512 px canvas is about 136 px tall.
 - Aoi's tote sits on her left in the front and back views and on the near side in her side view. The game flips side sprites, so nobody will notice.
