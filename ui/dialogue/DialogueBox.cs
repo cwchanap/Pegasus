@@ -56,7 +56,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
 
     public async YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
     {
-        ShowSpeaker(Conversation.Instance.FindCharacter(line.CharacterName), line.CharacterName);
+        ShowSpeaker(Conversation.Instance.FindCharacter(line.CharacterName), line.CharacterName, LineTags.GetMood(line.Metadata));
         _text.Text = line.TextWithoutCharacterName.Text;
         _hint.Text = "Next";
         _text.VisibleRatio = 0;
@@ -171,10 +171,10 @@ public partial class DialogueBox : Control, DialoguePresenterBase
 
     // ---- Layout ----
 
-    private void ShowSpeaker(CharacterProfile? profile, string? name)
+    private void ShowSpeaker(CharacterProfile? profile, string? name, Mood mood)
     {
-        _portrait.Texture = profile?.Portrait;
-        _portrait.Visible = profile?.Portrait != null;
+        _portrait.Texture = profile?.PortraitFor(mood);
+        _portrait.Visible = _portrait.Texture != null;
         _plate.Visible = name != null;
         _name.Text = profile?.DisplayName ?? name ?? "";
         var details = new List<string>();
@@ -196,7 +196,7 @@ public partial class DialogueBox : Control, DialoguePresenterBase
 
     private Button AddOption(int number, DialogueOption option)
     {
-        var needs = YarnBindings.Needs(option.Line.Metadata);
+        var needs = LineTags.Needs(option.Line.Metadata);
         var condition = needs == null ? null : Condition.Parse(needs);
         var locked = condition != null && !condition.IsMet(Game.State);
 
@@ -295,6 +295,8 @@ public partial class DialogueBox : Control, DialoguePresenterBase
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
             StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
             MouseFilter = MouseFilterEnum.Ignore,
+            // Portraits are drawn at 4x for big screens; mipmaps keep the line art clean at 720p.
+            TextureFilter = TextureFilterEnum.LinearWithMipmaps,
         };
         _portrait.AnchorTop = 1; _portrait.AnchorBottom = 1;
         _portrait.OffsetLeft = 80; _portrait.OffsetRight = 330; _portrait.OffsetTop = -560; _portrait.OffsetBottom = 0;

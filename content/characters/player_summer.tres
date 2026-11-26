@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpriteSet" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://world/player/SpriteSet.cs" id="1_set"]
+[ext_resource type="Texture2D" path="res://content/characters/player_summer_front.png" id="2_front"]
+[ext_resource type="Texture2D" path="res://content/characters/player_summer_back.png" id="3_back"]
+[ext_resource type="Texture2D" path="res://content/characters/player_summer_side.png" id="4_side"]
+
+[resource]
+script = ExtResource("1_set")
+Front = ExtResource("2_front")
+Back = ExtResource("3_back")
+Side = ExtResource("4_side")

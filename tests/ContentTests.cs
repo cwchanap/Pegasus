@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Pegasus.Conditions;
+using Pegasus.Dialogue;
 using Xunit;
 
 namespace Pegasus.Tests;
@@ -182,6 +183,15 @@ public class ContentTests
         }
         Assert.NotEmpty(names);
         Assert.Empty(bad);
+    }
+
+    [Fact]
+    public void Moods_are_known()
+    {
+        // An unknown mood falls back to neutral in play, so a typo would never show.
+        var moods = Find(@"#mood:(\S+)", ".yarn");
+        Assert.NotEmpty(moods);
+        Assert.Empty(moods.Where(m => !LineTags.TryMood(m.Value, out _)).Select(m => $"{m.File}: unknown mood '{m.Value}'"));
     }
 
     /// <summary>The night budgets in ShopAndWarmthTests assume these gear values; this reads the real items.</summary>

@@ -70,7 +70,7 @@ Day, night and cast values are measured from the approved art. Fire orange (not 
 
 ## Game assets (step 2)
 
-Finished images live in `content/characters/`. The old `*_sprite.png` and `*_portrait.png` placeholders stay until the "show the new character art in game" ticket swaps them. Godot creates the `.import` files the first time it opens the project.
+Finished images live in `content/characters/`, and the game shows them (the grey-box placeholders are gone). Their `.import` files turn mipmaps on and keep the PNGs lossless: the game draws sprites at about a quarter of their size and portraits at a quarter at 720p, and line art shimmers without mipmaps. Copy one of those `.import` files for any new character image.
 
 **World sprites:** `player_{summer|coat}_{front|back|side}.png` and `{aoi|kenta}_{front|side}.png`.
 

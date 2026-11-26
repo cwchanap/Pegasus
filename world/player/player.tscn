@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://world/player/Player.cs" id="1_player"]
 [ext_resource type="Script" path="res://world/interaction/Interactor.cs" id="2_interactor"]
-[ext_resource type="Texture2D" path="res://world/player/placeholder_player.png" id="3_sprite"]
+[ext_resource type="Texture2D" path="res://content/characters/player_summer_front.png" id="3_sprite"]
+[ext_resource type="Resource" path="res://content/characters/player_summer.tres" id="4_summer"]
+[ext_resource type="Resource" path="res://content/characters/player_coat.tres" id="5_coat"]
 
 [sub_resource type="CapsuleShape3D" id="body"]
 radius = 0.35
@@ -15,14 +17,16 @@ radius = 1.4
 collision_layer = 2
 script = ExtResource("1_player")
 Sprite = NodePath("Sprite")
+Summer = ExtResource("4_summer")
+Coat = ExtResource("5_coat")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("body")
 
 [node name="Sprite" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-pixel_size = 0.00625
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7625, 0)
+pixel_size = 0.003125
 billboard = 2
 shaded = true
 alpha_cut = 1

@@ -10,6 +10,7 @@
     <Compile Include="../core/state/**/*.cs" LinkBase="Linked/core" />
     <Compile Include="../conditions/**/*.cs" LinkBase="Linked/conditions" />
     <Compile Include="../puzzles/rules/**/*.cs" LinkBase="Linked/puzzles" />
+    <Compile Include="../dialogue/LineTags.cs" Link="Linked/dialogue/LineTags.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
