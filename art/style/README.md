@@ -105,8 +105,8 @@ Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everyth
 
 **Cut-outs:** square, transparent, 2× their square in the scene.
 
-- `tablet/glyph_{gate|cold|sleep|fire|wake}.png`: 116×116 carved stone tiles. Each is centred on its sign button (x 514, y 100 + 62 × index in view units, 58 square).
-- `cafe/dial_{gate|cold|sleep|fire|wake}.png`: 112×112 brass dial faces for the three dials at x 460, 524 and 588, y 194 (56 square). The pointer notch is at the top.
+- `tablet/glyph_{gate|cold|sleep|fire|wake}.png`: 116×116 carved stone tiles. Each is a 58 square centred on its 130×58 sign button: top-left at (514, 100 + 62 × index) in view units, centre at (543, 129 + 62 × index).
+- `cafe/dial_{gate|cold|sleep|fire|wake}.png`: 112×112 brass dial faces covering the three 56-square dial buttons, whose top-left corners are at x 460, 524 and 588, y 194 in view units. The pointer notch is at the top.
 - The glyph strokes follow the scene's stroke rectangles.
 
 **Screens:** 2560×1440 (Codex returned 1672×941).
