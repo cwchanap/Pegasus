@@ -196,6 +196,7 @@ public partial class CloseUp : CanvasLayer
     /// <summary>
     /// The tag goes above the hotspot, else below, right or left: the first place on the stage
     /// that covers no other hotspot and nothing drawn on one (a dial face, a sign's word).
+    /// It lives in the centred Frame, so it moves with the stage when the window resizes.
     /// </summary>
     private void ShowTag(Hotspot spot)
     {
@@ -222,7 +223,7 @@ public partial class CloseUp : CanvasLayer
             .Concat(spots.SelectMany(h => h.GetChildren().OfType<Control>()).Where(c => c.IsVisibleInTree()))
             .Select(c => c.GetGlobalRect()).ToList();
         var onStage = tries.Select(p => new Rect2(p, size)).Where(r => stage.Encloses(r)).ToList();
-        tag.Position = onStage.Where(r => !taken.Any(t => r.Intersects(t))).Concat(onStage)
+        tag.GlobalPosition = onStage.Where(r => !taken.Any(t => r.Intersects(t))).Concat(onStage)
             .Select(r => r.Position).DefaultIfEmpty(tries[0]).First();
     }
 

@@ -121,7 +121,10 @@ public class ContentTests
         var missing = Ids("content/items").Where(id =>
         {
             var icon = $"content/art/ui/icons/items/{id}.png";
-            return !File.ReadAllText(Path.Combine(Root, "content", "items", id + ".tres")).Contains($"path=\"res://{icon}\"")
+            var tres = File.ReadAllText(Path.Combine(Root, "content", "items", id + ".tres"));
+            var declared = Regex.Match(tres, $@"path=""res://{Regex.Escape(icon)}"" id=""([^""]+)""");
+            return !declared.Success
+                || !tres.Contains($"Icon = ExtResource(\"{declared.Groups[1].Value}\")")
                 || !File.Exists(Path.Combine(Root, icon));
         });
         Assert.Empty(missing.Select(id => $"content/items/{id}.tres: no Icon at content/art/ui/icons/items/{id}.png"));
