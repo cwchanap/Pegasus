@@ -1,6 +1,6 @@
 # Props
 
-3D props made in Tripo Studio from the references in `art/props/` (`{name}.png`, plus `{name}_side.png` where a side view helps). The references are painted like props in a Japanese anime film background, to match the building fronts: real proportions, painted detail and gentle wear, no outline. The torii, stone lantern and vending machine are in that style; the other 13 are still the first, flatter set and get repainted once the look is approved. Export each as `{name}.glb` here: Y up, the base centre on Y = 0, facing +Z, in metres, with one base colour texture at 1024 px and no baked lighting. Scale it to the size below before export, and keep it near the face count.
+3D props made in Tripo Studio from the references in `art/props/` (`{name}.png`, plus `{name}_side.png` where a side view helps). The references are painted like props in a Japanese anime film background, to match the building fronts: real proportions, painted detail and gentle wear, no outline. Export each as `{name}.glb` here: Y up, the base centre on Y = 0, facing +Z, in metres, with one base colour texture at 1024 px and no baked lighting. Scale it to the size below before export, and keep it near the face count.
 
 | Prop | Used in | Size (m, width × height) | Faces | GLB |
 |---|---|---|---|---|
