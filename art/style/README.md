@@ -133,13 +133,14 @@ Building fronts live in `content/art/fronts/` (its README lists each front's siz
 - Fronts are flat, straight-on, evenly lit, at 256 px per metre of the box face. Fronts with doors or windows that the scene uses were painted over a guide of flat blocks at the right size and place, with `parts/mood_day.png` as the style reference.
 - Each snow front is an edit of the summer one ("change nothing else"), with `parts/mood_night.png` as a second reference, so the layout matches.
 - Tiling fronts and skies asked Codex for a plain strip at both edges; the last 7% (8% for skies) was cross-faded into the first and dropped, so the image repeats. Skies came at 3:1 and were cropped from the top to 4:1.
-- Prop references are 2048×2048 on light grey, three-quarter front from above, flat colour with no line art, painted like the BASE column of `parts/sample_prop.png`. Side views are edits of the three-quarter view.
+- Prop references are 2048×2048 on light grey, three-quarter front from above, flat colour with no line art, painted like the BASE column of `parts/sample_prop.png`. Side views are edits of the three-quarter view and show the same side. The three pilot props went in as `-i` references for the other 13 so the set matches. The models and their size and face budgets are listed in `content/models/props/README.md`.
 
 **Codex notes for this batch:**
 
 - The image tool keeps to about 1.57 MP and 3:1 at most, so the pillar (1:3.75) was painted on a 1:3 canvas with grey either side and cropped.
 - An edit comes back in the input's aspect ratio only when that ratio is one the tool likes; for the pillar, pad the input to a wider canvas first.
 - A straight side view of a torii needs spelling out (one pillar, a T on top, nothing sticking out), or the beam ends come out lopsided.
+- In a side view of the right side, the front is on the right of the image. The bicycle's prompt put the basket on the left, which drew a mirrored bike, so the image was flipped (it has no text).
 
 ## Prompt preamble
 
