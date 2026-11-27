@@ -26,7 +26,7 @@ Metres from the left edge of the face, and up from the street or floor.
 
 - `apartment_block`: door 5.3–6.7, 0–2.2. Windows 1.8–3.2 and 8.8–10.2, both 3.65–4.75 (`Home/Door`, `Window0`, `Window1`). The left window and the door lamp are lit in the snow version.
 - `university_hall`: entrance 8.4–11.6, 0–2.8. The UNIVERSITY plate is 7–13, 3.0–3.8, so the `University/Sign` label is no longer needed.
-- `kissa_mori`: door 0.1–1.5, 0–2.2; window 1.55–3.95, 1.0–2.2. In the night scene that puts the door centre at x 38.8 and the window centre at x 40.75; `KissaDoor` (38) and `KissaWindow` (40.5) need to move there. The sign carries the name, so `KissaSign` is no longer needed either. The day version has a hiring notice in the window; the snow version is closed and dark.
+- `kissa_mori`: door 0.1–1.5, 0–2.2; window 1.55–3.95, 1.0–2.2. In the night scene that puts the door centre at x 38.8 and the window centre at x 40.75; `KissaDoor` (38) and `KissaWindow` (40.5) need to move there. The sign carries the name, so `KissaSign` is no longer needed either. The day version has a hiring notice in the window; in the snow version the window glows warm from inside, since the night route ends here.
 - `shrine_hall`: doors 1.7–3.3, 0–2.0 (`Shrine/HallDoor`).
 - `apartment_room_wall`: window frame 2.7–4.85, 1.15–2.45, a little larger than the grey-box `Room/Window` (1.6 × 1 m).
 - Library and gym walls: the lower 2.4 m is plain wainscot behind the shelves, treadmill and rack.
