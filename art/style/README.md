@@ -126,6 +126,22 @@ Puzzle close-ups live in `content/art/closeups/{lanterns|tablet|cafe}/`, everyth
 - When two runs share the machine, Codex can copy the other run's image. Take the file from that run's own `~/.codex/generated_images/<session id>/` folder.
 - Ask for 1808×870 or 1672×941 and scale up; it does not make exact sizes.
 
+## Fronts, skies and prop references (step 4)
+
+Building fronts live in `content/art/fronts/` (its README lists each front's size, box and openings), skies in `content/art/skies/`, and the Tripo Studio prop references in `art/props/`.
+
+- Fronts are flat, straight-on, evenly lit, at 256 px per metre of the box face. Fronts with doors or windows that the scene uses were painted over a guide of flat blocks at the right size and place, with `parts/mood_day.png` as the style reference.
+- Each snow front is an edit of the summer one ("change nothing else"), with `parts/mood_night.png` as a second reference, so the layout matches.
+- Tiling fronts and skies asked Codex for a plain strip at both edges; the last 7% (8% for skies) was cross-faded into the first and dropped, so the image repeats. Skies came at 3:1 and were cropped from the top to 4:1.
+- Prop references are 2048×2048 on light grey, three-quarter front from slightly above, even soft light, no line art, no shadow or ground. They are painted like props in a Japanese anime film background, matching the fronts: real proportions and construction, crisp edges, soft painted gradients, gentle wear. The first set, in flat colour like the BASE column of `parts/sample_prop.png`, came out toy-like, so all 16 were repainted, each with its old image for the angle and a front as the style reference (`shrine_hall_summer` for the shrine, `kissa_mori_summer` for the streets and arcade, the room, library and gym walls indoors). After the pilot (torii, stone lantern, vending machine) was approved, the other 13 also took a pilot image as a third reference so the set matches. Side views are edits of the three-quarter view and show the same side. The models and their size and face budgets are listed in `content/models/props/README.md`.
+
+**Codex notes for this batch:**
+
+- The image tool keeps to about 1.57 MP and 3:1 at most, so the pillar (1:3.75) was painted on a 1:3 canvas with grey either side and cropped.
+- An edit comes back in the input's aspect ratio only when that ratio is one the tool likes; for the pillar, pad the input to a wider canvas first.
+- A straight side view of a torii needs spelling out (one pillar, a T on top, nothing sticking out), or the beam ends come out lopsided.
+- In a side view of the right side, the front is on the right of the image. The bicycle's prompt put the basket on the left, which drew a mirrored bike, so the image was flipped (it has no text).
+
 ## Prompt preamble
 
 Paste this block first in every Codex art prompt, then the item-specific text.
