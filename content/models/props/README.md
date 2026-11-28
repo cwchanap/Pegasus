@@ -14,7 +14,7 @@ Tripo exports every model about 1 unit across, with 4096 px base colour, normal 
 | `cedar_tree` | Shrine, streets | 2 × 5 high | 3,000 | to come | |
 | `vending_machine` | Streets | 1.0 × 1.8 high | 1,500 | 4,132 | 1.03 × 1.80 × 1.01 |
 | `street_lamp` | Streets | 0.4 × 4.0 high | 800 | 738 | 1.23 × 4.00 × 1.12 |
-| `utility_pole` | Streets (no wires) | 0.4 × 8.0 high | 1,500 | 1,164 | 1.02 × 8.00 × 2.31 |
+| `utility_pole` | Streets (no wires) | 0.4 × 8.0 high | 1,500 | 1,164 | 2.31 × 8.00 × 1.02 |
 | `bicycle` | Streets, apartment | 1.7 long × 1.0 high | 3,000 | to come | |
 | `bench` | Streets, shrine | 1.6 × 0.8 high | 800 | 890 | 1.60 × 0.95 × 0.81 |
 | `post_box` | Streets | 0.5 × 1.3 high | 800 | 1,486 | 0.56 × 1.30 × 0.62 |
@@ -28,7 +28,7 @@ Tripo exports every model about 1 unit across, with 4096 px base colour, normal 
 Notes for placing them:
 
 - **Scale:** tall props were scaled by height and long or low ones by length: offering box, bench, shop counter and weight rack by width, bed and treadmill by length. The desk was scaled so its top sits at 0.73 m (lamp top 1.23 m), the bench seat lands at 0.46 m, and the counter top at 1.03 m.
-- **Facing:** every prop shows the face from its reference image toward +Z. The bed and the treadmill run along Z, with the foot of the bed and the back of the belt toward the camera; turn them 90° to lie along a wall. The utility pole's cross-arm runs along Z.
+- **Facing:** every prop shows the face from its reference image toward +Z. The bed and the treadmill run along Z, with the foot of the bed and the back of the belt toward the camera; turn them 90° to lie along a wall. The utility pole came out of Tripo side-on, so it was turned 90° to match its reference: cross-arms side to side, transformer on the right.
 - **Triangles:** Tripo counts faces as quads, so a few models came out at 2 to 3 times the triangle budget (vending machine, desk, bookshelf, weight rack). The 14 together are about 30,000 triangles, and the shrine's torii, five lanterns, offering box and bench about 11,000, so none were reduced.
 
 Side views: `torii_side`, `vending_machine_side`, `bicycle_side`.
